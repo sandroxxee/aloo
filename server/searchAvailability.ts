@@ -47,7 +47,7 @@ export function buildSearchSourceUrl(endpoint: string, query: string): string {
 }
 
 export function getSearchFailurePayload(failures: SearchFailure[]): SearchFailurePayload {
-  const sourceBlocked = failures.length > 0 && failures.every(failure => failure.status === 403);
+  const sourceBlocked = failures.some(failure => failure.status === 403);
 
   return {
     success: false,
@@ -81,6 +81,10 @@ function toRawContent(data: unknown): string {
     .join("\n\n");
 }
 
+function isBlockedHtml(content: string): boolean {
+  return /verifying your browser|antibot|captcha/i.test(content);
+}
+
 export async function runPublicSearch(
   query: string,
   fetcher: typeof fetch = fetch,
@@ -104,12 +108,22 @@ export async function runPublicSearch(
       }
 
       const contentType = response.headers.get("content-type") || "";
-      if (!contentType.includes("application/json")) {
-        failures.push({ source: source.name, status: response.status, reason: "Resposta fora do formato JSON" });
+      const rawContent = contentType.includes("application/json")
+        ? toRawContent(await response.json())
+        : contentType.includes("text/html")
+          ? await response.text()
+          : "";
+
+      if (contentType.includes("text/html") && isBlockedHtml(rawContent)) {
+        failures.push({ source: source.name, status: 403, reason: "Página de bloqueio detectada" });
         continue;
       }
 
-      const rawContent = toRawContent(await response.json());
+      if (!rawContent) {
+        failures.push({ source: source.name, status: response.status, reason: "Resposta sem conteúdo utilizável" });
+        continue;
+      }
+
       return {
         success: true,
         contacts: [],
