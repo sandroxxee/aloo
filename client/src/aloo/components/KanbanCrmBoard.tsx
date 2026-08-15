@@ -368,9 +368,9 @@ export const KanbanCrmBoard: React.FC<KanbanCrmBoardProps> = ({
         }}
         className={`p-3.5 rounded-xl border-2 border-dashed transition-all flex flex-col sm:flex-row items-center justify-between gap-3 ${
           isOverArchiveZone
-            ? 'bg-red-500/15 border-red-500 text-red-600 dark:text-red-300 scale-[1.01] shadow-lg shadow-red-500/20'
+            ? 'bg-red-500/15 border-red-500 text-red-600 dark:text-red-300 shadow-sm'
             : draggedLeadId
-            ? 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400 animate-pulse'
+            ? 'bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-400'
             : 'bg-slate-50/50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400'
         }`}
       >
@@ -394,7 +394,7 @@ export const KanbanCrmBoard: React.FC<KanbanCrmBoardProps> = ({
         </div>
 
         {isOverArchiveZone && (
-          <span className="text-xs font-black uppercase text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-950/80 px-3 py-1.5 rounded-lg animate-bounce border border-red-300 dark:border-red-800 whitespace-nowrap">
+          <span className="text-xs font-black uppercase text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-950/80 px-3 py-1.5 rounded-lg border border-red-300 dark:border-red-800 whitespace-nowrap">
             Solte para arquivar
           </span>
         )}
