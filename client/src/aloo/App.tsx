@@ -411,7 +411,7 @@ export default function App() {
   // Portal Navigation & Views
   const [activePortalTab, setActivePortalTab] = useState<'dashboard' | 'leads' | 'crm_kanban' | 'maps' | 'whatsapp' | 'email_dispatcher' | 'sms_dispatcher' | 'keywords' | 'settings'>('dashboard');
 
-  const [dashboardSubTab, setDashboardSubTab] = useState<'overview' | 'robot' | 'analytics' | 'tools'>('overview');
+  const [dashboardSubTab, setDashboardSubTab] = useState<'overview' | 'robot' | 'tools'>('overview');
   const [searchQueryTop, setSearchQueryTop] = useState('');
 
   // Project Protection States
@@ -2946,18 +2946,6 @@ export default function App() {
                   </button>
 
                   <button
-                    onClick={() => { setDashboardSubTab('analytics'); setIsToolsDropdownOpen(false); }}
-                    className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-1.5 cursor-pointer ${
-                      dashboardSubTab === 'analytics'
-                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    <BarChart3 className="w-3.5 h-3.5" />
-                    <span>Análises</span>
-                  </button>
-
-                  <button
                     onClick={() => { setDashboardSubTab('tools'); setIsToolsDropdownOpen(false); }}
                     className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                       dashboardSubTab === 'tools'
@@ -3168,81 +3156,6 @@ export default function App() {
                   </div>
                 </div>
               )}
-
-
-
-              {/* SUB-TAB 2: ANALYTICS & CONVERSÃO EXCLUSIVO */}
-              {dashboardSubTab === 'analytics' && (
-                <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-center justify-between transition-colors duration-300">
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <BarChart3 className="w-5 h-5 text-blue-600 dark:text-blue-500" />
-                        <span>Analytics & Desempenho</span>
-                      </h3>
-                    </div>
-                  </div>
-
-                  {leads.length === 0 ? (
-                    <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400">
-                        <BarChart3 className="h-6 w-6" />
-                      </div>
-                      <h4 className="text-base font-bold text-slate-900 dark:text-white">As análises aparecem quando sua base crescer</h4>
-                      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500 dark:text-slate-400">Inicie uma mineração, salve contatos reais e volte aqui para acompanhar tendência, funil, distribuição geográfica e follow-ups.</p>
-                      <button onClick={() => setDashboardSubTab('overview')} className="mt-5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-700">
-                        Ir para Visão geral
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                  <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                    <AiConversionTracker 
-                      leads={leads}
-                      currentKeywords={keywords}
-                      onAddSuggestion={handleAddSuggestion}
-                      onAddLog={addLog}
-                    />
-                  </Suspense>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-1">
-                      <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                        <SalesFunnelChart 
-                          leads={leads} 
-                          onSelectStageFilter={(status, sentiment) => {
-                            setLeadStatusFilter(status);
-                            setLeadSentimentFilter(sentiment);
-                            setActivePortalTab('leads');
-                          }}
-                        />
-                      </Suspense>
-                    </div>
-                    <div className="lg:col-span-2">
-                      <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                        <BrazilStateGeoChart 
-                          leads={leads} 
-                          onSelectStateFilter={(uf) => {
-                            setTargetState(uf);
-                            setActivePortalTab('leads');
-                          }} 
-                        />
-                      </Suspense>
-                    </div>
-                  </div>
-
-                  <Suspense fallback={<div className="h-48 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                    <LeadFollowUpScheduler
-                      leads={leads}
-                      onOpenWhatsappModal={() => setActivePortalTab('whatsapp')}
-                      onAddLog={addLog}
-                    />
-                  </Suspense>
-                    </>
-                  )}
-                </div>
-              )}
-
               {/* SUB-TAB 3: CENTRAL DE FERRAMENTAS & SYNC EXCLUSIVA */}
               {dashboardSubTab === 'tools' && (
                 <div className="space-y-6">

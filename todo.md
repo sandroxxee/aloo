@@ -88,3 +88,4 @@
 - [x] Auditar exclusivamente todos os controles, funções e estados visuais da Visão Geral e apresentar recomendações antes de remover qualquer item.
 - [x] Simplificar a Visão Geral mantendo a ação principal e os filtros essenciais visíveis, e movendo funções secundárias para áreas recolhíveis.
 - [x] Substituir o estado vazio de Análises por uma orientação única, preservando os gráficos e controles para quando houver dados.
+- [x] Remover exclusivamente a aba Análises da Visão Geral, sem alterar as demais funções ou telas.
