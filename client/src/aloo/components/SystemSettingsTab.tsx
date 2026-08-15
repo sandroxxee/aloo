@@ -1433,7 +1433,7 @@ export const SystemSettingsTab: React.FC<SystemSettingsTabProps> = ({
       )}
 
       {/* SUBTAB 10: PROXY & VPN IA (ANTI-BLOQUEIO) */}
-      {subTab === 'proxy_vpn' && (
+      {false && subTab === 'proxy_vpn' && (
         <div className="space-y-6 animate-in fade-in duration-200">
           {/* Header Banner */}
           <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
