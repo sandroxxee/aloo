@@ -204,7 +204,7 @@ const LeadTableRow = React.memo(({
         {/* 1. Primary Asset Info */}
         <div className="col-span-4 min-w-0 flex flex-col gap-1.5">
           <div className="flex items-center gap-2.5">
-             <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isLojista ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
+             <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isLojista ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
                {isLojista ? <Building2 className="w-4 h-4" /> : <User className="w-4 h-4" />}
              </div>
              <div className="flex flex-col min-w-0">
@@ -272,9 +272,9 @@ const LeadTableRow = React.memo(({
               href={lead.waMeUrl || `https://wa.me/${lead.rawPhone}`} 
               target="_blank" 
               rel="noreferrer"
-              className="flex items-center gap-3 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl hover:scale-105 transition-all shadow-xl shadow-slate-900/10 group/wa"
+              className="flex items-center gap-3 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl transition-colors shadow-sm group/wa"
             >
-              <MessageSquare className="w-4 h-4 group-hover/wa:rotate-12 transition-transform" />
+              <MessageSquare className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase tracking-widest">Establish Link</span>
             </a>
             {sellerAdCount > 1 && (
@@ -291,7 +291,7 @@ const LeadTableRow = React.memo(({
           <div className="flex flex-col gap-1.5 min-w-[100px]">
              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Lead Source</span>
              <div className="flex items-center gap-2 text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-600 shadow-lg shadow-blue-500/40" />
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
                 {lead.adPlatform || 'Direct'}
              </div>
           </div>
@@ -316,7 +316,7 @@ const LeadTableRow = React.memo(({
             onClick={() => onTogglePopover(lead.id)}
             className={`p-3 rounded-2xl transition-all border-2 ${
               isPopoverOpen 
-                ? 'bg-slate-900 text-white border-slate-900 shadow-2xl scale-110' 
+                ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-600 border-slate-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white shadow-sm'
             }`}
           >
@@ -329,7 +329,7 @@ const LeadTableRow = React.memo(({
       {/* POPOVER ACTIONS */}
       {isPopoverOpen && (
         <div 
-          className="absolute right-4 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-4 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg p-2 z-50"
           onMouseLeave={() => onTogglePopover('')}
         >
           <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800 mb-1">
@@ -339,7 +339,7 @@ const LeadTableRow = React.memo(({
             onClick={() => { onGenerateAiPitch(lead); onTogglePopover(''); }}
             className="w-full flex items-center gap-3 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group"
           >
-            <Sparkles className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform" />
+            <Sparkles className="w-4 h-4 text-amber-500" />
             Generate AI Pitch
           </button>
           {onAnalyzeSentiment && (
@@ -347,7 +347,7 @@ const LeadTableRow = React.memo(({
               onClick={() => { onAnalyzeSentiment(lead.id); onTogglePopover(''); }}
               className="w-full flex items-center gap-3 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group"
             >
-              <Bot className="w-4 h-4 text-purple-500 group-hover:scale-110 transition-transform" />
+              <Bot className="w-4 h-4 text-purple-500" />
               AI Qualification
             </button>
           )}
@@ -356,7 +356,7 @@ const LeadTableRow = React.memo(({
             onClick={() => { onDelete(lead.id); onTogglePopover(''); }}
             className="w-full flex items-center gap-3 px-3 py-2 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors group"
           >
-            <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
+            <Trash2 className="w-4 h-4" />
             Remove Intelligence
           </button>
         </div>
@@ -985,7 +985,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
               </button>
               
               {isMoreActionsOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-[60] animate-in fade-in slide-in-from-top-2">
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg p-2 z-[60]">
                   <button onClick={() => { onExportCsv(); setIsMoreActionsOpen(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors">
                     <Download className="w-4 h-4 text-blue-500" /> Exportar CSV
                   </button>
@@ -1056,7 +1056,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             onClick={() => setIsRegionalConfigOpen(!isRegionalConfigOpen)}
             className={`flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 ${
               isRegionalConfigOpen 
-                ? 'bg-blue-600 text-white border-blue-600 shadow-xl' 
+                ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                 : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-white shadow-sm'
             }`}
           >
@@ -1073,7 +1073,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             onClick={onCleanLeads}
             className="flex items-center gap-3 px-8 py-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-2xl border-2 border-transparent transition-all cursor-pointer group shadow-sm"
           >
-            <RefreshCw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-700" />
+            <RefreshCw className="w-5 h-5" />
             Otimizar base
           </button>
         </div>
@@ -1091,7 +1091,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             <div className="px-6 py-6 space-y-6">
               <div className="flex items-start justify-between">
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-blue-500/20">
+                  <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shrink-0 shadow-sm">
                     <Globe className="w-5 h-5" />
                   </div>
                   <div>
@@ -1116,7 +1116,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
                       }}
                       className={`px-4 py-2 rounded-xl text-[11px] font-black transition-all border ${
                         isSelected
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20'
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                           : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-blue-400'
                       }`}
                     >
@@ -1141,7 +1141,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
                   <button onClick={() => setSelectedRegionalStates([])} className="px-4 py-2 text-[10px] font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest">Clear Selection</button>
                   <button 
                     onClick={() => { setRegionalFilterMode('MISMATCH_ONLY'); setIsRegionalConfigOpen(false); }}
-                    className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black rounded-xl uppercase tracking-widest shadow-lg"
+                    className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black rounded-xl uppercase tracking-widest shadow-sm"
                   >
                     Ocultar incompatíveis
                   </button>
@@ -1233,7 +1233,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             onClick={() => { setQuickFilterWhatsOnly(prev => !prev); setCurrentPage(1); }}
             className={`flex items-center gap-2 px-4 py-1.5 rounded-xl text-[10px] font-black transition-all border shrink-0 ${
               quickFilterWhatsOnly 
-                ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-500/20' 
+                ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-emerald-400'
             }`}
           >
@@ -1245,7 +1245,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             onClick={() => { setQuickFilterCnpjOnly(prev => !prev); setCurrentPage(1); }}
             className={`flex items-center gap-2 px-4 py-1.5 rounded-xl text-[10px] font-black transition-all border shrink-0 ${
               quickFilterCnpjOnly
-                ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20' 
+                ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-blue-400'
             }`}
           >
@@ -1257,7 +1257,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             onClick={() => { setQuickFilterNotContacted(prev => !prev); setCurrentPage(1); }}
             className={`flex items-center gap-2 px-4 py-1.5 rounded-xl text-[10px] font-black transition-all border shrink-0 ${
               quickFilterNotContacted
-                ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-lg' 
+                ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500'
             }`}
           >
@@ -1341,7 +1341,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
         </div>
 
       {selectedLeadIds.size > 0 && (
-        <div className="sticky bottom-4 z-40 mx-auto max-w-4xl bg-slate-900 text-white p-3.5 rounded-2xl shadow-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-3 animate-in slide-in-from-bottom-5 duration-300">
+        <div className="sticky bottom-4 z-40 mx-auto max-w-4xl bg-slate-900 text-white p-3.5 rounded-2xl shadow-lg border border-slate-800 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="px-3 py-1 bg-indigo-600 text-white font-mono font-black text-xs rounded-xl shadow-xs">
               {selectedLeadIds.size} Selecionados
@@ -1434,7 +1434,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
                   }}
                   className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                     itemsPerPage === size
-                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg'
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
                       : 'text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -1450,7 +1450,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
 
         {totalPages > 1 && (
           <div className="flex items-center gap-3">
-            <div className="px-4 py-2 bg-slate-900 text-white rounded-xl shadow-lg flex items-center gap-2">
+            <div className="px-4 py-2 bg-slate-900 text-white rounded-xl shadow-sm flex items-center gap-2">
                <span className="opacity-40 tracking-normal">PG</span>
                <span className="text-xs">{currentPage}</span>
                <span className="opacity-40">/</span>
