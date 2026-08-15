@@ -149,7 +149,9 @@ export const WhatsAppBroadcastComposer: React.FC<WhatsAppBroadcastComposerProps>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <details className="group rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <summary className="cursor-pointer list-none text-xs font-bold text-slate-600">Opções de áudio e botões <span className="text-slate-400 group-open:hidden">— configurar</span><span className="hidden text-slate-400 group-open:inline">— recolher</span></summary>
+            <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-1">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-slate-800 flex items-center gap-2">
@@ -172,7 +174,8 @@ export const WhatsAppBroadcastComposer: React.FC<WhatsAppBroadcastComposerProps>
               </div>
               <p className="text-xs text-slate-500 leading-tight">Adiciona botões <strong>[Sim] [Já vendi]</strong> interativos.</p>
             </div>
-          </div>
+            </div>
+          </details>
 
           {messageType !== 'text' && (
             <div className="space-y-2">
