@@ -613,7 +613,7 @@ export const LoopController: React.FC<LoopControllerProps> = ({
                 ? 'bg-emerald-600 text-white border-emerald-700 shadow-sm'
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-400 hover:border-emerald-500'
             }`}
-            title="Usa o Search Brain V2 para expandir termos e sinônimos comercialmente relevantes."
+            title="Usa o Motor de Pesquisa IA V2 para expandir termos e sinônimos comercialmente relevantes."
           >
             <Sparkles className="w-3 h-3 shrink-0" />
             <span>{loopState.aiSearchEnabled ? 'Cérebro IA On' : 'Cérebro IA Off'}</span>

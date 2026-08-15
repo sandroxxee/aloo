@@ -93,7 +93,7 @@ export const WhatsAppQueueMonitor: React.FC<WhatsAppQueueMonitorProps> = ({
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-            <span className="text-xs font-bold text-white ">Processador em Tempo Real</span>
+            <span className="text-xs font-bold text-white ">Processador em tempo real</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">P: {queueItems.filter(i => i.status === 'pendente').length}</span>

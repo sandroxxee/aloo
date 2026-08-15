@@ -47,7 +47,7 @@ export const WhatsAppLivePreview: React.FC<WhatsAppLivePreviewProps> = ({
         <div className="flex items-center gap-2">
           <Smartphone className="w-5 h-5 text-indigo-600" />
           <span className="text-xs font-bold text-slate-900">
-            Simulador Live Preview Zap
+            Prévia do simulador Zap
           </span>
         </div>
       </div>
@@ -65,8 +65,8 @@ export const WhatsAppLivePreview: React.FC<WhatsAppLivePreviewProps> = ({
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs shadow-xs">ZP</div>
               <div>
-                <div className="text-xs font-bold leading-tight">zap API (Instância Ativa)</div>
-                <div className="text-xs leading-tight text-emerald-500 font-bold">online</div>
+                <div className="text-xs font-bold leading-tight">API Zap (instância ativa)</div>
+                <div className="text-xs leading-tight text-emerald-500 font-bold">conectada</div>
               </div>
             </div>
             <button onClick={() => setPhoneTheme(prev => prev === 'light' ? 'dark' : 'light')} className="p-1.5 hover:bg-slate-500/10 rounded-lg">
@@ -107,7 +107,7 @@ export const WhatsAppLivePreview: React.FC<WhatsAppLivePreviewProps> = ({
 
           <div className={`p-2 flex items-center gap-2 border-t relative z-10 ${phoneTheme === 'light' ? 'bg-[#f0f2f5] border-slate-200' : 'bg-[#202c33] border-slate-800'}`}>
             <div className={`flex-1 rounded-full px-3 py-1.5 text-sm flex items-center justify-between ${phoneTheme === 'light' ? 'bg-white text-slate-400' : 'bg-[#2a3942] text-slate-400'}`}>
-              <span>Disparo via {activeGateway.toUpperCase()}</span>
+              <span>Envio por {activeGateway === 'simulation' ? 'simulador' : activeGateway.toUpperCase()}</span>
               <span>🤖</span>
             </div>
           </div>

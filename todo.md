@@ -71,3 +71,13 @@
 - [x] Adicionar teste de regressão para garantir que a busca não configure proxies ou cabeçalhos de rotação.
 - [x] Corrigir o carregamento do WebAssembly do SQLite para eliminar rejeições não tratadas na prévia.
 - [x] Reorganizar o Radar em etapas de configuração progressiva para reduzir a densidade de controles.
+- [ ] Preservar o Radar e os demais módulos que já funcionam; executar verificações ou alterações apenas quando solicitadas explicitamente pelo usuário.
+- [ ] Reformular exclusivamente o tema visual, a hierarquia, os espaçamentos e a responsividade, sem remover, revisar ou alterar funcionalidades existentes.
+- [ ] Definir no todo.md os critérios de validação visual para tema, layout, desktop, mobile e ausência de regressões funcionais.
+- [ ] Atualizar cada item visual no todo.md antes e depois de sua implementação e validação correspondente.
+- [ ] Capturar referências de interface em desktop e mobile para orientar a reformulação sem tocar em comportamentos.
+- [ ] Simplificar tokens globais de cor, sombra, borda, raio e tipografia para reduzir ruído visual e custo de renderização.
+- [ ] Refinar cabeçalho, navegação e largura do conteúdo para melhorar a leitura em desktop e mobile.
+- [ ] Padronizar cartões, formulários, tabelas e estados vazios nas telas principais com hierarquia visual consistente.
+- [ ] Verificar as telas principais em desktop e mobile, confirmando que os controles existentes continuam acessíveis.
+- [x] Criar um arquivo de especificação para recriar o aplicativo com as capacidades já mapeadas, mas com experiência, navegação e tema visual novos.

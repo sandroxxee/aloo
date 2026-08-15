@@ -9,7 +9,6 @@ import {
   Send, 
   Mail, 
   Layers, 
-  ShieldCheck,
   Save,
   Network,
   Globe,
@@ -84,7 +83,7 @@ export const SystemSettingsTab: React.FC<SystemSettingsTabProps> = ({
   onSetAutoValidateLeads,
 }) => {
   // Local active subtab management
-  const [subTab, setSubTab] = useState<('cron' | 'google_ai' | 'webhooks' | 'dossier' | 'security' | 'cache' | 'quotas' | 'speed' | 'server_bot' | 'proxy_vpn' | 'background_engines')>(
+  const [subTab, setSubTab] = useState<('cron' | 'google_ai' | 'webhooks' | 'dossier' | 'security' | 'cache' | 'quotas' | 'speed' | 'server_bot' | 'background_engines')>(
     (activeSubTab as any) || 'cron'
   );
 
@@ -94,7 +93,7 @@ export const SystemSettingsTab: React.FC<SystemSettingsTabProps> = ({
     }
   }, [activeSubTab]);
 
-  const handleTabChange = (t: ('cron' | 'google_ai' | 'webhooks' | 'dossier' | 'security' | 'cache' | 'quotas' | 'speed' | 'server_bot' | 'proxy_vpn' | 'background_engines')) => {
+  const handleTabChange = (t: ('cron' | 'google_ai' | 'webhooks' | 'dossier' | 'security' | 'cache' | 'quotas' | 'speed' | 'server_bot' | 'background_engines')) => {
     setSubTab(t);
     onSubTabChange(t);
   };
@@ -111,53 +110,6 @@ export const SystemSettingsTab: React.FC<SystemSettingsTabProps> = ({
   const [botTestOutput, setBotTestOutput] = useState('');
   const [isTestingBot, setIsTestingBot] = useState(false);
   const [isSavingBot, setIsSavingBot] = useState(false);
-
-  // Proxy & VPN IA State
-  const [proxyVpnEnabled, setProxyVpnEnabled] = useState<boolean>(() => {
-    return localStorage.getItem('asset_intel_proxy_vpn_enabled') !== 'false';
-  });
-  const [proxyMode, setProxyMode] = useState<'residential_ai' | 'datacenter' | 'custom'>(() => {
-    return (localStorage.getItem('asset_intel_proxy_mode') as any) || 'residential_ai';
-  });
-  const [customProxyUrl, setCustomProxyUrl] = useState<string>(() => {
-    return localStorage.getItem('asset_intel_custom_proxy') || '';
-  });
-  const [proxyGeoBrOnly, setProxyGeoBrOnly] = useState<boolean>(() => {
-    return localStorage.getItem('asset_intel_proxy_br_only') !== 'false';
-  });
-  const [proxyAutoRotateUserAgent, setProxyAutoRotateUserAgent] = useState<boolean>(true);
-  const [proxyBypassCloudflare, setProxyBypassCloudflare] = useState<boolean>(true);
-  const [proxyTestStatus, setProxyTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
-  const [proxyTestResult, setProxyTestResult] = useState<string>('');
-
-  const handleSaveProxySettings = () => {
-    localStorage.setItem('asset_intel_proxy_vpn_enabled', String(proxyVpnEnabled));
-    localStorage.setItem('asset_intel_proxy_mode', proxyMode);
-    localStorage.setItem('asset_intel_custom_proxy', customProxyUrl);
-    localStorage.setItem('asset_intel_proxy_br_only', String(proxyGeoBrOnly));
-  };
-
-  const handleTestProxyConnection = async () => {
-    setProxyTestStatus('testing');
-    setProxyTestResult('');
-    try {
-      const res = await fetch('/api/proxy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: 'https://httpbin.org/ip' })
-      });
-      if (res.ok) {
-        setProxyTestStatus('success');
-        setProxyTestResult('Conexão OK! Gateway Proxy/VPN IA ativo e respondendo sem bloqueios.');
-      } else {
-        setProxyTestStatus('success');
-        setProxyTestResult('Rede Proxy IA operando em modo de desvio adaptativo.');
-      }
-    } catch {
-      setProxyTestStatus('success');
-      setProxyTestResult('Proxy IA ativo com proteção anti-fingerprint e rotação de User-Agent.');
-    }
-  };
 
   useEffect(() => {
     const fetchBotConfig = async () => {
@@ -1431,232 +1383,6 @@ export const SystemSettingsTab: React.FC<SystemSettingsTabProps> = ({
           </div>
         </div>
       )}
-
-      {/* SUBTAB 10: PROXY & VPN IA (ANTI-BLOQUEIO) */}
-      {false && subTab === 'proxy_vpn' && (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          {/* Header Banner */}
-          <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold ">Proxy e Proteção</h3>
-                  <span className={`px-2 py-0.5 rounded-full text-sm font-medium ${
-                    proxyVpnEnabled ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                  }`}>
-                    {proxyVpnEnabled ? 'Ativo' : 'Pausado'}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400 font-medium leading-relaxed">
-                  Evite bloqueios e desafios de segurança.
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                const next = !proxyVpnEnabled;
-                setProxyVpnEnabled(next);
-                localStorage.setItem('truck_miner_proxy_vpn_enabled', String(next));
-              }}
-              className={`px-5 py-2.5 rounded-xl font-bold text-xs  transition-all cursor-pointer shadow-xs ${
-                proxyVpnEnabled
-                  ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                  : 'bg-emerald-600 hover:bg-emerald-700 text-white'
-              }`}
-            >
-              {proxyVpnEnabled ? 'Desativar Proxy' : 'Ativar Proxy'}
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Left Col: Mode Selection & Settings */}
-            <div className="md:col-span-2 space-y-6">
-              
-              {/* Card 1: Seleção de Modo de Proxy */}
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-5 shadow-xs">
-                <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                  <h4 className="text-xs font-bold text-slate-900 ">Modo de Rotação</h4>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setProxyMode('residential_ai')}
-                    className={`p-4 rounded-xl border text-left space-y-2 transition-all cursor-pointer ${
-                      proxyMode === 'residential_ai'
-                        ? 'border-slate-900 bg-slate-900 text-white shadow-md'
-                        : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100/80 text-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className={`text-xs font-bold px-1.5 py-0.5 rounded  ${proxyMode === 'residential_ai' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-800'}`}>RECOMENDADO</span>
-                    </div>
-                    <div className="font-bold text-xs ">Pool Residencial</div>
-                    <p className={`text-xs font-medium tracking-tighter leading-tight ${proxyMode === 'residential_ai' ? 'text-slate-300' : 'text-slate-500'}`}>IPs domésticos rotativos.</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setProxyMode('datacenter')}
-                    className={`p-4 rounded-xl border text-left space-y-2 transition-all cursor-pointer ${
-                      proxyMode === 'datacenter'
-                        ? 'border-slate-900 bg-slate-900 text-white shadow-md'
-                        : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100/80 text-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className={`text-xs font-bold px-1.5 py-0.5 rounded  ${proxyMode === 'datacenter' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-800'}`}>ULTRA RÁPIDO</span>
-                    </div>
-                    <div className="font-bold text-xs ">Data Center</div>
-                    <p className={`text-xs font-medium tracking-tighter leading-tight ${proxyMode === 'datacenter' ? 'text-slate-300' : 'text-slate-500'}`}>Baixa latência.</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setProxyMode('custom')}
-                    className={`p-4 rounded-xl border text-left space-y-2 transition-all cursor-pointer ${
-                      proxyMode === 'custom'
-                        ? 'border-slate-900 bg-slate-900 text-white shadow-md'
-                        : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100/80 text-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className={`text-xs font-bold px-1.5 py-0.5 rounded  ${proxyMode === 'custom' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-800'}`}>PROPRIA</span>
-                    </div>
-                    <div className="font-bold text-xs ">Customizado</div>
-                    <p className={`text-xs font-medium tracking-tighter leading-tight ${proxyMode === 'custom' ? 'text-slate-300' : 'text-slate-500'}`}>Gateway externo.</p>
-                  </button>
-                </div>
-
-                {proxyMode === 'custom' && (
-                  <div className="space-y-3 pt-2 animate-in fade-in">
-                    <label className="text-xs font-medium text-slate-700 dark:text-slate-300 block">URL / Endpoint do Proxy Customizado</label>
-                    <input
-                      type="text"
-                      value={customProxyUrl}
-                      onChange={(e) => setCustomProxyUrl(e.target.value)}
-                      placeholder="Ex: http://usuario:senha@proxy.meusite.com:8080"
-                      className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-mono focus:ring-1 focus:ring-slate-900 focus:outline-hidden"
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* Card 2: Heurísticas de Estabilidade Ativas */}
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-4 shadow-xs">
-                <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                  <h4 className="text-xs font-bold text-slate-900 ">Módulos de Segurança e Estabilidade</h4>
-                </div>
-
-                <div className="space-y-3">
-                  <label className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-slate-900  block">Rotação de User-Agent</span>
-                      <span className="text-xs text-slate-500 font-medium">Simula navegadores reais.</span>
-                    </div>
-                    <input
-                      type="checkbox"
-                      checked={proxyAutoRotateUserAgent}
-                      onChange={(e) => setProxyAutoRotateUserAgent(e.target.checked)}
-                      className="w-5 h-5 text-slate-900 rounded border-slate-300 focus:ring-0 cursor-pointer"
-                    />
-                  </label>
-
-                  <label className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-slate-900  block">Bypass Cloudflare</span>
-                      <span className="text-xs text-slate-500 font-medium">Evita CAPTCHAs e desafios.</span>
-                    </div>
-                    <input
-                      type="checkbox"
-                      checked={proxyBypassCloudflare}
-                      onChange={(e) => setProxyBypassCloudflare(e.target.checked)}
-                      className="w-5 h-5 text-slate-900 rounded border-slate-300 focus:ring-0 cursor-pointer"
-                    />
-                  </label>
-
-                  <label className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer">
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-slate-900  block">Geo-Lock Brasil</span>
-                      <span className="text-xs text-slate-500 font-medium">IPs exclusivos nacionais.</span>
-                    </div>
-                    <input
-                      type="checkbox"
-                      checked={proxyGeoBrOnly}
-                      onChange={(e) => setProxyGeoBrOnly(e.target.checked)}
-                      className="w-5 h-5 text-slate-900 rounded border-slate-300 focus:ring-0 cursor-pointer"
-                    />
-                  </label>
-                </div>
-
-                <div className="pt-2 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={handleSaveProxySettings}
-                    className="px-6 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-all shadow-md cursor-pointer"
-                  >
-                    Salvar Configurações
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Right Col: Diagnostics & Live Test */}
-            <div className="space-y-6">
-              
-              <div className="bg-slate-900 text-white border border-slate-800 rounded-2xl p-6 space-y-5 shadow-xl">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                  <span className="text-sm font-medium text-slate-400">Status da Rede</span>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300  border border-emerald-500/30">ATIVO</span>
-                </div>
-
-                <div className="space-y-3 text-sm font-medium">
-                  <div className="flex justify-between items-center py-2 border-b border-slate-800/80">
-                    <span className="text-slate-500">IP Virtual:</span>
-                    <span className="text-slate-200">177.136.210.45</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-slate-800/80">
-                    <span className="text-slate-500">Região:</span>
-                    <span className="text-slate-200">BRASIL (SP)</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-slate-800/80">
-                    <span className="text-slate-500">Bloqueio:</span>
-                    <span className="text-emerald-400">0.0%</span>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    disabled={proxyTestStatus === 'testing'}
-                    onClick={handleTestProxyConnection}
-                    className="w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-sm font-medium transition-all cursor-pointer disabled:opacity-50"
-                  >
-                    {proxyTestStatus === 'testing' ? 'Testando...' : 'Testar Conexão'}
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 text-xs space-y-2 text-amber-900 dark:text-amber-200">
-                <div className="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300">
-                  <ShieldCheck className="w-4 h-4 text-amber-600" />
-                  <span>Dica de Desempenho e Segurança</span>
-                </div>
-                <p className="text-sm leading-relaxed text-amber-800 dark:text-amber-300/90">
-                  Ao realizar minerações em lote para centenas de peças de caminhões, mantenha a <strong>VPN/Proxy IA Ativo</strong> ativada. Isso distribui as chamadas de busca por múltiplos nós e impede o bloqueio temporário do seu IP de origem.
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-      )}
-
 
       {/* SUBTAB: BACKGROUND ENGINES (MOTORES OCULTOS) */}
       {subTab === 'background_engines' && (

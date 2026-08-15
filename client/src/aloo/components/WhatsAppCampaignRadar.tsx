@@ -28,7 +28,7 @@ export const WhatsAppCampaignRadar: React.FC<WhatsAppCampaignRadarProps> = ({
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <h3 className="text-indigo-100 text-xs font-bold tracking-[0.2em]">Radar de Saúde da Campanha V3.2</h3>
           </div>
-          <h4 className="text-white text-xl font-display font-medium">Dashboard de Performance Comercial</h4>
+          <h4 className="text-white text-xl font-display font-medium">Painel de desempenho comercial</h4>
           <p className="text-indigo-300/70 text-xs max-w-md">
             Monitoramento em tempo real de entrega, taxa de conversão e triagem semântica via IA Gemini.
           </p>
@@ -46,7 +46,7 @@ export const WhatsAppCampaignRadar: React.FC<WhatsAppCampaignRadarProps> = ({
           </div>
           <div className="w-px h-8 bg-white/10" />
           <div className="text-center">
-            <span className="text-xs font-bold text-amber-300 block mb-1">Taxa ROI %</span>
+            <span className="text-xs font-bold text-amber-300 block mb-1">Taxa de retorno %</span>
             <span className="text-2xl font-display font-medium text-amber-400">
               {sentCount > 0 ? ((repliedCount / sentCount) * 100).toFixed(1) : '0.0'}%
             </span>

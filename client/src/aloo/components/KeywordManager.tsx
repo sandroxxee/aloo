@@ -280,7 +280,7 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
             <span className="text-xs font-bold text-blue-400 tracking-[0.2em]">
               Central de Inteligência de Termos
             </span>
-            <h2 className="text-2xl font-display font-medium ">Cérebro de Pesquisa</h2>
+            <h2 className="text-2xl font-display font-medium ">Inteligência de Pesquisa</h2>
             <p className="text-sm text-slate-300 max-w-3xl font-medium leading-relaxed">
               Gerenciamento dinâmico, expansão combinatória, filtragem anti-ruído e otimização por IA.
             </p>
@@ -343,7 +343,7 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
             { id: 'expansao', label: 'Expansão' },
             { id: 'discovery', label: 'Anti-Ruído', count: discoveries.filter(d => d.status === 'Pendente').length },
             { id: 'cruzamento', label: 'Motor Cruzado' },
-            { id: 'analytics', label: 'ROI & Performance' },
+            { id: 'analytics', label: 'Retorno e Desempenho' },
           ].map(tab => {
             const isSelected = activeTab === tab.id;
             return (

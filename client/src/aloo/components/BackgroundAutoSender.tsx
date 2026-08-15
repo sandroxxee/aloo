@@ -226,10 +226,10 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
           { id: 'sender', label: '🚀 Disparador', icon: Send },
           { id: 'groups', label: '👥 Grupos', icon: Users },
           { id: 'auto_reply', label: '🤖 Auto-Bot IA', icon: Bot },
-          { id: 'templates', label: '📋 Templates', icon: FileText },
+          { id: 'templates', label: '📋 Modelos', icon: FileText },
           { id: 'validator', label: '🔍 Triagem', icon: Search },
           { id: 'antiblock', label: '🛡️ Blindagem', icon: Sliders },
-          { id: 'config', label: '⚙️ Config', icon: Settings }
+          { id: 'config', label: '⚙️ Configurações', icon: Settings }
         ].map((tab) => (
           <button
             key={tab.id}

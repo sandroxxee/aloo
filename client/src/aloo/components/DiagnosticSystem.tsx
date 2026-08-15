@@ -125,7 +125,7 @@ export const DiagnosticSystem: React.FC<DiagnosticProps> = ({ isOpen, onClose, l
                 <div className="p-6 bg-slate-900 text-white rounded-3xl relative overflow-hidden">
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xs font-black uppercase tracking-widest">Performance Score</h3>
+                      <h3 className="text-xs font-black uppercase tracking-widest">Índice de desempenho</h3>
                       <span className="text-2xl font-black">{healthScore}%</span>
                     </div>
                     <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden">

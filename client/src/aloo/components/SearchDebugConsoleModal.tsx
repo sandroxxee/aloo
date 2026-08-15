@@ -161,7 +161,7 @@ export const SearchDebugConsoleModal: React.FC<SearchDebugConsoleModalProps> = (
                   Console de Depuração e Diagnóstico de Busca
                 </h2>
                 <span className="bg-sky-500/20 text-sky-300 border border-sky-500/30 text-xs px-2 py-0.5 rounded-full font-mono font-medium">
-                  Search Brain V2
+                  Motor de Pesquisa IA V2
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">

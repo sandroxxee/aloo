@@ -541,7 +541,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
   const [soundAlert, setSoundAlert] = useState<boolean>(true);
   const [customMapCenter, setCustomMapCenter] = useState<{ lat: number; lng: number } | null>(null);
 
-  // Batch Extraction State (Extração em Lote Simultânea)
+  // Batch Extraction State (Extração em Lote Sequencial)
   const [isBatchScanning, setIsBatchScanning] = useState<boolean>(false);
   const [batchRadiusKm, setBatchRadiusKm] = useState<number>(30);
   const [batchPointsDensity, setBatchPointsDensity] = useState<number>(9);
@@ -549,7 +549,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
   const [batchTotalSteps, setBatchTotalSteps] = useState<number>(0);
   const [batchStepLabel, setBatchStepLabel] = useState<string>('');
   const [batchExtractedCount, setBatchExtractedCount] = useState<number>(0);
-  const batchIntervalRef = useRef<any>(null);
+  const batchStopRequestedRef = useRef(false);
 
   // Autonomous Pilot State (Busca Autônoma Automática)
   const [isAutoPilot, setIsAutoPilot] = useState<boolean>(false);
@@ -576,6 +576,41 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
   useEffect(() => { autoPilotIntervalSecRef.current = autoPilotIntervalSec; }, [autoPilotIntervalSec]);
 
   const existingPhoneSet = new Set(existingLeads.map(l => l.rawPhone.replace(/\D/g, '')));
+
+  const mapRealContactToBusiness = (
+    contact: any,
+    index: number,
+    targetCity: string,
+    targetCategory: string,
+    latitude: number,
+    longitude: number,
+  ): ScannedBusiness => {
+    const rawPhone = (contact.rawPhone || contact.formattedPhone || '').replace(/\D/g, '');
+    const [city = targetCity, stateUf = 'SP'] = targetCity.split(',').map((part: string) => part.trim());
+
+    return {
+      id: `real_prox_${Date.now()}_${index}`,
+      name: contact.companyName || contact.sellerFullName || contact.name || 'Empresa não identificada',
+      category: CATEGORIES.find(category => category.id === targetCategory)?.label || targetCategory,
+      categoryType: (targetCategory === 'all' ? 'outro' : targetCategory) as any,
+      address: contact.location || 'Localização não informada',
+      city,
+      stateUf,
+      phone: contact.formattedPhone || contact.rawPhone || 'N/A',
+      rawPhone,
+      phoneType: contact.phoneType === 'Fixo' ? 'Fixo' : 'Celular',
+      email: contact.email || undefined,
+      website: contact.webPageUrl || undefined,
+      rating: 0,
+      userRatingsTotal: 0,
+      openNow: false,
+      lat: latitude,
+      lng: longitude,
+      niche: contact.item || undefined,
+      distributor: undefined,
+      saved: false,
+    };
+  };
 
   // Busca por proximidade com limites e backoff seguro, sem rotação de IP.
   const handleStartScan = async (
@@ -801,10 +836,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
       clearInterval(autoPilotTimerRef.current);
       autoPilotTimerRef.current = null;
     }
-    if (batchIntervalRef.current) {
-      clearInterval(batchIntervalRef.current);
-      batchIntervalRef.current = null;
-    }
+    batchStopRequestedRef.current = true;
     setIsScanning(false);
     setIsAutoPilot(false);
     setIsBatchScanning(false);
@@ -816,19 +848,17 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
     });
   };
 
-  const handleStartBatchScan = () => {
+  const handleStartBatchScan = async () => {
     if (scanIntervalRef.current) {
       clearInterval(scanIntervalRef.current);
       scanIntervalRef.current = null;
     }
-    if (batchIntervalRef.current) {
-      clearInterval(batchIntervalRef.current);
-      batchIntervalRef.current = null;
-    }
 
+    batchStopRequestedRef.current = false;
     setIsBatchScanning(true);
     setIsScanning(true);
     setScanProgress(0);
+    setScanFeedback(null);
     setScannedBusinesses([]);
     setActiveBusiness(null);
 
@@ -836,7 +866,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
     let baseLat = customMapCenter ? customMapCenter.lat : selectedCity.lat;
     let baseLng = customMapCenter ? customMapCenter.lng : selectedCity.lng;
 
-    const foundPreset = PRESET_CITIES.find(c => c.name.toLowerCase() === cityToUse.toLowerCase());
+    const foundPreset = PRESET_CITIES.find(city => city.name.toLowerCase() === cityToUse.toLowerCase());
     if (foundPreset) {
       baseLat = foundPreset.lat;
       baseLng = foundPreset.lng;
@@ -845,13 +875,12 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
     const kmPerDegree = 111;
     const radiusOffsetLat = (batchRadiusKm / kmPerDegree) * 0.45;
     const radiusOffsetLng = (batchRadiusKm / (kmPerDegree * Math.cos((baseLat * Math.PI) / 180))) * 0.45;
-
     const gridPoints: { name: string; lat: number; lng: number }[] = [
       { name: 'Centro Metropolitano & Entorno', lat: baseLat, lng: baseLng },
       { name: 'Setor Norte (Eixo Rodoviário N)', lat: baseLat + radiusOffsetLat, lng: baseLng },
       { name: 'Setor Sul (Anel Viário S)', lat: baseLat - radiusOffsetLat, lng: baseLng },
       { name: 'Setor Leste (Distrito Industrial E)', lat: baseLat, lng: baseLng + radiusOffsetLng },
-      { name: 'Setor Oeste (Polo Logístico W)', lat: baseLat, lng: baseLng - radiusOffsetLng }
+      { name: 'Setor Oeste (Polo Logístico W)', lat: baseLat, lng: baseLng - radiusOffsetLng },
     ];
 
     if (batchPointsDensity >= 9) {
@@ -859,7 +888,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
         { name: 'Quadrante Nordeste (NE)', lat: baseLat + radiusOffsetLat * 0.7, lng: baseLng + radiusOffsetLng * 0.7 },
         { name: 'Quadrante Sudeste (SE)', lat: baseLat - radiusOffsetLat * 0.7, lng: baseLng + radiusOffsetLng * 0.7 },
         { name: 'Quadrante Noroeste (NW)', lat: baseLat + radiusOffsetLat * 0.7, lng: baseLng - radiusOffsetLng * 0.7 },
-        { name: 'Quadrante Sudoeste (SW)', lat: baseLat - radiusOffsetLat * 0.7, lng: baseLng - radiusOffsetLng * 0.7 }
+        { name: 'Quadrante Sudoeste (SW)', lat: baseLat - radiusOffsetLat * 0.7, lng: baseLng - radiusOffsetLng * 0.7 },
       );
     }
 
@@ -871,81 +900,97 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
         { name: 'Perímetro SSE (Periferia Sul)', lat: baseLat - radiusOffsetLat * 1.2, lng: baseLng + radiusOffsetLng * 0.5 },
         { name: 'Perímetro SSW (Distrito Sul-Oeste)', lat: baseLat - radiusOffsetLat * 1.2, lng: baseLng - radiusOffsetLng * 0.5 },
         { name: 'Perímetro WSW (Eixo Logístico W)', lat: baseLat - radiusOffsetLat * 0.5, lng: baseLng - radiusOffsetLng * 1.2 },
-        { name: 'Perímetro WNW (Polo Industrial NW)', lat: baseLat + radiusOffsetLat * 0.5, lng: baseLng - radiusOffsetLng * 1.2 }
+        { name: 'Perímetro WNW (Polo Industrial NW)', lat: baseLat + radiusOffsetLat * 0.5, lng: baseLng - radiusOffsetLng * 1.2 },
       );
     }
 
     setBatchTotalSteps(gridPoints.length);
     setBatchCurrentStep(0);
     setBatchExtractedCount(0);
-
     onAddLog({
       id: `log_batch_scan_start_${Date.now()}`,
       timestamp: new Date().toLocaleTimeString('pt-BR'),
       level: 'info',
-      message: `⚡ EXTRAÇÃO EM LOTE INICIADA: ${gridPoints.length} Pontos de Interesse Simultâneos em "${cityToUse}" (Raio de Lote: ${batchRadiusKm}km, Categoria: ${selectedCategory})`
+      message: `⚡ EXTRAÇÃO EM LOTE INICIADA: ${gridPoints.length} pontos em sequência controlada em "${cityToUse}" (Raio: ${batchRadiusKm}km, Categoria: ${selectedCategory})`,
     });
 
-    let stepIdx = 0;
     let accumulatedResults: ScannedBusiness[] = [];
     const seenPhones = new Set<string>();
+    let hadExternalFailure = false;
 
-    batchIntervalRef.current = setInterval(() => {
-      if (stepIdx >= gridPoints.length) {
-        clearInterval(batchIntervalRef.current);
-        batchIntervalRef.current = null;
-        setIsBatchScanning(false);
-        setIsScanning(false);
-        setScanProgress(100);
-        setBatchCurrentStep(gridPoints.length);
+    for (let stepIndex = 0; stepIndex < gridPoints.length; stepIndex += 1) {
+      if (batchStopRequestedRef.current) break;
 
-        onAddLog({
-          id: `log_batch_scan_done_${Date.now()}`,
-          timestamp: new Date().toLocaleTimeString('pt-BR'),
-          level: 'success',
-          message: `✅ Extração em Lote Concluída! Total de ${accumulatedResults.length} contatos únicos capturados em ${gridPoints.length} pontos de interesse.`
-        });
-        return;
-      }
-
-      const point = gridPoints[stepIdx];
-      setBatchCurrentStep(stepIdx + 1);
+      const point = gridPoints[stepIndex];
+      setBatchCurrentStep(stepIndex + 1);
       setBatchStepLabel(point.name);
-      setScanProgress(Math.round(((stepIdx + 1) / gridPoints.length) * 100));
+      setScanProgress(Math.round(((stepIndex + 1) / gridPoints.length) * 100));
 
-      const pointResults: ScannedBusiness[] = [];
+      try {
+        const category = CATEGORIES.find(item => item.id === selectedCategory);
+        const response = await executeProximityContactSearch(
+          cityToUse,
+          point.lat,
+          point.lng,
+          batchRadiusKm,
+          category?.label || selectedCategory,
+        );
 
-      pointResults.forEach(biz => {
-        const cleanPhone = biz.rawPhone.replace(/\D/g, '');
-        if (!seenPhones.has(cleanPhone)) {
-          seenPhones.add(cleanPhone);
-          accumulatedResults.push(biz);
+        (response.contacts || [])
+          .map((contact, index) => mapRealContactToBusiness(contact, index, cityToUse, selectedCategory, point.lat, point.lng))
+          .forEach(business => {
+            const phone = business.rawPhone.replace(/\D/g, '');
+            if (phone && !seenPhones.has(phone)) {
+              seenPhones.add(phone);
+              accumulatedResults.push(business);
+            }
+          });
+
+        if (!batchStopRequestedRef.current) {
+          setScannedBusinesses([...accumulatedResults]);
+          setBatchExtractedCount(accumulatedResults.length);
+          if (accumulatedResults.length > 0) {
+            setActiveBusiness(current => current || accumulatedResults[0]);
+          }
         }
-      });
-
-      setScannedBusinesses([...accumulatedResults]);
-      setBatchExtractedCount(accumulatedResults.length);
-      if (accumulatedResults.length > 0 && !activeBusiness) {
-        setActiveBusiness(accumulatedResults[0]);
+      } catch (error) {
+        hadExternalFailure = true;
+        console.warn('Falha na consulta do ponto de lote:', error);
       }
 
-      stepIdx++;
-    }, 700);
+      if (stepIndex < gridPoints.length - 1 && !batchStopRequestedRef.current) {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      }
+    }
+
+    const wasStopped = batchStopRequestedRef.current;
+    setIsBatchScanning(false);
+    setIsScanning(false);
+    setScanProgress(100);
+
+    if (!wasStopped && accumulatedResults.length === 0) {
+      setScanFeedback({
+        kind: hadExternalFailure ? 'error' : 'empty',
+        message: hadExternalFailure
+          ? 'Não foi possível consultar fontes externas em nenhum ponto do lote. Aguarde alguns instantes antes de tentar novamente.'
+          : 'Nenhum contato real foi encontrado nos pontos consultados. Ajuste a cidade, categoria ou raio e tente novamente.',
+      });
+    }
+
+    onAddLog({
+      id: `log_batch_scan_done_${Date.now()}`,
+      timestamp: new Date().toLocaleTimeString('pt-BR'),
+      level: wasStopped ? 'info' : 'success',
+      message: wasStopped
+        ? '🛑 Extração em lote interrompida pelo usuário.'
+        : `✅ Extração em lote concluída: ${accumulatedResults.length} contatos reais e únicos em ${gridPoints.length} pontos de interesse.`,
+    });
   };
 
   const handleStopBatchScan = () => {
-    if (batchIntervalRef.current) {
-      clearInterval(batchIntervalRef.current);
-      batchIntervalRef.current = null;
-    }
+    batchStopRequestedRef.current = true;
     setIsBatchScanning(false);
     setIsScanning(false);
-    onAddLog({
-      id: `log_batch_scan_stop_${Date.now()}`,
-      timestamp: new Date().toLocaleTimeString('pt-BR'),
-      level: 'info',
-      message: '🛑 Extração em Lote interrompida pelo usuário.'
-    });
   };
 
   useEffect(() => {

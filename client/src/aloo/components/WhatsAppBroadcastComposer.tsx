@@ -64,14 +64,14 @@ export const WhatsAppBroadcastComposer: React.FC<WhatsAppBroadcastComposerProps>
               className="px-3 py-1.5 bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all"
             >
               <Book className="w-3.5 h-3.5" />
-              <span>Meus Templates</span>
+              <span>Meus modelos</span>
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showTemplates ? 'rotate-180' : ''}`} />
             </button>
 
             {showTemplates && (
               <div className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="p-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Selecione um Template</span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Selecione um modelo</span>
                 </div>
                 <div className="max-h-64 overflow-y-auto">
                   {templates.length > 0 ? (
@@ -87,7 +87,7 @@ export const WhatsAppBroadcastComposer: React.FC<WhatsAppBroadcastComposerProps>
                     ))
                   ) : (
                     <div className="p-4 text-center">
-                      <p className="text-xs text-slate-400">Nenhum template salvo.</p>
+                    <p className="text-xs text-slate-400">Nenhum modelo salvo.</p>
                     </div>
                   )}
                 </div>
@@ -96,7 +96,7 @@ export const WhatsAppBroadcastComposer: React.FC<WhatsAppBroadcastComposerProps>
           </div>
           <button onClick={onGenerateAiPitch} className="px-3 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all">
             <Wand2 className="w-3.5 h-3.5 text-amber-600" />
-            <span>Biblioteca Copys IA</span>
+            <span>Biblioteca de textos com IA</span>
           </button>
         </div>
       </div>

@@ -208,7 +208,7 @@ export const Header: React.FC<HeaderProps> = ({
                     >
                       <div className="flex items-center gap-4">
                         <ShieldCheck className="w-5 h-5 text-blue-500" />
-                        Project Lock
+                        Bloqueio do projeto
                       </div>
                       <div className={`w-10 h-5 rounded-full transition-colors flex items-center px-1 ${isLocked ? 'bg-blue-600' : 'bg-slate-200 dark:bg-slate-800'}`}>
                          <div className={`w-3 h-3 bg-white rounded-full transition-transform ${isLocked ? 'translate-x-5' : 'translate-x-0'}`} />
@@ -220,7 +220,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full px-5 py-4 text-left text-[11px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white hover:text-slate-900 dark:hover:text-slate-900 rounded-2xl transition-all flex items-center gap-4"
                     >
                       <Sliders className="w-5 h-5 text-indigo-500" />
-                      Security Config
+                      Configurações de segurança
                     </button>
 
                     <button
@@ -228,14 +228,14 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full px-5 py-4 text-left text-[11px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white hover:text-slate-900 dark:hover:text-slate-900 rounded-2xl transition-all flex items-center gap-4"
                     >
                       <Database className="w-5 h-5 text-amber-500" />
-                      System Nexus
+                      Central do sistema
                     </button>
                   </div>
 
                   <div className="mt-4 p-5 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                      <div className="flex flex-col">
-                        <span className="text-[10px] font-black text-slate-400 uppercase">License</span>
-                        <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Enterprise PRO</span>
+                        <span className="text-[10px] font-black text-slate-400 uppercase">Licença</span>
+                        <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Enterprise Pro</span>
                      </div>
                      <div className="w-10 h-10 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl flex items-center justify-center">
                         <Zap className="w-5 h-5 fill-current" />
