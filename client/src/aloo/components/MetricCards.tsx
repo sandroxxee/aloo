@@ -115,13 +115,13 @@ export const MetricCards: React.FC<MetricCardsProps> = memo(({
       {/* 1. Base Leads */}
       <motion.div 
         variants={cardVariants}
-        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-blue-500/50 transition-colors"
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-slate-400 dark:hover:border-slate-700 transition-colors"
       >
         <div className="flex items-center justify-between mb-3">
-          <div className="w-8 h-8 bg-blue-600/10 text-blue-600 flex items-center justify-center rounded-lg">
+          <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center rounded-lg">
             <Database className="w-4 h-4" />
           </div>
-          <div className={`text-[9px] font-black px-1.5 py-0.5 rounded uppercase ${statsTrends.isLeadsUp ? 'bg-emerald-500/10 text-emerald-600' : 'bg-rose-500/10 text-rose-600'}`}>
+          <div className="rounded bg-slate-100 px-1.5 py-0.5 text-[9px] font-black uppercase text-slate-600 dark:bg-slate-800 dark:text-slate-300">
             {statsTrends.isLeadsUp ? '+' : '-'}{statsTrends.leadsTrend}%
           </div>
         </div>
@@ -134,13 +134,13 @@ export const MetricCards: React.FC<MetricCardsProps> = memo(({
       {/* 2. Scans */}
       <motion.div 
         variants={cardVariants}
-        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-indigo-500/50 transition-colors"
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-slate-400 dark:hover:border-slate-700 transition-colors"
       >
         <div className="flex items-center justify-between mb-3">
-          <div className="w-8 h-8 bg-indigo-600/10 text-indigo-600 flex items-center justify-center rounded-lg">
+          <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center rounded-lg">
             <Globe2 className="w-4 h-4" />
           </div>
-          <RefreshCw className="w-3.5 h-3.5 text-indigo-500/30 group-hover:animate-spin" />
+          <RefreshCw className="w-3.5 h-3.5 text-slate-400" />
         </div>
         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Varreduras</p>
         <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">
@@ -151,13 +151,13 @@ export const MetricCards: React.FC<MetricCardsProps> = memo(({
       {/* 3. Efficiency */}
       <motion.div 
         variants={cardVariants}
-        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-emerald-500/50 transition-colors"
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-slate-400 dark:hover:border-slate-700 transition-colors"
       >
         <div className="flex items-center justify-between mb-3">
-          <div className="w-8 h-8 bg-emerald-600/10 text-emerald-600 flex items-center justify-center rounded-lg">
+          <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center rounded-lg">
             <CheckCircle2 className="w-4 h-4" />
           </div>
-          <span className="text-[9px] font-black text-emerald-600 uppercase">Verificado</span>
+          <span className="text-[9px] font-black text-slate-500 uppercase">Verificado</span>
         </div>
         <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Eficiência</p>
         <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">
@@ -168,14 +168,14 @@ export const MetricCards: React.FC<MetricCardsProps> = memo(({
       {/* 4. Optimization */}
       <motion.div 
         variants={cardVariants}
-        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-amber-500/50 transition-colors"
+        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm group hover:border-slate-400 dark:hover:border-slate-700 transition-colors"
       >
         <div className="flex items-center justify-between mb-3">
-          <div className="w-8 h-8 bg-amber-500/10 text-amber-500 flex items-center justify-center rounded-lg">
+          <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center rounded-lg">
             <Cpu className="w-4 h-4" />
           </div>
           {cacheHits > 0 && (
-            <button onClick={onClearCache} className="p-1 hover:bg-rose-500/10 rounded text-rose-500 transition-colors">
+            <button onClick={onClearCache} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-slate-500 transition-colors">
               <RefreshCw className="w-3.5 h-3.5" />
             </button>
           )}
