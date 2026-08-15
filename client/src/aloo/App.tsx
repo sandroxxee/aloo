@@ -3008,111 +3008,140 @@ export default function App() {
 
               {/* SUB-TAB 1: MINERAÇÃO ATIVA & PAINEL PRINCIPAL */}
               {(dashboardSubTab === 'overview' || dashboardSubTab === 'robot') && (
-                <div className="space-y-6">
-                  {/* 1. Radar Comercial (O que mais importa primeiro) */}
-                  <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-3xl" />}>
-                    <LoopController
-                      loopState={loopState}
-                      keywordsCount={keywords.length}
-                      targetState={targetState}
-                      onSetTargetState={(uf) => setTargetState(uf)}
-                      searchFilterConfig={searchFilterConfig}
-                      concurrency={loopState.concurrency}
-                      onUpdateSearchFilterConfig={(updated) => setSearchFilterConfig(prev => ({ ...prev, ...updated }))}
-                      onOpenWhatsappTab={() => setActivePortalTab('whatsapp')}
-                      autoAddAiSuggestions={autoAddAiSuggestions}
-                      onToggleAutoAddAiSuggestions={() => setAutoAddAiSuggestions(prev => !prev)}
-                      autoGeographicExpansionEnabled={autoGeographicExpansion}
-                      onToggleAutoGeographicExpansion={handleToggleAutoGeographicExpansion}
-                      autoEngineRotationEnabled={autoEngineRotation}
-                      onToggleAutoEngineRotation={handleToggleAutoEngineRotation}
-                      deepSearchFallbackEnabled={deepSearchFallback}
-                      onToggleDeepSearchFallback={handleToggleDeepSearchFallback}
-                      onStartLoop={handleStartLoop}
-                      onPauseLoop={handlePauseLoop}
-                      onResumeLoop={handleResumeLoop}
-                      onStopLoop={handleStopLoop}
-                      onResetLoop={handleResetLoop}
-                      onSetDelaySeconds={(sec) => {
-                        baseDelaySecondsRef.current = sec;
-                        setLoopState(prev => ({ ...prev, delaySeconds: sec, backoffActive: false }));
-                      }}
-                      onSetConcurrency={(conc) => setLoopState(prev => ({ ...prev, concurrency: conc }))}
-                      onProcessManualHtmlForLoop={handleProcessManualHtmlForLoop}
-                      onSkipCurrentKeywordInLoop={handleSkipCurrentKeyword}
-                      onToggleAutoRecovery={() => setLoopState(prev => ({ ...prev, autoRecoveryMode: !prev.autoRecoveryMode }))}
-                      onToggleAiSearch={() => setLoopState(prev => ({ ...prev, aiSearchEnabled: !prev.aiSearchEnabled }))}
-                      onToggleShowConsole={() => setShowConsole(prev => !prev)}
-                      showConsole={showConsole}
-                      failedKeywords={loopState.failedKeywords || []}
-                      onRetryFailedKeyword={handleRetryFailedKeyword}
-                      aiReformulations={aiReformulations}
-                      onApplyAiReformulation={handleApplyAiReformulation}
-                      soundAlertEnabled={soundAlertEnabled}
-                      onToggleSoundAlert={() => setSoundAlertEnabled(prev => !prev)}
-                      browserNotificationPermission={browserNotificationPermission}
-                      onRequestBrowserNotificationPermission={handleRequestNotificationPermission}
-                      onSendTestBrowserNotification={handleSendTestNotification}
+                <div className="space-y-5">
+                  <section className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:px-6">
+                    <div className="absolute -right-10 -top-12 h-40 w-40 rounded-full bg-emerald-400/10 blur-3xl" />
+                    <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                      <div className="max-w-2xl">
+                        <div className="mb-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+                          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                          Centro de operações
+                        </div>
+                        <h1 className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">Visão geral</h1>
+                        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Acompanhe a base, a fila de pesquisa e as próximas oportunidades em um único espaço de trabalho.</p>
+                      </div>
+                      <div className="grid grid-cols-3 divide-x divide-slate-200 rounded-xl border border-slate-200 bg-slate-50/70 p-3 text-center dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-800/60">
+                        <div className="px-3">
+                          <p className="text-lg font-bold text-slate-950 dark:text-white">{leads.length}</p>
+                          <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Leads</p>
+                        </div>
+                        <div className="px-3">
+                          <p className="text-lg font-bold text-slate-950 dark:text-white">{keywords.length}</p>
+                          <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Termos</p>
+                        </div>
+                        <div className="px-3">
+                          <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{loopState.status === 'running' ? 'Ativo' : 'Pausado'}</p>
+                          <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Operação</p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <Suspense fallback={<div className="h-32 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
+                    <MetricCards
+                      totalLeads={leads.length}
+                      sessionNewLeads={sessionNewLeads}
+                      totalSearches={totalSearches}
+                      autoSourceCount={autoSourceCount}
+                      manualSourceCount={manualSourceCount}
+                      cacheHits={cacheHits}
+                      onClearCache={handleClearCache}
+                      leads={leads}
                     />
                   </Suspense>
 
-                  {showConsole && (
-                    <Suspense fallback={<div className="h-48 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                      <ActivityLogConsole
-                        logs={activityLogs}
-                        onClearLogs={() => setActivityLogs([])}
-                        autoRecoveryMode={loopState.autoRecoveryMode}
-                        onToggleAutoRecovery={() => setLoopState(prev => ({ ...prev, autoRecoveryMode: !prev.autoRecoveryMode }))}
-                        onOpenDebugConsole={() => setIsSearchDebugModalOpen(true)}
-                      />
-                    </Suspense>
-                  )}
+                  <div className="grid grid-cols-1 gap-5 2xl:grid-cols-12 2xl:items-start">
+                    <div className="2xl:col-span-8 space-y-5">
+                      <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-4">
+                        <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
+                          <LoopController
+                            loopState={loopState}
+                            keywordsCount={keywords.length}
+                            targetState={targetState}
+                            onSetTargetState={(uf) => setTargetState(uf)}
+                            searchFilterConfig={searchFilterConfig}
+                            concurrency={loopState.concurrency}
+                            onUpdateSearchFilterConfig={(updated) => setSearchFilterConfig(prev => ({ ...prev, ...updated }))}
+                            onOpenWhatsappTab={() => setActivePortalTab('whatsapp')}
+                            autoAddAiSuggestions={autoAddAiSuggestions}
+                            onToggleAutoAddAiSuggestions={() => setAutoAddAiSuggestions(prev => !prev)}
+                            autoGeographicExpansionEnabled={autoGeographicExpansion}
+                            onToggleAutoGeographicExpansion={handleToggleAutoGeographicExpansion}
+                            autoEngineRotationEnabled={autoEngineRotation}
+                            onToggleAutoEngineRotation={handleToggleAutoEngineRotation}
+                            deepSearchFallbackEnabled={deepSearchFallback}
+                            onToggleDeepSearchFallback={handleToggleDeepSearchFallback}
+                            onStartLoop={handleStartLoop}
+                            onPauseLoop={handlePauseLoop}
+                            onResumeLoop={handleResumeLoop}
+                            onStopLoop={handleStopLoop}
+                            onResetLoop={handleResetLoop}
+                            onSetDelaySeconds={(sec) => {
+                              baseDelaySecondsRef.current = sec;
+                              setLoopState(prev => ({ ...prev, delaySeconds: sec, backoffActive: false }));
+                            }}
+                            onSetConcurrency={(conc) => setLoopState(prev => ({ ...prev, concurrency: conc }))}
+                            onProcessManualHtmlForLoop={handleProcessManualHtmlForLoop}
+                            onSkipCurrentKeywordInLoop={handleSkipCurrentKeyword}
+                            onToggleAutoRecovery={() => setLoopState(prev => ({ ...prev, autoRecoveryMode: !prev.autoRecoveryMode }))}
+                            onToggleAiSearch={() => setLoopState(prev => ({ ...prev, aiSearchEnabled: !prev.aiSearchEnabled }))}
+                            onToggleShowConsole={() => setShowConsole(prev => !prev)}
+                            showConsole={showConsole}
+                            failedKeywords={loopState.failedKeywords || []}
+                            onRetryFailedKeyword={handleRetryFailedKeyword}
+                            aiReformulations={aiReformulations}
+                            onApplyAiReformulation={handleApplyAiReformulation}
+                            soundAlertEnabled={soundAlertEnabled}
+                            onToggleSoundAlert={() => setSoundAlertEnabled(prev => !prev)}
+                            browserNotificationPermission={browserNotificationPermission}
+                            onRequestBrowserNotificationPermission={handleRequestNotificationPermission}
+                            onSendTestBrowserNotification={handleSendTestNotification}
+                          />
+                        </Suspense>
+                      </div>
 
-                  {/* 2. Resumo de Resultados & Métricas em Grid Compacto */}
-                  <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
-                    <div className="xl:col-span-2 space-y-6">
-                      {/* Metric Cards - Agora como uma seção secundária */}
-                      <Suspense fallback={<div className="h-40 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                        <MetricCards
-                          totalLeads={leads.length}
-                          sessionNewLeads={sessionNewLeads}
-                          totalSearches={totalSearches}
-                          autoSourceCount={autoSourceCount}
-                          manualSourceCount={manualSourceCount}
-                          cacheHits={cacheHits}
-                          onClearCache={handleClearCache}
-                          leads={leads}
-                        />
-                      </Suspense>
+                      {showConsole && (
+                        <Suspense fallback={<div className="h-48 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
+                          <ActivityLogConsole
+                            logs={activityLogs}
+                            onClearLogs={() => setActivityLogs([])}
+                            autoRecoveryMode={loopState.autoRecoveryMode}
+                            onToggleAutoRecovery={() => setLoopState(prev => ({ ...prev, autoRecoveryMode: !prev.autoRecoveryMode }))}
+                            onOpenDebugConsole={() => setIsSearchDebugModalOpen(true)}
+                          />
+                        </Suspense>
+                      )}
+                    </div>
 
-                      {/* Leads Preview - Para ver os resultados sem trocar de aba */}
-                      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-                        <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                          <h3 className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white flex items-center gap-2">
-                            <Plus className="w-4 h-4 text-emerald-500" />
-                            Últimas Oportunidades
-                          </h3>
+                    <aside className="2xl:col-span-4 space-y-5">
+                      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-slate-800">
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Base comercial</p>
+                            <h3 className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">Últimas oportunidades</h3>
+                          </div>
                           <button 
                             onClick={() => setActivePortalTab('leads')}
                             className="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
                           >
-                            Ver Todos <Compass className="w-3 h-3" />
+                            Abrir leads <Compass className="w-3 h-3" />
                           </button>
                         </div>
                         <div className="divide-y divide-slate-100 dark:divide-slate-800">
                           {leads.slice(0, 5).map((lead) => (
-                            <div key={lead.id} className="px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors flex items-center justify-between gap-4">
+                            <div key={lead.id} className="flex items-center justify-between gap-4 px-5 py-3.5 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50">
                               <div className="min-w-0">
-                                <p className="text-xs font-bold text-slate-900 dark:text-white truncate uppercase">{lead.item}</p>
-                                <p className="text-[10px] text-slate-500 font-medium truncate">{lead.location} • {lead.adPlatform}</p>
+                                <p className="truncate text-xs font-bold text-slate-900 dark:text-white">{lead.item}</p>
+                                <p className="mt-0.5 truncate text-[10px] font-medium text-slate-500">{lead.location} · {lead.adPlatform}</p>
                               </div>
-                              <div className="flex items-center gap-3 shrink-0">
+                              <div className="flex shrink-0 items-center gap-2">
                                 <span className="text-[10px] font-black text-blue-600 dark:text-blue-400">{lead.price}</span>
                                 <a 
                                   href={lead.waMeUrl} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="p-2 bg-emerald-500/10 text-emerald-600 rounded-lg hover:bg-emerald-500 hover:text-white transition-all"
+                                  aria-label={`Abrir conversa sobre ${lead.item}`}
+                                  className="rounded-lg bg-emerald-500/10 p-2 text-emerald-600 transition-all hover:bg-emerald-500 hover:text-white"
                                 >
                                   <MessageSquare className="w-3.5 h-3.5" />
                                 </a>
@@ -3120,23 +3149,22 @@ export default function App() {
                             </div>
                           ))}
                           {leads.length === 0 && (
-                            <div className="px-5 py-8 text-center text-slate-500 text-xs font-medium italic">
-                              Nenhum lead minerado ainda. Inicie o Radar para começar.
+                            <div className="px-5 py-9 text-center">
+                              <Database className="mx-auto mb-2 h-5 w-5 text-slate-300 dark:text-slate-600" />
+                              <p className="text-xs font-medium text-slate-500">Nenhuma oportunidade recente.</p>
+                              <p className="mt-1 text-[10px] text-slate-400">Os contatos encontrados aparecerão aqui.</p>
                             </div>
                           )}
                         </div>
                       </div>
-                    </div>
 
-                    {/* Diretor Comercial (Inteligência estratégica lateral) */}
-                    <div className="space-y-6">
                       <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
                         <CommercialIntelligenceCenter leads={leads} onActionClick={(id) => {
                           setActivePortalTab('leads');
                           setSearchQueryTop(id);
                         }} />
                       </Suspense>
-                    </div>
+                    </aside>
                   </div>
                 </div>
               )}

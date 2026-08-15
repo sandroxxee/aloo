@@ -84,3 +84,4 @@
 - [x] Corrigir a busca que recebe HTML e tenta desserializá-lo como JSON, com diagnóstico seguro e regressão automatizada.
 - [x] Aplicar a mesma validação de resposta não-JSON no executor compartilhado de busca para tratar o erro em todos os caminhos atuais.
 - [x] Para cada solicitação pontual, aplicar somente a correção explicitamente pedida, sem abrir auditorias, filas extensas ou alterações paralelas.
+- [x] Melhorar exclusivamente a composição visual, hierarquia e responsividade da tela Visão Geral, sem alterar funções ou outras áreas.
