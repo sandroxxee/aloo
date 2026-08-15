@@ -1,0 +1,71 @@
+# Project TODO
+
+- [x] Inventariar os módulos do frontend e backend do repositório `sandroxxee/aloo` e registrar incompatibilidades com WebDev.
+- [ ] Migrar o código React do Aloo, incluindo componentes, páginas, hooks, utilitários e estilos, para `client/src`.
+- [ ] Adicionar e alinhar as dependências de frontend exigidas pelo Aloo no projeto gerenciado.
+- [ ] Corrigir a configuração de build para não externalizar `buffer` no bundle de navegador.
+- [ ] Migrar as rotas Express compatíveis do Aloo para o servidor WebDev sem substituir a infraestrutura interna do template.
+- [ ] Adaptar os serviços de IA, fila, WebSocket e WhatsApp para as limitações do ambiente gerenciado.
+- [ ] Substituir persistência em arquivos locais por banco de dados e armazenamento persistentes quando necessária.
+- [ ] Cadastrar e validar segredos de produção para Gemini, autenticação de API e Firebase.
+- [ ] Criar ou atualizar testes Vitest para as rotas e adaptações migradas.
+- [ ] Validar o build, a verificação TypeScript e a renderização no navegador.
+- [ ] Criar checkpoint de lançamento do projeto migrado.
+- [ ] Solicitar a confirmação obrigatória para ativação de Reserved Hosting e orientar a publicação pelo painel.
+- [x] Documentar em uma auditoria de migração as incompatibilidades do Aloo com o runtime WebDev e a estratégia de adaptação.
+- [x] Clonar uma cópia limpa do repositório Aloo para auditoria independente de alterações locais.
+- [x] Inventariar arquivo por arquivo os módulos de aplicação, configuração, scripts e documentação do Aloo.
+- [x] Revisar dependências, rotas, serviços, componentes, hooks e utilitários quanto a qualidade, segurança e desempenho.
+- [x] Executar build, checagem de tipos e inspeções estáticas para corroborar os achados da auditoria.
+- [x] Entregar um relatório técnico priorizado com problemas, impacto, evidências e plano de melhoria.
+- [ ] Enviar ao usuário o relatório de auditoria priorizado, com resumo executivo e os anexos de evidências e inventário por arquivo.
+- [x] Preparar um roteiro de correções rápidas por arquivo, com prompts prontos para o Google AI Studio baseados na auditoria do Aloo.
+- [x] Mapear o fluxo de busca do Aloo entre o Preview, a rota de API e os provedores externos.
+- [x] Identificar a causa provável da falha de busca e preparar um prompt de correção para o Google AI Studio.
+- [x] Criar uma cópia de trabalho do Aloo para estabilizar a prévia sem afetar a referência auditada.
+- [x] Corrigir timeout, cancelamento e diagnóstico de busca no cliente.
+- [x] Limitar a busca do servidor, remover resultados sintéticos e retornar diagnósticos de provedores.
+- [x] Validar a prévia, o fluxo de busca e o build após as correções.
+- [x] Entregar a prévia atualizada e registrar as mudanças realizadas.
+- [x] Corrigir a inicialização do HTTP/WebSocket para que conflito de porta não derrube a prévia do Aloo.
+- [ ] Implementar fallback automático para uma porta HTTP alternativa quando a porta configurada estiver ocupada.
+- [ ] Configurar uma porta de HMR do Vite independente e recuperável para evitar colisões entre prévias.
+- [ ] Validar a prévia com porta HTTP e HMR inicialmente ocupadas, sem encerrar processos manualmente.
+- [x] Implementar fallback automático para uma porta HTTP alternativa quando a porta configurada estiver ocupada.
+- [x] Configurar uma porta de HMR do Vite independente e recuperável para evitar colisões entre prévias.
+- [x] Validar a prévia com porta HTTP e HMR inicialmente ocupadas, sem encerrar processos manualmente.
+- [ ] Rastrear a mineração do Aloo desde a consulta externa até o salvamento da tabela de leads.
+- [ ] Identificar por que respostas válidas não estão produzindo contatos extraídos no Preview.
+- [ ] Corrigir o gargalo de extração, filtragem ou deduplicação sem gerar contatos sintéticos.
+- [ ] Validar uma mineração completa com contatos reais e enviar a correção ao GitHub.
+- [x] Reiniciar a prévia do Aloo após interrupção do servidor de desenvolvimento.
+- [x] Confirmar a disponibilidade da interface e do endpoint de saúde após o reinício.
+- [x] Reiniciar a prévia após a nova interrupção do servidor de desenvolvimento.
+- [x] Validar o endpoint de saúde e o painel após esta recuperação.
+- [x] Reiniciar e recuperar a pré-visualização interna do projeto WebDev asset-intelligence.
+- [x] Identificar e corrigir o erro que impede a renderização da prévia no painel do Manus.
+- [x] Validar a pré-visualização interna restaurada no ambiente WebDev.
+- [ ] Mapear rotas, abas, modais e estados acessíveis do Asset Intelligence para auditoria visual.
+- [ ] Capturar e avaliar a interface em desktop e mobile, incluindo tela vazia, mineração pausada e modais.
+- [ ] Definir e aplicar um sistema visual unificado para hierarquia, espaçamento, cores, tipografia e feedbacks.
+- [ ] Reformular navegação, dashboard, Radar, tabelas de leads, Kanban e modais sem remover comportamentos existentes.
+- [ ] Corrigir problemas de responsividade, contraste, sobreposição e estados de carregamento em todos os fluxos revisados.
+- [ ] Validar visualmente os caminhos reformulados em desktop e mobile.
+- [ ] Atualizar testes Vitest e criar checkpoint da reformulação visual antes da entrega.
+- [x] Impedir que o modal de integração abra automaticamente ao carregar o painel.
+- [x] Corrigir o carregamento sob demanda do módulo LeadTable e validar a área de leads.
+- [x] Localizar e simplificar os controles prioritários e o estado vazio da tabela de leads.
+- [x] Localizar os estágios, reduzir a ênfase do descarte e orientar o estado vazio do Kanban.
+- [ ] Remover controles e mensagens de rotação de IP/proxies do Radar, preservando apenas práticas de busca seguras.
+- [ ] Verificar e eliminar resultados, avaliações e contatos sintéticos do Radar antes da reformulação visual.
+- [ ] Remover a subaba e o subpainel residual de proxy das configurações e qualquer texto de evasão associado.
+- [ ] Eliminar a infraestrutura residual de proxy e rotação não utilizada em `searchEngines.ts`.
+- [ ] Validar carga inicial, troca de local, busca manual, extração em lote e modo autônomo do Radar sem qualquer fallback sintético.
+- [ ] Criar estados explícitos de vazio e erro para o Radar quando a busca real não retornar contatos.
+- [ ] Simplificar os atalhos e localizar a terminologia residual nas áreas de Inteligência e Mensagens.
+- [x] Tornar o painel de Configurações transparente, sem histórico ou alertas aparentando estar ativos antes da configuração real.
+- [ ] Localizar o estado de análise e as orientações vazias restantes no dashboard móvel.
+- [x] Remover do dashboard o controle de rotação automática de mecanismo associado a bloqueios de busca.
+- [x] Adicionar teste de regressão para garantir que a busca não configure proxies ou cabeçalhos de rotação.
+- [x] Corrigir o carregamento do WebAssembly do SQLite para eliminar rejeições não tratadas na prévia.
+- [ ] Reorganizar o Radar em etapas de configuração progressiva para reduzir a densidade de controles.
