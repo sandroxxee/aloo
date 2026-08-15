@@ -89,3 +89,13 @@
 - [x] Simplificar a Visão Geral mantendo a ação principal e os filtros essenciais visíveis, e movendo funções secundárias para áreas recolhíveis.
 - [x] Substituir o estado vazio de Análises por uma orientação única, preservando os gráficos e controles para quando houver dados.
 - [x] Remover exclusivamente a aba Análises da Visão Geral, sem alterar as demais funções ou telas.
+- [ ] Definir e aplicar um sistema visual sóbrio, com uma paleta reduzida, tipografia legível e superfícies sem efeitos chamativos.
+- [ ] Reduzir controles de liga/desliga visíveis e agrupar opções secundárias de pesquisa e automação por contexto.
+- [ ] Revisar e reformular a navegação, Visão Geral, Leads, Pipeline, Radar, Inteligência e Mensagens em blocos visuais completos.
+- [ ] Padronizar cada painel, balão, modal e estado vazio com hierarquia consistente e responsividade funcional.
+- [ ] Validar os fluxos principais por grupos de abas, sem iniciar ações externas ou alterar dados sem solicitação explícita.
+- [x] Remover o cartão residual de análise da Visão Geral após a exclusão da aba Análises.
+- [ ] Aplicar o tema sóbrio aos painéis internos restantes de Radar, Inteligência, Mensagens e modais, eliminando gradientes e efeitos chamativos residuais.
+- [ ] Revisar os toggles ainda expostos e mover opções secundárias restantes para áreas recolhíveis ou contextuais.
+- [ ] Concluir a reformulação visual dos subpainéis internos de Pipeline, Radar, Inteligência e Mensagens.
+- [ ] Validar explicitamente, aba por aba, os fluxos visuais de Pipeline, Radar, Inteligência e Mensagens após as mudanças.

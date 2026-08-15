@@ -47,36 +47,36 @@ const COLUMNS: ColumnConfig[] = [
   {
     id: 'novo',
     title: 'Novos leads',
-    badgeBg: 'bg-blue-600 text-white shadow-lg shadow-blue-500/20',
-    headerBorder: 'border-blue-600',
+    badgeBg: 'bg-slate-800 text-white dark:bg-slate-700',
+    headerBorder: 'border-slate-500',
     icon: <Zap className="w-3.5 h-3.5" />
   },
   {
     id: 'contatado',
     title: 'Em contato',
-    badgeBg: 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20',
-    headerBorder: 'border-emerald-600',
+    badgeBg: 'bg-slate-800 text-white dark:bg-slate-700',
+    headerBorder: 'border-slate-500',
     icon: <MessageCircle className="w-3.5 h-3.5" />
   },
   {
     id: 'negociacao',
     title: 'Negociação',
-    badgeBg: 'bg-amber-600 text-white shadow-lg shadow-amber-500/20',
-    headerBorder: 'border-amber-600',
+    badgeBg: 'bg-slate-800 text-white dark:bg-slate-700',
+    headerBorder: 'border-slate-500',
     icon: <TrendingUp className="w-3.5 h-3.5" />
   },
   {
     id: 'ganho',
     title: 'Convertidos',
-    badgeBg: 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-lg',
-    headerBorder: 'border-slate-900 dark:border-white',
+    badgeBg: 'bg-slate-800 text-white dark:bg-slate-700',
+    headerBorder: 'border-slate-500',
     icon: <CheckCircle2 className="w-3.5 h-3.5" />
   },
   {
     id: 'perdido',
     title: 'Arquivados',
-    badgeBg: 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
-    headerBorder: 'border-slate-300 dark:border-slate-700',
+    badgeBg: 'bg-slate-800 text-white dark:bg-slate-700',
+    headerBorder: 'border-slate-500',
     icon: <XCircle className="w-3.5 h-3.5" />
   }
 ];
@@ -147,17 +147,17 @@ export const KanbanCrmBoard: React.FC<KanbanCrmBoardProps> = ({
       };
     } else if (days <= 5) {
       return {
-        text: `${days}d na etapa ⚠️`,
+        text: `${days}d na etapa`,
         hours,
         days,
         badgeClass: 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border-amber-300 dark:border-amber-700 font-bold'
       };
     } else {
       return {
-        text: `${days}d parado! 🚨`,
+        text: `${days}d parado`,
         hours,
         days,
-        badgeClass: 'bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-300 border-red-300 dark:border-red-700 font-extrabold animate-pulse'
+        badgeClass: 'bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-300 border-red-300 dark:border-red-700 font-extrabold'
       };
     }
   };

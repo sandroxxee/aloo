@@ -139,7 +139,6 @@ const MetricCards = safeLazy(() => import('./components/MetricCards').then(m => 
 const LoopController = safeLazy(() => import('./components/LoopController').then(m => ({ default: m.LoopController })), 'LoopController');
 const ActivityLogConsole = safeLazy(() => import('./components/ActivityLogConsole').then(m => ({ default: m.ActivityLogConsole })), 'ActivityLogConsole');
 const SearchDebugConsoleModal = safeLazy(() => import('./components/SearchDebugConsoleModal').then(m => ({ default: m.SearchDebugConsoleModal })), 'SearchDebugConsoleModal');
-const CommercialIntelligenceCenter = safeLazy(() => import('./components/CommercialIntelligenceCenter').then(m => ({ default: m.CommercialIntelligenceCenter })), 'CommercialIntelligenceCenter');
 const AutoBackupModal = safeLazy(() => import('./components/AutoBackupModal').then(m => ({ default: m.AutoBackupModal })), 'AutoBackupModal');
 const SystemHealthMonitorModal = safeLazy(() => import('./components/SystemHealthMonitorModal').then(m => ({ default: m.SystemHealthMonitorModal })), 'SystemHealthMonitorModal');
 const SecurityGuardModal = safeLazy(() => import('./components/SecurityGuardModal').then(m => ({ default: m.SecurityGuardModal })), 'SecurityGuardModal');
@@ -2891,7 +2890,7 @@ export default function App() {
         onDragOver={handleGlobalDragOver}
         onDragLeave={handleGlobalDragLeave}
         onDrop={handleGlobalDrop}
-        className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col selection:bg-blue-500/20 selection:text-blue-700 relative transition-colors duration-300"
+        className="asset-intelligence-shell min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col selection:bg-blue-500/20 selection:text-blue-700 relative transition-colors duration-300"
       >
       
       {/* CONSOLIDATED ENTERPRISE SHELL */}
@@ -2933,23 +2932,20 @@ export default function App() {
               {/* Dashboard Navigation Sub-Header - Compacted */}
               <div className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl p-1.5 shadow-sm flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-1">
-                  <button
-                    onClick={() => { setDashboardSubTab('overview'); setIsToolsDropdownOpen(false); }}
-                    className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-1.5 cursor-pointer ${
-                      dashboardSubTab === 'overview' || dashboardSubTab === 'robot'
-                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    <Zap className={`w-3.5 h-3.5 ${dashboardSubTab === 'overview' || dashboardSubTab === 'robot' ? 'text-amber-400' : 'text-slate-400'}`} />
-                    <span>Visão geral</span>
-                  </button>
+                  {dashboardSubTab === 'tools' && (
+                    <button
+                      onClick={() => { setDashboardSubTab('overview'); setIsToolsDropdownOpen(false); }}
+                      className="px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                    >
+                      Visão geral
+                    </button>
+                  )}
 
                   <button
                     onClick={() => { setDashboardSubTab('tools'); setIsToolsDropdownOpen(false); }}
                     className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                       dashboardSubTab === 'tools'
-                        ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20 ring-1 ring-blue-500/50'
+                        ? 'bg-slate-800 text-white dark:bg-slate-700'
                         : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
@@ -2966,7 +2962,7 @@ export default function App() {
                     onClick={() => setIsToolsDropdownOpen(prev => !prev)}
                     className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm border border-slate-300 dark:border-slate-600 active:scale-95"
                   >
-                    <Wrench className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+                    <Wrench className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Ações Rápidas</span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${isToolsDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
@@ -3145,13 +3141,6 @@ export default function App() {
                           )}
                         </div>
                       </div>
-
-                      <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
-                        <CommercialIntelligenceCenter leads={leads} onActionClick={(id) => {
-                          setActivePortalTab('leads');
-                          setSearchQueryTop(id);
-                        }} />
-                      </Suspense>
                     </aside>
                   </div>
                 </div>

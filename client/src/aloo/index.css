@@ -21,7 +21,7 @@
   --btn-secondary: #f1f5f9;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  --font-display: 'Playfair Display', serif;
+  --font-display: var(--font-sans);
 }
 
 html.dark {
@@ -326,21 +326,18 @@ button:active {
 /* ========================================================== */
 
 .asset-intelligence-shell {
-  --ai-bg-deep: #060b18;
-  --ai-surface: #0d1628;
-  --ai-surface-raised: #121f35;
-  --ai-border: rgba(148, 163, 184, 0.18);
-  --ai-text: #e8f0fb;
-  --ai-muted: #8da0bc;
-  --ai-primary: #3b82f6;
-  --ai-primary-soft: rgba(59, 130, 246, 0.14);
-  --ai-success: #10b981;
+  --ai-bg-deep: #0c1118;
+  --ai-surface: #121a24;
+  --ai-surface-raised: #18222d;
+  --ai-border: rgba(148, 163, 184, 0.16);
+  --ai-text: #edf2f7;
+  --ai-muted: #9aa8b8;
+  --ai-primary: #3b6f95;
+  --ai-primary-soft: rgba(59, 111, 149, 0.12);
+  --ai-success: #2f855a;
   min-height: 100vh;
   color: var(--ai-text);
-  background:
-    radial-gradient(circle at 10% -10%, rgba(37, 99, 235, 0.2), transparent 36rem),
-    radial-gradient(circle at 90% 10%, rgba(14, 165, 233, 0.08), transparent 30rem),
-    var(--ai-bg-deep);
+  background: var(--ai-bg-deep);
 }
 
 .asset-intelligence-shell :focus-visible {
@@ -376,7 +373,7 @@ button:active {
 
 .asset-intelligence-shell header {
   border-color: rgba(148, 163, 184, 0.12) !important;
-  box-shadow: 0 12px 34px rgba(2, 6, 23, 0.32);
+  box-shadow: none;
 }
 
 .asset-intelligence-shell button {
@@ -384,7 +381,37 @@ button:active {
 }
 
 .asset-intelligence-shell button:hover {
-  filter: brightness(1.08);
+  filter: none;
+}
+
+.asset-intelligence-shell .shadow-lg,
+.asset-intelligence-shell .shadow-xl,
+.asset-intelligence-shell .shadow-2xl,
+.asset-intelligence-shell .shadow-elegant {
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.18) !important;
+}
+
+.asset-intelligence-shell .animate-pulse,
+.asset-intelligence-shell .animate-bounce,
+.asset-intelligence-shell .animate-ping {
+  animation: none !important;
+}
+
+.asset-intelligence-shell [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.asset-intelligence-shell .bg-gradient-to-r,
+.asset-intelligence-shell .bg-gradient-to-l,
+.asset-intelligence-shell .bg-gradient-to-t,
+.asset-intelligence-shell .bg-gradient-to-b,
+.asset-intelligence-shell .bg-gradient-to-br,
+.asset-intelligence-shell .bg-gradient-to-bl,
+.asset-intelligence-shell .bg-gradient-to-tr,
+.asset-intelligence-shell .bg-gradient-to-tl {
+  background-image: none !important;
+  background-color: var(--ai-surface-raised) !important;
 }
 
 .asset-intelligence-shell input,
@@ -402,9 +429,7 @@ button:active {
 
 @media (max-width: 640px) {
   .asset-intelligence-shell {
-    background:
-      radial-gradient(circle at 50% -10%, rgba(37, 99, 235, 0.18), transparent 20rem),
-      var(--ai-bg-deep);
+    background: var(--ai-bg-deep);
   }
 
   .asset-intelligence-shell button {

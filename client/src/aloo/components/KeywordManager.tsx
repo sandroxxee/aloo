@@ -274,14 +274,14 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
   return (
     <div className="space-y-6">
       {/* MASTER HEADER: CENTRAL DE INTELIGÊNCIA DE TERMOS */}
-      <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-6 rounded-3xl text-white shadow-xl space-y-5">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl text-slate-900 dark:text-white shadow-sm space-y-5">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-xs font-bold text-blue-400 tracking-[0.2em]">
+            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-[0.16em]">
               Central de Inteligência de Termos
             </span>
             <h2 className="text-2xl font-display font-medium ">Inteligência de Pesquisa</h2>
-            <p className="text-sm text-slate-300 max-w-3xl font-medium leading-relaxed">
+            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-3xl font-medium leading-relaxed">
               Gerenciamento dinâmico, expansão combinatória, filtragem anti-ruído e otimização por IA.
             </p>
           </div>
@@ -289,61 +289,47 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
           <div className="flex flex-wrap items-center gap-2 shrink-0">
             <button
               onClick={() => keywords.forEach(kw => onExecuteSearchKeyword?.(kw))}
-              className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-lg shadow-emerald-500/20"
+              className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer flex items-center gap-1.5"
             >
-              <Search className="w-3.5 h-3.5" /> Pesquisar Todos (Fila)
+              <Search className="w-3.5 h-3.5" /> Pesquisar todos
             </button>
-            <button
-              onClick={handlePrioritize}
-              className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 font-bold text-xs  rounded-xl transition-all cursor-pointer"
-            >
-              Priorizar por Leads
-            </button>
-            <button
-              onClick={handlePruneNonConverting}
-              className="px-3.5 py-2 bg-amber-600 hover:bg-amber-500 font-bold text-xs  rounded-xl transition-all cursor-pointer"
-            >
-              Otimizar Fila
-            </button>
-            <button
-              onClick={() => setShowImportModal(true)}
-              className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 font-bold text-xs  rounded-xl border border-slate-700 transition-all cursor-pointer"
-            >
-              Importar
-            </button>
+            <details className="relative">
+              <summary className="cursor-pointer list-none rounded-xl border border-slate-200 px-3.5 py-2 text-xs font-bold text-slate-600 dark:border-slate-700 dark:text-slate-300">Ações de fila</summary>
+              <div className="absolute right-0 z-20 mt-2 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-lg dark:border-slate-800 dark:bg-slate-950">
+                <button onClick={handlePrioritize} className="w-full rounded-lg px-3 py-2 text-left text-xs font-semibold text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-900">Priorizar por leads</button>
+                <button onClick={handlePruneNonConverting} className="w-full rounded-lg px-3 py-2 text-left text-xs font-semibold text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-900">Otimizar fila</button>
+                <button onClick={() => setShowImportModal(true)} className="w-full rounded-lg px-3 py-2 text-left text-xs font-semibold text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-900">Importar termos</button>
+              </div>
+            </details>
           </div>
         </div>
 
         {/* QUICK STATS BAR */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-800/80">
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-200 dark:border-slate-800">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
             <span className="text-slate-400 text-xs font-bold">Fila Ativa de Mineração</span>
-            <p className="text-xl font-display font-medium text-white">{keywords.length} termos</p>
+            <p className="text-xl font-display font-medium text-slate-900 dark:text-white">{keywords.length} termos</p>
           </div>
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
             <span className="text-slate-400 text-xs font-bold">Banco Catalogado</span>
-            <p className="text-xl font-display font-medium text-emerald-400">{intelligentTerms.length} palavras</p>
+            <p className="text-xl font-display font-medium text-slate-900 dark:text-white">{intelligentTerms.length} palavras</p>
           </div>
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
             <span className="text-slate-400 text-xs font-bold">Filtro Anti-Ruído</span>
-            <p className="text-xl font-display font-medium text-rose-400">{negativeTerms.length} termos negativos</p>
+            <p className="text-xl font-display font-medium text-slate-900 dark:text-white">{negativeTerms.length} termos negativos</p>
           </div>
-          <div className="p-3 bg-white/5 rounded-2xl border border-white/10">
+          <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
             <span className="text-slate-400 text-xs font-bold">Termos Emergentes</span>
-            <p className="text-xl font-display font-medium text-blue-400">{discoveries.filter(d => d.status === 'Pendente').length} descobertos</p>
+            <p className="text-xl font-display font-medium text-slate-900 dark:text-white">{discoveries.filter(d => d.status === 'Pendente').length} descobertos</p>
           </div>
         </div>
 
         {/* NAVIGATION TABS */}
         <div className="flex flex-wrap items-center gap-1.5 pt-2">
           {[
-            { id: 'banco', label: 'Banco de Termos', count: intelligentTerms.length },
-            { id: 'ai_generator', label: 'IA Geradora' },
+            { id: 'banco', label: 'Banco de termos', count: intelligentTerms.length },
+            { id: 'ai_generator', label: 'Gerar termos' },
             { id: 'niches', label: 'Nichos' },
-            { id: 'expansao', label: 'Expansão' },
-            { id: 'discovery', label: 'Anti-Ruído', count: discoveries.filter(d => d.status === 'Pendente').length },
-            { id: 'cruzamento', label: 'Motor Cruzado' },
-            { id: 'analytics', label: 'Retorno e Desempenho' },
           ].map(tab => {
             const isSelected = activeTab === tab.id;
             return (
@@ -352,8 +338,8 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-white/5 hover:bg-white/10 text-slate-400'
+                    ? 'bg-slate-800 text-white'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-400'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -367,6 +353,28 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
               </button>
             );
           })}
+          <details className="relative">
+            <summary className="cursor-pointer list-none rounded-xl bg-slate-100 px-3.5 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700">Mais módulos</summary>
+            <div className="absolute right-0 z-20 mt-2 w-52 rounded-xl border border-slate-200 bg-white p-2 shadow-lg dark:border-slate-800 dark:bg-slate-950">
+              {[
+                { id: 'expansao', label: 'Expansão' },
+                { id: 'discovery', label: 'Anti-ruído', count: discoveries.filter(d => d.status === 'Pendente').length },
+                { id: 'cruzamento', label: 'Motor cruzado' },
+                { id: 'analytics', label: 'Retorno e desempenho' },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
+                    activeTab === tab.id ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white' : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-900'
+                  }`}
+                >
+                  {tab.label}
+                  {tab.count !== undefined && <span className="text-xs text-slate-400">{tab.count}</span>}
+                </button>
+              ))}
+            </div>
+          </details>
         </div>
       </div>
 

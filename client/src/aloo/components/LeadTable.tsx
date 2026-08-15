@@ -1169,7 +1169,9 @@ export const LeadTable: React.FC<LeadTableProps> = ({
       </AnimatePresence>
 
       {/* 5. Advanced Intelligence Filter Suite */}
-      <div className="px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800/60 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <details className="border-b border-slate-100 bg-slate-50/50 px-6 py-3 dark:border-slate-800/60 dark:bg-slate-900/50">
+        <summary className="cursor-pointer list-none text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Filtros detalhados</summary>
+        <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Channel Filter */}
         <div className="space-y-1.5">
           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Canal de contato</label>
@@ -1233,10 +1235,13 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             <option value="GANHO">Convertido / fechado</option>
           </select>
         </div>
-      </div>
+        </div>
+      </details>
 
       {/* 6. Intelligence Quick Toggles & Sentiment Analysis */}
-      <div className="px-6 py-4 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/60 flex flex-wrap items-center justify-between gap-4">
+      <details className="border-b border-slate-100 bg-white px-6 py-3 dark:border-slate-800/60 dark:bg-slate-900">
+        <summary className="cursor-pointer list-none text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Atalhos de filtro</summary>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest shrink-0">Atalhos:</span>
           
@@ -1302,7 +1307,8 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             </button>
           )}
         </div>
-      </div>
+        </div>
+      </details>
 
       {/* 7. Lead Intelligence Grid (Main Table) */}
       <div className="flex-1 overflow-hidden flex flex-col">

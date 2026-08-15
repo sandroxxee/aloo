@@ -465,7 +465,7 @@ export const LoopController: React.FC<LoopControllerProps> = ({
           </h4>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5">
+        <div className="grid grid-cols-2 gap-1.5">
           {/* 1. DDD Filter Select */}
           <div className="relative flex items-center col-span-2 sm:col-span-1">
             <Compass className="w-3 h-3 text-indigo-500 absolute left-2 pointer-events-none z-10" />
@@ -508,6 +508,10 @@ export const LoopController: React.FC<LoopControllerProps> = ({
             <Phone className="w-3 h-3 shrink-0" />
             <span>{currentPhoneType === 'Celular' ? 'Só Whats' : 'Todos'}</span>
           </button>
+
+          <details className="col-span-2 rounded-lg border border-slate-200 bg-slate-50/70 px-2.5 py-1.5 dark:border-slate-700 dark:bg-slate-800/30">
+            <summary className="cursor-pointer list-none text-[9px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">Filtros adicionais</summary>
+            <div className="mt-2 grid grid-cols-1 gap-1.5 sm:grid-cols-3">
 
           {/* 3. Document Filter Toggle */}
           <button
@@ -557,6 +561,8 @@ export const LoopController: React.FC<LoopControllerProps> = ({
             <Zap className="w-3 h-3 shrink-0" />
             <span>{searchFilterConfig?.engineMode === 'specialized' ? 'Turbo On' : 'Turbo Off'}</span>
           </button>
+            </div>
+          </details>
         </div>
 
         <details className="group rounded-xl border border-slate-200 bg-slate-50/70 p-2.5 dark:border-slate-700 dark:bg-slate-800/30">

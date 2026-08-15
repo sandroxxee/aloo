@@ -1,4 +1,4 @@
-import React, { useState, useMemo, memo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { motion } from 'motion/react';
 import { 
   TrendingUp,
@@ -102,16 +102,7 @@ export const MetricCards: React.FC<MetricCardsProps> = memo(({
 
   const cardVariants = {
     hidden: { opacity: 0, y: 10, scale: 0.98 },
-    show: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        type: 'spring' as any,
-        stiffness: 150,
-        damping: 25
-      }
-    }
+    show: { opacity: 1, y: 0, scale: 1 },
   };
 
   return (
@@ -198,4 +189,3 @@ export const MetricCards: React.FC<MetricCardsProps> = memo(({
   );
 });
 MetricCards.displayName = 'MetricCards';
-

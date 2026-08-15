@@ -1135,18 +1135,17 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
     <div className="space-y-6" id="google-maps-scanner-component">
       
       {/* Banner Header */}
-      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 rounded-3xl shadow-xl border border-blue-800/40 relative overflow-hidden">
-        <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-sm border border-slate-700 relative overflow-hidden">
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
           <div className="space-y-1.5 max-w-2xl">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-400/30 rounded-full text-xs   flex items-center gap-1.5">
-                <Compass className="w-3 h-3 text-blue-400 animate-spin-slow" />
-                RADAR GOOGLE MAPS PRO
+              <span className="px-2.5 py-0.5 bg-slate-800 text-slate-300 border border-slate-700 rounded-full text-xs flex items-center gap-1.5">
+                <Compass className="w-3 h-3 text-slate-400" />
+                RADAR DE EMPRESAS
               </span>
-              <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-full text-xs ">
-                Geolocalização Ativa
+              <span className="px-2 py-0.5 bg-slate-800 text-slate-300 border border-slate-700 rounded-full text-xs">
+                Localização definida
               </span>
             </div>
             <h2 className="text-xl md:text-2xl font-display font-medium text-white tracking-tight flex items-center gap-2">
@@ -1162,7 +1161,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             {isBatchScanning ? (
               <button
                 onClick={handleStopBatchScan}
-                className="px-4 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2 border border-rose-400 animate-pulse"
+                className="px-4 py-2.5 bg-rose-700 hover:bg-rose-800 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer flex items-center gap-2 border border-rose-600"
               >
                 <Pause className="w-4 h-4 fill-current" />
                 <span>Interromper Lote</span>
@@ -1171,7 +1170,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
               <button
                 onClick={handleStartBatchScan}
                 disabled={isScanning}
-                className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2 border border-amber-300 disabled:opacity-50"
+                className="px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer flex items-center gap-2 border border-slate-600 disabled:opacity-50"
                 title="Iniciar extração em lote de múltiplos pontos de interesse simultâneos na área selecionada"
               >
                 <Zap className="w-4 h-4 fill-current text-slate-950" />
@@ -1182,7 +1181,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             <button
               onClick={handleSaveAllScannedLeads}
               disabled={scannedBusinesses.length === 0}
-              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer flex items-center gap-2"
+              className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-40 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer flex items-center gap-2"
             >
               <CheckCircle className="w-4 h-4" />
               <span>Salvar Todos na Base ({scannedBusinesses.length})</span>

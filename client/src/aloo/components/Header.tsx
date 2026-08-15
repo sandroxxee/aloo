@@ -76,16 +76,16 @@ export const Header: React.FC<HeaderProps> = ({
   const { lastSearchLatency, isLatencyHigh, dismissWarning } = useConnectionMonitor();
 
   return (
-    <header className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-3xl border-b border-slate-100 dark:border-slate-900 sticky top-0 z-50 transition-all duration-500 shadow-sm">
+    <header className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-900 sticky top-0 z-50 transition-colors duration-200">
       <div className="max-w-[1920px] mx-auto h-16 px-4 sm:px-6 flex items-center justify-between gap-4 lg:gap-8">
         
         {/* Brand Section */}
         <div className="flex items-center gap-4 shrink-0">
           <div 
             onClick={() => setActiveTab('dashboard')}
-            className="w-10 h-10 bg-slate-900 dark:bg-white rounded-xl flex items-center justify-center shadow-lg shadow-slate-900/10 transition-all hover:scale-105 active:scale-95 cursor-pointer group"
+            className="w-10 h-10 bg-slate-900 dark:bg-white rounded-xl flex items-center justify-center border border-slate-800 dark:border-slate-200 transition-colors cursor-pointer group"
           >
-            <Zap className="w-5 h-5 text-white dark:text-slate-900 fill-current group-hover:rotate-12 transition-transform" />
+            <Zap className="w-5 h-5 text-white dark:text-slate-900 fill-current" />
           </div>
           <div className="hidden xl:block">
             <h1 className="text-sm font-black text-slate-900 dark:text-white leading-none tracking-tight uppercase">
@@ -108,11 +108,11 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => setActiveTab(item.id)}
                 className={`relative px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all flex items-center gap-2 group ${
                   isActive 
-                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs' 
+                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700'
                     : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 transition-transform group-hover:scale-110 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
                 {item.label}
                 {item.id === 'leads' && (
                   <span className={`px-1 py-0.5 rounded text-[8px] font-black ${isActive ? 'bg-blue-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}`}>
@@ -138,33 +138,6 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Controls & Operations */}
         <div className="flex items-center gap-3 shrink-0">
           
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => setIsWebhookModalOpen(!isWebhookModalOpen)}
-              className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-all relative group"
-              title="Webhooks"
-            >
-              <Webhook className="w-4.5 h-4.5 group-hover:rotate-12 transition-transform" />
-            </button>
-
-            <button
-              onClick={() => setIsHealthMonitorOpen(!isHealthMonitorOpen)}
-              className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-all relative group"
-              title="System Health"
-            >
-              <Activity className="w-4.5 h-4.5" />
-            </button>
-
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg transition-all group"
-            >
-              {theme === 'dark' ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-            </button>
-          </div>
-
-          <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-1" />
-
           {/* User Auth & Cloud Sync */}
           <button
             onClick={onOpenAuthModal}
@@ -182,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white hover:border-slate-900 dark:hover:border-white transition-all shadow-xs active:scale-95"
+              className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white hover:border-slate-400 dark:hover:border-slate-600 transition-colors"
             >
               <ShieldCheck className="w-4 h-4 text-blue-500" />
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`} />
@@ -194,11 +167,11 @@ export const Header: React.FC<HeaderProps> = ({
                   initial={{ opacity: 0, y: 15, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                  className="absolute right-0 mt-4 w-72 bg-white dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-900 rounded-3xl shadow-2xl p-3 z-50 overflow-hidden"
+                  className="absolute right-0 mt-3 w-72 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg p-3 z-50 overflow-hidden"
                   onMouseLeave={() => setIsMenuOpen(false)}
                 >
                   <div className="px-5 py-4 border-b border-slate-50 dark:border-slate-900 mb-2">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Security Protocol</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.16em]">Opções do sistema</p>
                   </div>
                   
                   <div className="space-y-1">
@@ -230,14 +203,40 @@ export const Header: React.FC<HeaderProps> = ({
                       <Database className="w-5 h-5 text-amber-500" />
                       Central do sistema
                     </button>
+
+                    <div className="my-2 border-t border-slate-100 dark:border-slate-800" />
+
+                    <button
+                      onClick={() => { setIsWebhookModalOpen(!isWebhookModalOpen); setIsMenuOpen(false); }}
+                      className="w-full px-5 py-3 text-left text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-colors flex items-center gap-4"
+                    >
+                      <Webhook className="w-4 h-4 text-slate-500" />
+                      Integrações
+                    </button>
+
+                    <button
+                      onClick={() => { setIsHealthMonitorOpen(!isHealthMonitorOpen); setIsMenuOpen(false); }}
+                      className="w-full px-5 py-3 text-left text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-colors flex items-center gap-4"
+                    >
+                      <Activity className="w-4 h-4 text-slate-500" />
+                      Saúde do sistema
+                    </button>
+
+                    <button
+                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                      className="w-full px-5 py-3 text-left text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-colors flex items-center gap-4"
+                    >
+                      {theme === 'dark' ? <Sun className="w-4 h-4 text-slate-500" /> : <Moon className="w-4 h-4 text-slate-500" />}
+                      Alternar tema
+                    </button>
                   </div>
 
-                  <div className="mt-4 p-5 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                      <div className="flex flex-col">
                         <span className="text-[10px] font-black text-slate-400 uppercase">Licença</span>
                         <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Enterprise Pro</span>
                      </div>
-                     <div className="w-10 h-10 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl flex items-center justify-center">
+                     <div className="w-9 h-9 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl flex items-center justify-center">
                         <Zap className="w-5 h-5 fill-current" />
                      </div>
                   </div>
@@ -259,7 +258,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setActiveTab(item.id)}
               className={`shrink-0 inline-flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-bold transition-all ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                  ? 'bg-slate-800 text-white dark:bg-slate-800'
                   : 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800'
               }`}
             >

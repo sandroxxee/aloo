@@ -139,26 +139,25 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
       {/* 1. TOP HEADER - ALWAYS VISIBLE CONNECTION CONTROL BAR */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-5 shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-200 shrink-0">
+          <div className="p-3 bg-slate-800 text-white rounded-xl shrink-0">
             <Send className="w-6 h-6" />
           </div>
           <div>
             <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              Central de Disparo em Massa
-              <span className="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full border border-indigo-200">Enterprise V3.6</span>
+              Central de mensagens
             </h2>
             <div className="flex items-center gap-3 mt-1">
               <div className="flex items-center gap-1.5">
                 {config.gatewayConfig.type === 'simulation' ? (
                   <>
-                    <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                    <div className="w-2 h-2 rounded-full bg-slate-400" />
                     <span className="text-sm font-bold text-slate-500">
                       Modo: <span className="text-blue-600">Simulador (OFFLINE)</span>
                     </span>
                   </>
                 ) : config.gatewayConfig.type === 'evolution' ? (
                   <>
-                    <div className={`w-2 h-2 rounded-full ${evolution.isEvolutionConnected ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
+                    <div className={`w-2 h-2 rounded-full ${evolution.isEvolutionConnected ? 'bg-emerald-500' : 'bg-rose-500'}`} />
                     <span className="text-sm font-bold text-slate-500">
                       Status Evolution: <span className={evolution.isEvolutionConnected ? 'text-emerald-600' : 'text-rose-600'}>
                         {evolution.isEvolutionConnected ? 'CONECTADO' : 'DESCONECTADO'}
@@ -167,7 +166,7 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
                   </>
                 ) : (
                   <>
-                    <div className={`w-2 h-2 rounded-full ${config.gatewayConfig.officialToken ? 'bg-indigo-500 animate-pulse' : 'bg-rose-500'}`} />
+                    <div className={`w-2 h-2 rounded-full ${config.gatewayConfig.officialToken ? 'bg-slate-500' : 'bg-rose-500'}`} />
                     <span className="text-sm font-bold text-slate-500">
                       Status Oficial: <span className={config.gatewayConfig.officialToken ? 'text-indigo-600' : 'text-rose-600'}>
                         {config.gatewayConfig.officialToken ? 'CONFIGURADO' : 'FALTA TOKEN'}
@@ -189,7 +188,7 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
           {!sender.isRunning ? (
             <button
               onClick={handleStart}
-              className="flex-1 lg:flex-none px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-200 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+              className="flex-1 lg:flex-none px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
               <Play className="w-4 h-4 fill-current" />
               INICIAR DISPAROS
@@ -197,7 +196,7 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
           ) : (
             <button
               onClick={handleStop}
-              className="flex-1 lg:flex-none px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-200 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+              className="flex-1 lg:flex-none px-6 py-3 bg-rose-700 hover:bg-rose-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
               <Pause className="w-4 h-4 fill-current" />
               PARAR DISPAROS
@@ -212,7 +211,7 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
                 setActiveSubTab('config');
               }
             }}
-            className="flex-1 lg:flex-none px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-lg shadow-slate-200 flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+            className="flex-1 lg:flex-none px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
             <Smartphone className="w-4 h-4" />
             {config.gatewayConfig.type === 'evolution' ? 'CONECTAR EVO' : 'CONFIGURAR API'}
@@ -223,20 +222,16 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
       {/* 2. SUB-NAVIGATION TABS */}
       <div className="flex flex-wrap items-center gap-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1.5 rounded-2xl shadow-xs overflow-x-auto scrollbar-hide">
         {[
-          { id: 'sender', label: '🚀 Disparador', icon: Send },
-          { id: 'groups', label: '👥 Grupos', icon: Users },
-          { id: 'auto_reply', label: '🤖 Auto-Bot IA', icon: Bot },
-          { id: 'templates', label: '📋 Modelos', icon: FileText },
-          { id: 'validator', label: '🔍 Triagem', icon: Search },
-          { id: 'antiblock', label: '🛡️ Blindagem', icon: Sliders },
-          { id: 'config', label: '⚙️ Configurações', icon: Settings }
+          { id: 'sender', label: 'Disparos', icon: Send },
+          { id: 'templates', label: 'Modelos', icon: FileText },
+          { id: 'config', label: 'Configurações', icon: Settings }
         ].map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveSubTab(tab.id as any)}
             className={`px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
               activeSubTab === tab.id
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-100'
+                ? 'bg-slate-800 text-white'
                 : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
@@ -244,6 +239,30 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
             {tab.label}
           </button>
         ))}
+        <details className="relative">
+          <summary className="cursor-pointer list-none rounded-xl px-4 py-2.5 text-sm font-bold text-slate-500 hover:bg-slate-50 hover:text-slate-900">
+            Mais módulos
+          </summary>
+          <div className="absolute right-0 z-20 mt-2 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-lg dark:border-slate-800 dark:bg-slate-900">
+            {[
+              { id: 'groups', label: 'Grupos', icon: Users },
+              { id: 'auto_reply', label: 'Respostas automáticas', icon: Bot },
+              { id: 'validator', label: 'Triagem', icon: Search },
+              { id: 'antiblock', label: 'Controle de envio', icon: Sliders }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveSubTab(tab.id as any)}
+                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
+                  activeSubTab === tab.id ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white' : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800'
+                }`}
+              >
+                <tab.icon className="h-4 w-4 text-slate-400" />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </details>
       </div>
 
       {/* 3. DYNAMIC CONTENT AREA */}
