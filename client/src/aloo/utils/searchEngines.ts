@@ -16,6 +16,7 @@ export interface SearchResultPayload {
   duration?: number;
   rateLimited?: boolean;
   networkError?: boolean;
+  providerUnavailable?: boolean;
   cascadeAttempts?: number;
   cached?: boolean;
   timeInHttpMs?: number;
@@ -297,6 +298,15 @@ export async function executeMultiEngineSearch(
       }
 
       return { success: false, contacts: [], rateLimited: true, timeInHttpMs, httpStatus: 429 };
+    }
+
+    if (res.status === 403 || res.status === 503) {
+      const contentType = res.headers.get('content-type') || '';
+      const payload = contentType.includes('application/json') ? await res.json().catch(() => null) : null;
+
+      if (payload?.errorCode === 'SEARCH_SOURCE_BLOCKED' || payload?.errorCode === 'SEARCH_PROVIDER_UNAVAILABLE') {
+        return { success: false, contacts: [], providerUnavailable: true, timeInHttpMs, httpStatus: res.status };
+      }
     }
 
     if (!res.ok) {

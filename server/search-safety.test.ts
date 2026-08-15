@@ -45,4 +45,26 @@ describe("busca segura", () => {
     expect(searchEngineSource).toContain("res.headers.get('content-type')");
     expect(searchEngineSource).toContain("contentType.includes('application/json')");
   });
+
+  it("classifica a fonte externa indisponível e interrompe o loop antes do próximo lote", () => {
+    const appSource = readFileSync(
+      new URL("../client/src/aloo/App.tsx", import.meta.url),
+      "utf8",
+    );
+    const searchEngineSource = readFileSync(
+      new URL("../client/src/aloo/utils/searchEngines.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(searchEngineSource).toContain("SEARCH_PROVIDER_UNAVAILABLE");
+    expect(searchEngineSource).toContain("providerUnavailable: true");
+    expect(appSource).toContain("externalSearchUnavailableRef.current = true");
+    expect(appSource).toContain("getLoopPausePatch");
+
+    const failurePolicySource = readFileSync(
+      new URL("../client/src/aloo/utils/searchFailurePolicy.ts", import.meta.url),
+      "utf8",
+    );
+    expect(failurePolicySource).toContain("O loop foi pausado para evitar tentativas repetidas sem resultado");
+  });
 });

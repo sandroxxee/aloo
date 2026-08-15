@@ -7,6 +7,7 @@ import { analyzeLead } from './utils/aiQualifier';
 import { extractContactsFromText, isValidPhone } from './utils/phoneExtractor';
 import { extractContactsInWorker } from './utils/extractionWorkerManager';
 import { executeMultiEngineSearch, executeAlternativeMultiEngineSearch, executeAdvancedNavigationDeepSearch } from './utils/searchEngines';
+import { getLoopPausePatch, getSearchFailurePausePolicy, resolveClientSearchFailureTransition, shouldScheduleNextLoopBatch } from './utils/searchFailurePolicy';
 import { executeSmartOrchestratedSearch } from './utils/smartSearchOrchestrator';
 import { cleanseAndFilterGarbage, mergeCrossPlatformLeads, calculateCommercialScore, detectAndExtractSocialLinks } from './utils/leadMergerEngine';
 import { enrichLeadWithOpportunitySignals } from './utils/opportunityEngine';
@@ -632,6 +633,7 @@ export default function App() {
       concurrency: savedConcurrency,
     };
   });
+  const externalSearchUnavailableRef = useRef(false);
 
   useEffect(() => {
     if (!autoValidateLeads || isAutoValidatingRef.current || loopState.status !== 'running') return;
@@ -1549,6 +1551,7 @@ export default function App() {
   const executeSearchTerm = useCallback(async (rawQueryTerm: string) => {
     const queryTerm = sanitizeInput(rawQueryTerm, 150);
     if (!queryTerm) return;
+    if (externalSearchUnavailableRef.current) return;
 
     setActiveSearchCount(prev => prev + 1);
     const activeBoost = localStorage.getItem('search_boost_level') || 'normal';
@@ -1608,13 +1611,31 @@ export default function App() {
       let contacts: ExtractedContact[] = [];
       let rateLimited = false;
       let networkError = false;
+      let providerUnavailable = false;
+      let providerUnavailableMessage = '';
+      const contentType = res.headers.get('content-type') || '';
+      const failurePayload = contentType.includes('application/json') ? await res.clone().json().catch(() => null) : null;
+      const pausePolicy = getSearchFailurePausePolicy({
+        status: res.status,
+        contentType,
+        errorCode: failurePayload?.errorCode,
+      });
+      const clientFailureTransition = resolveClientSearchFailureTransition({
+        status: res.status,
+        contentType,
+        errorCode: failurePayload?.errorCode,
+        queryTerm,
+      });
 
-      if (res.status === 429) {
+      if (pausePolicy) {
+        networkError = true;
+        providerUnavailable = true;
+        providerUnavailableMessage = pausePolicy.reason;
+      } else if (res.status === 429) {
         rateLimited = true;
       } else if (!res.ok) {
         networkError = true;
       } else {
-        const contentType = res.headers.get('content-type') || '';
         if (!contentType.includes('application/json')) {
           networkError = true;
           addLog({
@@ -1650,7 +1671,8 @@ export default function App() {
         contacts,
         duration,
         rateLimited,
-        networkError
+        networkError,
+        providerUnavailable
       };
 
       if (result.duration) {
@@ -1660,6 +1682,29 @@ export default function App() {
           localStorage.setItem('truck_miner_avg_search_time', newAvg.toString());
           return newAvg;
         });
+      }
+
+      if (result.providerUnavailable && clientFailureTransition) {
+        const wasAlreadyUnavailable = externalSearchUnavailableRef.current;
+        externalSearchUnavailableRef.current = true;
+        consecutiveNetworkErrorsRef.current = 0;
+        consecutiveSuccessesRef.current = 0;
+
+        setLoopState(prev => ({
+          ...prev,
+          ...clientFailureTransition.loopPatch
+        }));
+
+        if (!wasAlreadyUnavailable) {
+          addLog({
+            id: `log_search_provider_unavailable_${Date.now()}`,
+            timestamp: new Date().toLocaleTimeString('pt-BR'),
+            level: 'warning',
+            message: clientFailureTransition.logMessage,
+            keyword: queryTerm
+          });
+        }
+        return;
       }
 
       if (result.success && result.contacts.length > 0) {
@@ -2085,7 +2130,11 @@ export default function App() {
         }
       }
 
-      if (!isSubscribed) return;
+      if (!shouldScheduleNextLoopBatch({
+        isSubscribed,
+        searchUnavailable: externalSearchUnavailableRef.current,
+        loopStatus: loopStateRef.current.status,
+      })) return;
 
       let latestKws = keywordsRef.current;
       if (latestKws.length === 0) {
@@ -2148,11 +2197,13 @@ export default function App() {
     const nextKeyword = seqProgress.pendingKeywords[0] || prioritized[0] || '';
     const resumeIdx = seqProgress.searchedCount % prioritized.length;
 
+    externalSearchUnavailableRef.current = false;
     setLoopState(prev => ({ 
       ...prev, 
       status: 'running', 
       currentIndex: resumeIdx, 
-      currentKeyword: nextKeyword 
+      currentKeyword: nextKeyword,
+      manualRequiredReason: undefined
     }));
 
     if (nextKeyword) {
@@ -2183,7 +2234,8 @@ export default function App() {
   };
 
   const handleResumeLoop = () => {
-    setLoopState(prev => ({ ...prev, status: 'running' }));
+    externalSearchUnavailableRef.current = false;
+    setLoopState(prev => ({ ...prev, status: 'running', manualRequiredReason: undefined }));
     addLog({
       id: `log_resume_${Date.now()}`,
       timestamp: new Date().toLocaleTimeString('pt-BR'),

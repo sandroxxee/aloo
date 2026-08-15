@@ -108,3 +108,10 @@
 - [ ] Executar varredura final com caminhos explícitos para confirmar a ausência de gradientes, pulsos, bounce, ping e blur nas áreas revisadas.
 - [ ] Incluir modais de Mensagens fora do padrão WhatsApp e subpainéis de keywordIntelligence na varredura visual final.
 - [ ] Reduzir sombras, escalas e acentos concorrentes restantes na LeadTable após varredura específica.
+- [x] Corrigir o loop autônomo para reconhecer bloqueios HTTP 403 em fontes externas, evitar repetição inútil e informar uma falha segura sem evasão de bloqueios.
+- [x] Classificar o bloqueio HTTP 403 no fluxo real de respostas dos provedores, sem substituir globalmente o endpoint de busca.
+- [x] Remover a rota temporária que força indisponibilidade e preservar a execução normal quando uma fonte responder com dados válidos.
+- [ ] Cobrir em teste: provedor bloqueado pausa o loop; resposta válida permanece processável; rota ausente devolve falha legível sem repetição automática.
+- [ ] Testar o cliente diante de endpoint de busca ausente ou resposta HTML, garantindo pausa antes do próximo lote e mensagem legível.
+- [x] Extrair a transição de pausa do loop para função testável e cobrir 403, 404 e HTML com motivo legível e sem próximo lote.
+- [ ] Cobrir o fluxo equivalente ao cliente para 403 classificado, 404 e HTML 200, validando o patch de estado, o log legível e o bloqueio do próximo lote.
