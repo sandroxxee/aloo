@@ -1172,7 +1172,13 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
       </div>
 
       {/* BATCH EXTRACTION CONTROL PANEL (EXTRAÇÃO EM LOTE MULTI-PONTOS) */}
-      <div className={`p-4 rounded-2xl border transition-all ${
+      <details className="group rounded-2xl" open={isBatchScanning}>
+        <summary className="cursor-pointer list-none flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-bold text-amber-950 hover:bg-amber-100">
+          <span className="flex items-center gap-2"><Zap className="w-4 h-4 fill-current" /> Extração em lote e cobertura ampliada</span>
+          <span className="text-amber-700 group-open:hidden">Configurar</span>
+          <span className="text-amber-700 hidden group-open:inline">Recolher</span>
+        </summary>
+        <div className={`mt-3 p-4 rounded-2xl border transition-all ${
         isBatchScanning
           ? 'bg-gradient-to-r from-amber-950 via-slate-900 to-indigo-950 border-amber-500 shadow-xl text-white'
           : 'bg-amber-50/80 border-amber-200/90 text-slate-800'
@@ -1309,10 +1315,17 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
 
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       {/* AUTONOMOUS RADAR CONTROL PANEL (BUSCA AUTÔNOMA AUTOMÁTICA) */}
-      <div className={`p-4 rounded-2xl border transition-all ${
+      <details className="group rounded-2xl" open={isAutoPilot}>
+        <summary className="cursor-pointer list-none flex items-center justify-between gap-3 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-xs font-bold text-indigo-950 hover:bg-indigo-100">
+          <span className="flex items-center gap-2"><Bot className="w-4 h-4" /> Modo autônomo e salvamento automático</span>
+          <span className="text-indigo-700 group-open:hidden">Configurar</span>
+          <span className="text-indigo-700 hidden group-open:inline">Recolher</span>
+        </summary>
+        <div className={`mt-3 p-4 rounded-2xl border transition-all ${
         isAutoPilot
           ? 'bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 border-indigo-500 shadow-xl text-white'
           : 'bg-indigo-50/70 border-indigo-200 text-slate-800'
@@ -1422,7 +1435,8 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             </button>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       {/* SEARCH SAFEGUARDS STATUS BANNER */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3.5 px-4 shadow-sm text-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">

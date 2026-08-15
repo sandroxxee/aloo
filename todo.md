@@ -68,4 +68,4 @@
 - [x] Remover do dashboard o controle de rotação automática de mecanismo associado a bloqueios de busca.
 - [x] Adicionar teste de regressão para garantir que a busca não configure proxies ou cabeçalhos de rotação.
 - [x] Corrigir o carregamento do WebAssembly do SQLite para eliminar rejeições não tratadas na prévia.
-- [ ] Reorganizar o Radar em etapas de configuração progressiva para reduzir a densidade de controles.
+- [x] Reorganizar o Radar em etapas de configuração progressiva para reduzir a densidade de controles.
