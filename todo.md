@@ -85,3 +85,6 @@
 - [x] Aplicar a mesma validação de resposta não-JSON no executor compartilhado de busca para tratar o erro em todos os caminhos atuais.
 - [x] Para cada solicitação pontual, aplicar somente a correção explicitamente pedida, sem abrir auditorias, filas extensas ou alterações paralelas.
 - [x] Melhorar exclusivamente a composição visual, hierarquia e responsividade da tela Visão Geral, sem alterar funções ou outras áreas.
+- [x] Auditar exclusivamente todos os controles, funções e estados visuais da Visão Geral e apresentar recomendações antes de remover qualquer item.
+- [x] Simplificar a Visão Geral mantendo a ação principal e os filtros essenciais visíveis, e movendo funções secundárias para áreas recolhíveis.
+- [x] Substituir o estado vazio de Análises por uma orientação única, preservando os gráficos e controles para quando houver dados.

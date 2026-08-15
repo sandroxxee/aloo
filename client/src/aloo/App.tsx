@@ -3183,6 +3183,19 @@ export default function App() {
                     </div>
                   </div>
 
+                  {leads.length === 0 ? (
+                    <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400">
+                        <BarChart3 className="h-6 w-6" />
+                      </div>
+                      <h4 className="text-base font-bold text-slate-900 dark:text-white">As análises aparecem quando sua base crescer</h4>
+                      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500 dark:text-slate-400">Inicie uma mineração, salve contatos reais e volte aqui para acompanhar tendência, funil, distribuição geográfica e follow-ups.</p>
+                      <button onClick={() => setDashboardSubTab('overview')} className="mt-5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-700">
+                        Ir para Visão geral
+                      </button>
+                    </div>
+                  ) : (
+                    <>
                   <Suspense fallback={<div className="h-64 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-2xl" />}>
                     <AiConversionTracker 
                       leads={leads}
@@ -3225,6 +3238,8 @@ export default function App() {
                       onAddLog={addLog}
                     />
                   </Suspense>
+                    </>
+                  )}
                 </div>
               )}
 

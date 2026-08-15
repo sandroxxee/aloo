@@ -239,7 +239,12 @@ export const LoopController: React.FC<LoopControllerProps> = ({
             </button>
           )}
 
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800/50 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700 ml-1">
+          <details className="group relative ml-1">
+            <summary className="flex cursor-pointer list-none items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-100 px-2.5 py-2 text-[10px] font-black uppercase tracking-wider text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:text-white">
+              <Sliders className="h-3.5 w-3.5" />
+              Controles
+            </summary>
+            <div className="absolute right-0 z-20 mt-2 flex items-center gap-1 rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg dark:border-slate-700 dark:bg-slate-900">
             {onSkipCurrentKeywordInLoop && (
               <button
                 onClick={onSkipCurrentKeywordInLoop}
@@ -282,7 +287,8 @@ export const LoopController: React.FC<LoopControllerProps> = ({
                 <Terminal className="w-3.5 h-3.5" />
               </button>
             )}
-          </div>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -380,12 +386,16 @@ export const LoopController: React.FC<LoopControllerProps> = ({
             }}
             className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-0.5 font-black text-slate-900 dark:text-slate-100 cursor-pointer hover:border-indigo-500 transition-colors text-[9px]"
           >
-            <option value={0.5}>🌪️ Hyper Turbo (0.5s) - 30+ Fontes</option>
-            <option value={1}>⚡ Turbo (1s) - 20 Fontes</option>
-            <option value={2}>🚀 Rápido (2s) - 15 Fontes</option>
-            <option value={5}>🎯 Padrão (5s) - 10 Fontes</option>
-            <option value={10}>🛡️ Seguro (10s) - 5 Fontes</option>
-            <option value={20}>🕵️ Discreto (20s) - 3 Fontes</option>
+            <optgroup label="Recomendados">
+              <option value={2}>Rápido (2s)</option>
+              <option value={5}>Padrão (5s)</option>
+              <option value={10}>Seguro (10s)</option>
+            </optgroup>
+            <optgroup label="Avançados">
+              <option value={0.5}>Alto volume (0,5s)</option>
+              <option value={1}>Alta cadência (1s)</option>
+              <option value={20}>Cadência baixa (20s)</option>
+            </optgroup>
           </select>
 
           <button
@@ -438,7 +448,7 @@ export const LoopController: React.FC<LoopControllerProps> = ({
               }).catch(() => {});
             }}
             id="save-speed-btn"
-            className="ml-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-1.5 rounded-xl font-black text-[10px] uppercase tracking-tighter transition-all border border-slate-700 dark:border-slate-200 active:scale-95 shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20 flex items-center gap-2 cursor-pointer"
+            className="hidden"
           >
             <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
             Salvar
@@ -549,14 +559,12 @@ export const LoopController: React.FC<LoopControllerProps> = ({
           </button>
         </div>
 
-        <div className="flex items-center justify-between pt-2">
-          <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-            <Cpu className="w-3 h-3 text-emerald-500" />
-            Inteligência & Automação
-          </h4>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5">
+        <details className="group rounded-xl border border-slate-200 bg-slate-50/70 p-2.5 dark:border-slate-700 dark:bg-slate-800/30">
+          <summary className="flex cursor-pointer list-none items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            <span className="flex items-center gap-1.5"><Cpu className="h-3 w-3 text-emerald-500" /> Opções avançadas</span>
+            <span className="text-[9px] font-semibold normal-case tracking-normal">4 automações</span>
+          </summary>
+          <div className="mt-2.5 grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-4">
           {/* 6. Deterministic Mode Toggle */}
           <button
             type="button"
@@ -618,7 +626,8 @@ export const LoopController: React.FC<LoopControllerProps> = ({
             <Sparkles className="w-3 h-3 shrink-0" />
             <span>{loopState.aiSearchEnabled ? 'Cérebro IA On' : 'Cérebro IA Off'}</span>
           </button>
-        </div>
+          </div>
+        </details>
       </div>
     </div>
   );
