@@ -59,12 +59,12 @@
 - [ ] Remover controles e mensagens de rotação de IP/proxies do Radar, preservando apenas práticas de busca seguras.
 - [ ] Verificar e eliminar resultados, avaliações e contatos sintéticos do Radar antes da reformulação visual.
 - [ ] Remover a subaba e o subpainel residual de proxy das configurações e qualquer texto de evasão associado.
-- [ ] Eliminar a infraestrutura residual de proxy e rotação não utilizada em `searchEngines.ts`.
+- [x] Eliminar a infraestrutura residual de proxy e rotação não utilizada em `searchEngines.ts`.
 - [ ] Validar carga inicial, troca de local, busca manual, extração em lote e modo autônomo do Radar sem qualquer fallback sintético.
 - [ ] Criar estados explícitos de vazio e erro para o Radar quando a busca real não retornar contatos.
 - [ ] Simplificar os atalhos e localizar a terminologia residual nas áreas de Inteligência e Mensagens.
 - [x] Tornar o painel de Configurações transparente, sem histórico ou alertas aparentando estar ativos antes da configuração real.
-- [ ] Localizar o estado de análise e as orientações vazias restantes no dashboard móvel.
+- [x] Localizar o estado de análise e as orientações vazias restantes no dashboard móvel.
 - [x] Remover do dashboard o controle de rotação automática de mecanismo associado a bloqueios de busca.
 - [x] Adicionar teste de regressão para garantir que a busca não configure proxies ou cabeçalhos de rotação.
 - [x] Corrigir o carregamento do WebAssembly do SQLite para eliminar rejeições não tratadas na prévia.
