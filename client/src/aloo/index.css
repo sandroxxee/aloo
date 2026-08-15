@@ -402,6 +402,10 @@ button:active {
   -webkit-backdrop-filter: none !important;
 }
 
+.asset-intelligence-shell .fixed.inset-0[class*="backdrop-blur"] {
+  background-color: rgba(2, 6, 23, 0.72) !important;
+}
+
 .asset-intelligence-shell .bg-gradient-to-r,
 .asset-intelligence-shell .bg-gradient-to-l,
 .asset-intelligence-shell .bg-gradient-to-t,

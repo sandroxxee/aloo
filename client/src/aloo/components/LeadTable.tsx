@@ -1011,39 +1011,23 @@ export const LeadTable: React.FC<LeadTableProps> = ({
         </div>
       </div>
 
-      {/* 2. Intelligent Categorization Tabs */}
-      <div className="px-8 py-5 border-b border-slate-100 dark:border-slate-800/40 flex items-center gap-3 overflow-x-auto no-scrollbar bg-slate-50/30 dark:bg-slate-900/10">
-        {[
-          { id: 'ALL', label: 'Todos', icon: Database, color: 'text-blue-500' },
-          { id: 'Caminhões', label: 'Caminhões', icon: Truck, color: 'text-indigo-500' },
-          { id: 'Implementos', label: 'Implementos', icon: Package, color: 'text-purple-500' },
-          { id: 'Peças', label: 'Peças', icon: Cog, color: 'text-amber-500' },
-          { id: 'Pneus', label: 'Pneus', icon: Package, color: 'text-rose-500' },
-          { id: 'Motores', label: 'Motores', icon: Zap, color: 'text-orange-500' },
-          { id: 'Logística', label: 'Logística', icon: Globe, color: 'text-cyan-500' }
-        ].map((tab) => {
-          const Icon = tab.icon || Layers;
-          const isSelected = categoryFilter === tab.id;
-          const count = tab.id === 'ALL' ? leads.length : leads.filter(l => classifyLeadCategory(l) === tab.id).length;
-          
-          return (
-            <button
-              key={tab.id}
-              onClick={() => { setCategoryFilter(tab.id); setCurrentPage(1); }}
-              className={`flex items-center gap-3 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap cursor-pointer border-2 ${
-                isSelected 
-                  ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-xl scale-105 relative z-10' 
-                  : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-500 border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600'
-              }`}
-            >
-              <Icon className={`w-4 h-4 ${isSelected ? (tab.id === 'ALL' ? 'text-blue-400' : 'text-current') : tab.color}`} />
-              {tab.label}
-              <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black ${isSelected ? 'bg-white/20 text-white dark:bg-slate-900/20 dark:text-slate-900' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500'}`}>
-                {count}
-              </span>
-            </button>
-          );
-        })}
+      {/* 2. Lead Category Filter */}
+      <div className="flex items-center gap-3 border-b border-slate-100 bg-slate-50/30 px-8 py-3 dark:border-slate-800/40 dark:bg-slate-900/10">
+        <label htmlFor="lead-category-filter" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Categoria</label>
+        <select
+          id="lead-category-filter"
+          value={categoryFilter}
+          onChange={(event) => { setCategoryFilter(event.target.value); setCurrentPage(1); }}
+          className="min-w-48 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+        >
+          <option value="ALL">Todos ({leads.length})</option>
+          <option value="Caminhões">Caminhões</option>
+          <option value="Implementos">Implementos</option>
+          <option value="Peças">Peças</option>
+          <option value="Pneus">Pneus</option>
+          <option value="Motores">Motores</option>
+          <option value="Logística">Logística</option>
+        </select>
       </div>
 
       {/* 3. Search & Intelligence Action Bar */}

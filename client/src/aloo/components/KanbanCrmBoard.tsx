@@ -292,6 +292,9 @@ export const KanbanCrmBoard: React.FC<KanbanCrmBoardProps> = ({
             />
           </div>
 
+          <details className="relative">
+            <summary className="cursor-pointer list-none rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">Filtros</summary>
+            <div className="absolute right-0 z-20 mt-2 flex min-w-64 flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-lg dark:border-slate-800 dark:bg-slate-900">
           {/* Category Filter */}
           <select
             value={selectedCategory}
@@ -342,6 +345,8 @@ export const KanbanCrmBoard: React.FC<KanbanCrmBoardProps> = ({
               </button>
             ))}
           </div>
+            </div>
+          </details>
         </div>
       </div>
 
