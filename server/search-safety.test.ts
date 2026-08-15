@@ -28,4 +28,21 @@ describe("busca segura", () => {
     expect(settingsSource).not.toMatch(/Bypass Cloudflare/i);
     expect(settingsSource).not.toMatch(/rota[çc][ãa]o de User-Agent/i);
   });
+
+  it("valida o tipo de conteúdo antes de desserializar a resposta de busca", () => {
+    const appSource = readFileSync(
+      new URL("../client/src/aloo/App.tsx", import.meta.url),
+      "utf8",
+    );
+
+    expect(appSource).toContain("res.headers.get('content-type')");
+    expect(appSource).toContain("contentType.includes('application/json')");
+
+    const searchEngineSource = readFileSync(
+      new URL("../client/src/aloo/utils/searchEngines.ts", import.meta.url),
+      "utf8",
+    );
+    expect(searchEngineSource).toContain("res.headers.get('content-type')");
+    expect(searchEngineSource).toContain("contentType.includes('application/json')");
+  });
 });

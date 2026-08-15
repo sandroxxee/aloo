@@ -316,6 +316,11 @@ export async function executeMultiEngineSearch(
       return { success: false, contacts: [], networkError: true, timeInHttpMs, httpStatus: res.status };
     }
 
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      return { success: false, contacts: [], networkError: true, timeInHttpMs, httpStatus: res.status };
+    }
+
     const data = await res.json();
     let initialContacts: ExtractedContact[] = [];
 

@@ -1615,21 +1615,33 @@ export default function App() {
       } else if (!res.ok) {
         networkError = true;
       } else {
-        const data = await res.json();
-        const rawContent = data.rawContent || data.html || data.resultsText || '';
-        
-        if (data.sourceEngine) {
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          networkError = true;
           addLog({
-            id: `log_sources_${Date.now()}`,
+            id: `log_search_response_${Date.now()}`,
             timestamp: new Date().toLocaleTimeString('pt-BR'),
-            level: 'info',
-            message: `📡 [Radar] Fontes: ${data.enginesCount || 0} mecanismos (${data.sourceEngine.slice(0, 50)}...).`,
+            level: 'warning',
+            message: `A busca para "${queryTerm}" não retornou dados no formato esperado. Nenhum contato foi adicionado.`,
             keyword: queryTerm
           });
-        }
+        } else {
+          const data = await res.json();
+          const rawContent = data.rawContent || data.html || data.resultsText || '';
+          
+          if (data.sourceEngine) {
+            addLog({
+              id: `log_sources_${Date.now()}`,
+              timestamp: new Date().toLocaleTimeString('pt-BR'),
+              level: 'info',
+              message: `📡 [Radar] Fontes: ${data.enginesCount || 0} mecanismos (${data.sourceEngine.slice(0, 50)}...).`,
+              keyword: queryTerm
+            });
+          }
 
-        if (rawContent) {
-          contacts = await extractContactsInWorker(rawContent, 'Automático', queryTerm, searchFilterConfigRef.current);
+          if (rawContent) {
+            contacts = await extractContactsInWorker(rawContent, 'Automático', queryTerm, searchFilterConfigRef.current);
+          }
         }
       }
 

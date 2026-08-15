@@ -81,3 +81,6 @@
 - [ ] Padronizar cartões, formulários, tabelas e estados vazios nas telas principais com hierarquia visual consistente.
 - [ ] Verificar as telas principais em desktop e mobile, confirmando que os controles existentes continuam acessíveis.
 - [x] Criar um arquivo de especificação para recriar o aplicativo com as capacidades já mapeadas, mas com experiência, navegação e tema visual novos.
+- [x] Corrigir a busca que recebe HTML e tenta desserializá-lo como JSON, com diagnóstico seguro e regressão automatizada.
+- [x] Aplicar a mesma validação de resposta não-JSON no executor compartilhado de busca para tratar o erro em todos os caminhos atuais.
+- [x] Para cada solicitação pontual, aplicar somente a correção explicitamente pedida, sem abrir auditorias, filas extensas ou alterações paralelas.
