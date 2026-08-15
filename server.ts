@@ -37,7 +37,7 @@ import pino from 'pino';
 import { Boom } from '@hapi/boom';
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 
 const requestContext = new AsyncLocalStorage<express.Request>();
 
@@ -3045,51 +3045,6 @@ app.post('/api/whatsapp/send-cloud', async (req, res) => {
 });
 
 /**
- * Gerador de Anúncios de Backup Resiliente contra Bloqueio de IP em Produção
- * Produz anúncios brasileiros autênticos e contextualizados de caminhões e peças
- */
-function generateResilientBackupAds(query: string, filterConfig: any, offset: number): string {
-  const ddd = filterConfig?.targetState || '11';
-  const item = query || 'Ativos e Oportunidades';
-  
-  // Public Dorks and Deep Search Patterns
-  const dorks = [
-    `site:olx.com.br "${query}" whatsapp`,
-    `site:facebook.com/marketplace "${query}" fone`,
-    `site:mercadolivre.com.br "${query}" contato`,
-    `site:guiamais.com.br "${query}" (11)`,
-    `site:telelistas.net "${query}"`,
-    `site:cnpj.biz "${query}"`,
-    `site:instagram.com "${query}" @gmail.com`,
-  ];
-
-  const shuffledDorks = dorks.sort(() => 0.5 - Math.random()).slice(0, 3);
-  
-  return `
---- [SISTEMA DE BUSCA PROFUNDA PUBLIC-OSINT] ---
-Gerando dorks de contingência para: ${query}
-Sugestão de Busca Manual Caso Bloqueio Persista: 
-${shuffledDorks.map(d => `- ${d}`).join('\n')}
-
-[RESULTADOS BRUTOS DE DIRETÓRIOS PÚBLICOS]
-Anúncio: Oportunidade Direta - ${item} em ${ddd}
-Contato: (${ddd}) 9${Math.floor(Math.random() * 89999999 + 10000000)}
-Snippet: Venda de ${item} urgente, entrar em contato via whatsapp ou telefone. Falar com proprietário.
-Link: https://www.google.com/search?q=${encodeURIComponent(shuffledDorks[0])}
-
-Anúncio: Empresa de ${item} - Registro Comercial
-Contato: (${ddd}) 3${Math.floor(Math.random() * 8999999 + 1000000)}
-Snippet: Empresa especializada em ${item}, atendemos toda região de ${ddd}. Ligue agora para orçamento.
-Link: https://www.bing.com/search?q=${encodeURIComponent(shuffledDorks[1])}
-
-Anúncio: ${item} - Repasse de Frota / Desmobilização
-Contato: (${ddd}) 99${Math.floor(Math.random() * 8999999 + 1000000)}
-Snippet: Lote de ${item} para repasse, preço abaixo da tabela. Contato direto com frotista.
-Link: https://duckduckgo.com/?q=${encodeURIComponent(shuffledDorks[2])}
-  `;
-}
-
-/**
  * 3. Server-side Search Proxy & Gemini Search Grounding for Primary Pages
  * Always performs deep search on primary search engine & portal pages to retrieve full results.
  */
@@ -3100,7 +3055,9 @@ app.post('/api/search', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Query é obrigatória' });
     }
 
-    let runAi = true;
+    // A primeira resposta prioriza fontes web rápidas. IA pode ser acionada depois,
+    // sem bloquear o Preview quando a rede externa estiver lenta ou indisponível.
+    let runAi = false;
     let runSx = true;
 
     // Update global config if boostLevel is provided
@@ -3134,6 +3091,7 @@ app.post('/api/search', async (req, res) => {
     const startTime = Date.now();
     let combinedRawContent = '';
     let enginesUsed: string[] = [];
+    const sourceDiagnostics: Array<{ name: string; status: string; durationMs: number }> = [];
 
     // Construct filter modifiers
     const filterModifiers: string[] = [];
@@ -3346,24 +3304,24 @@ app.post('/api/search', async (req, res) => {
     const isSafe = activeBoostLevel === 'safe' || activeBoostLevel === '10' || activeBoostLevel === 10;
     const isDiscrete = activeBoostLevel === 'discrete' || activeBoostLevel === '20' || activeBoostLevel === 20;
 
-    let limit = 12;
-    let scraperTimeout = 8000;
+    let limit = 4;
+    let scraperTimeout = 4000;
 
     if (isHyper) {
-      limit = 40; 
-      scraperTimeout = 6500; // Increased from 4000
-    } else if (isTurbo) {
-      limit = 25;
-      scraperTimeout = 7500; // Increased from 5500
-    } else if (isFast) {
-      limit = 18;
-      scraperTimeout = 8500;
-    } else if (isSafe) {
-      limit = 8;
-      scraperTimeout = 12000;
-    } else if (isDiscrete) {
       limit = 4;
-      scraperTimeout = 15000;
+      scraperTimeout = 4000;
+    } else if (isTurbo) {
+      limit = 4;
+      scraperTimeout = 4000;
+    } else if (isFast) {
+      limit = 4;
+      scraperTimeout = 4000;
+    } else if (isSafe) {
+      limit = 4;
+      scraperTimeout = 4000;
+    } else if (isDiscrete) {
+      limit = 3;
+      scraperTimeout = 4000;
     }
     
     let activeSources = [...coreSources, ...shuffledOthers].slice(0, limit);
@@ -3432,16 +3390,29 @@ Busque e extraia dados reais de contatos de vendedores/compradores (números de 
       return null;
     };
 
+    const isBlockedSearchPage = (text: string) => {
+      const normalized = text.toLowerCase();
+      return [
+        'anomaly-modal',
+        'challenge-form',
+        'captcha',
+        'unusual traffic',
+        'access denied',
+        'verify you are human',
+      ].some(marker => normalized.includes(marker));
+    };
+
     // Branch 2: Web Scrapers Pool (optimized for concurrency and individual extraction to avoid massive strings)
     const runScrapers = async () => {
       try {
-        // Use batches of 10 to avoid overwhelming the network interface
-        const BATCH_SIZE = isHyper ? 15 : 8;
+        // Pequenos lotes mantêm a prévia responsiva e evitam saturar a rede.
+        const BATCH_SIZE = 2;
         const results: {name: string, text: string}[] = [];
         
         for (let i = 0; i < activeSources.length; i += BATCH_SIZE) {
           const batch = activeSources.slice(i, i + BATCH_SIZE);
           const batchPromises = batch.map(async (src) => {
+            const sourceStartedAt = Date.now();
             try {
               const response = await fetchWithTimeout(src.url, {
                 method: src.method,
@@ -3453,11 +3424,20 @@ Busque e extraia dados reais de contatos de vendedores/compradores (números de 
                 const text = await response.text();
                 // Filter out empty or too small responses
                 if (text && text.length > 500) {
+                  if (isBlockedSearchPage(text)) {
+                    sourceDiagnostics.push({ name: src.name, status: 'bloqueado por CAPTCHA/anti-bot', durationMs: Date.now() - sourceStartedAt });
+                    return null;
+                  }
+                  sourceDiagnostics.push({ name: src.name, status: 'ok', durationMs: Date.now() - sourceStartedAt });
                   return { name: src.name, text };
                 }
+                sourceDiagnostics.push({ name: src.name, status: 'sem conteúdo útil', durationMs: Date.now() - sourceStartedAt });
+              } else {
+                sourceDiagnostics.push({ name: src.name, status: `HTTP ${response.status}`, durationMs: Date.now() - sourceStartedAt });
               }
-            } catch (e) {
-              // Silently fail source
+            } catch (error: any) {
+              const reason = error?.name === 'AbortError' ? 'timeout' : 'falha de rede';
+              sourceDiagnostics.push({ name: src.name, status: reason, durationMs: Date.now() - sourceStartedAt });
             }
             return null;
           });
@@ -3559,11 +3539,9 @@ Busque e extraia dados reais de contatos de vendedores/compradores (números de 
       enginesUsed.push(results[2].value.name);
     }
 
-    // Fallback de segurança contra bloqueio de IPs em nuvem (CAPTCHA, 403, 429)
-    if (!combinedRawContent || combinedRawContent.trim().length < 150) {
-      console.warn(`[API Search Blockage] - Todos os motores de busca retornaram vazios para "${query}". Acionando gerador OSINT resiliente.`);
-      combinedRawContent = generateResilientBackupAds(query, filterConfig, offsetNum);
-      enginesUsed.push('Servidor Autônomo');
+    const externalSearchUnavailable = !combinedRawContent || combinedRawContent.trim().length < 150;
+    if (externalSearchUnavailable) {
+      console.warn(`[API Search Blockage] - Fontes externas não retornaram conteúdo útil para "${query}".`);
     }
 
     const durationSec = Number(((Date.now() - startTime) / 1000).toFixed(1));
@@ -3577,9 +3555,14 @@ Busque e extraia dados reais de contatos de vendedores/compradores (números de 
       searchDepth: depthNum,
       offset: offsetNum,
       duration: durationSec,
+      diagnostics: sourceDiagnostics,
+      externalSearchUnavailable,
+      message: externalSearchUnavailable ? 'Fontes externas não retornaram conteúdo útil; tente novamente em alguns segundos.' : undefined,
     };
 
-    setToCache(SEARCH_CACHE, cacheKey, finalResponse);
+    if (!externalSearchUnavailable) {
+      setToCache(SEARCH_CACHE, cacheKey, finalResponse);
+    }
 
     res.json({
       ...finalResponse,
@@ -5003,12 +4986,11 @@ async function setupServer() {
       console.log(`🚀 Asset Intelligence - Servidor rodando com sucesso!`);
       console.log(`🌐 Acesse no seu navegador: http://localhost:${PORT}`);
       console.log(`==================================================\n`);
-    });
-    
-    const wssInstance = new WebSocketServer({ server, path: '/ws' });
-    setWss(wssInstance);
-    wssInstance.on('connection', (ws) => {
-      ws.send(JSON.stringify({ type: 'log', message: 'Conectado ao servidor WebSocket.' }));
+      const wssInstance = new WebSocketServer({ server, path: '/ws' });
+      setWss(wssInstance);
+      wssInstance.on('connection', (ws) => {
+        ws.send(JSON.stringify({ type: 'log', message: 'Conectado ao servidor WebSocket.' }));
+      });
     });
 
     server.on('error', (err: any) => {

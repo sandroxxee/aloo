@@ -61,7 +61,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 300,
     rollupOptions: {
       external: [
-        'util', 'zlib', 'crypto', 'fs', 'net', 'tls', 'stream', 'stream/promises', 'path', 'os', 'child_process', 'events', 'url', 'http', 'https', 'assert', 'querystring', 'buffer', 'async_hooks', 'fs/promises',
+        'util', 'zlib', 'crypto', 'fs', 'net', 'tls', 'stream', 'stream/promises', 'path', 'os', 'child_process', 'events', 'url', 'http', 'https', 'assert', 'querystring', 'async_hooks', 'fs/promises',
         'node:child_process', 'node:crypto', 'node:fs', 'node:path', 'node:os', 'node:util', 'node:module', 'node:v8', 'node:buffer', 'node:events', 'node:stream'
       ]
     }

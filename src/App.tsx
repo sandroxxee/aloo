@@ -1578,6 +1578,9 @@ export default function App() {
       keyword: queryTerm
     });
 
+    const requestController = new AbortController();
+    const requestTimeout = setTimeout(() => requestController.abort(), 15000);
+
     try {
       const fetchStart = Date.now();
       
@@ -1606,6 +1609,7 @@ export default function App() {
           filterConfig: searchFilterConfigRef.current,
           boostLevel: localStorage.getItem('search_boost_level') || 'normal'
         }),
+        signal: requestController.signal,
       });
 
       let contacts: ExtractedContact[] = [];
@@ -1619,7 +1623,36 @@ export default function App() {
       } else {
         const data = await res.json();
         const rawContent = data.rawContent || data.html || data.resultsText || '';
-        
+
+        if (Array.isArray(data.diagnostics) && data.diagnostics.length > 0) {
+          const failedSources = data.diagnostics
+            .filter((item: { status?: string }) => item.status !== 'ok')
+            .map((item: { name?: string; status?: string }) => `${item.name || 'fonte'}: ${item.status || 'falha'}`)
+            .slice(0, 3)
+            .join(' | ');
+
+          if (failedSources) {
+            addLog({
+              id: `log_search_diagnostics_${Date.now()}`,
+              timestamp: new Date().toLocaleTimeString('pt-BR'),
+              level: 'warning',
+              message: `⚠️ [Radar] ${failedSources}`,
+              keyword: queryTerm
+            });
+          }
+        }
+
+        if (data.externalSearchUnavailable) {
+          networkError = true;
+          addLog({
+            id: `log_search_unavailable_${Date.now()}`,
+            timestamp: new Date().toLocaleTimeString('pt-BR'),
+            level: 'warning',
+            message: `⚠️ [Radar] ${data.message || 'Fontes externas indisponíveis no momento.'}`,
+            keyword: queryTerm
+          });
+        }
+
         if (data.sourceEngine) {
           addLog({
             id: `log_sources_${Date.now()}`,
@@ -1702,7 +1735,7 @@ export default function App() {
         });
       } else {
         // Se a Varredura Profunda estiver ativada E não for modo determinístico
-        if (deepSearchFallback && !searchFilterConfigRef.current?.deterministicMode && !rateLimited) {
+        if (deepSearchFallback && !searchFilterConfigRef.current?.deterministicMode && !rateLimited && !networkError) {
           addLog({
             id: `log_adv_nav_start_${Date.now()}_${queryTerm}`,
             timestamp: new Date().toLocaleTimeString('pt-BR'),
@@ -1743,11 +1776,15 @@ export default function App() {
         } else {
           recordKeywordSearch(queryTerm, 0, 0);
           const speedMessage = result.duration ? ` em ${result.duration}s` : '';
-          const msg = rateLimited ? `🛑 Limite atingido em "${queryTerm}"` : `⚡ Varredura rápida concluída para "${queryTerm}"${speedMessage} (0 leads).`;
+          const msg = rateLimited
+            ? `🛑 Limite atingido em "${queryTerm}"`
+            : networkError
+              ? `⚠️ Fontes externas indisponíveis para "${queryTerm}"${speedMessage}. Tente novamente em alguns segundos.`
+              : `⚡ Varredura rápida concluída para "${queryTerm}"${speedMessage} (0 leads).`;
           addLog({
             id: `log_fast_finish_${Date.now()}_${queryTerm}`,
             timestamp: new Date().toLocaleTimeString('pt-BR'),
-            level: rateLimited ? 'error' : 'info',
+            level: rateLimited ? 'error' : (networkError ? 'warning' : 'info'),
             message: msg,
             keyword: queryTerm
           });
@@ -1933,6 +1970,7 @@ export default function App() {
         keyword: queryTerm
       });
     } finally {
+      clearTimeout(requestTimeout);
       setActiveSearchCount(prev => Math.max(0, prev - 1));
     }
   }, [saveContactsToDb, addLog]);
