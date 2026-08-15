@@ -30,6 +30,8 @@ O painel será consolidado como um **centro de inteligência operacional**: supe
 
 | Tema | A alternância claro/escuro continua funcional; a prévia foi restaurada ao tema escuro padrão após a verificação. | Manter contraste mínimo e foco visível nos dois temas. |
 | Configurações | A aba de proxy não aparece mais na navegação administrativa. O painel de agendamento, porém, mostra histórico, destinatários e alertas ativos apesar de a base estar vazia e de as integrações não estarem comprovadamente configuradas. | Trocar informações de demonstração por estados neutros e instruções de configuração. |
+
+> A validação posterior confirmou a navegação de Configurações sem aba de proxy, com agendador pausado, sem histórico de execução e sem alertas previamente ativos.
 | Mobile | A navegação horizontal e os controles de toque aparecem corretamente em 375 px. O dashboard mantém boa legibilidade, mas ainda apresenta rótulos em inglês na área de análise de dados. | Localizar o estado de análise e priorizar textos de orientação em português. |
 
 > A validação posterior confirmou a localização do estado de análise e a remoção visual do controle de rotação de mecanismo na área de mineração.
