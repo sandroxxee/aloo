@@ -99,3 +99,4 @@
 - [ ] Revisar os toggles ainda expostos e mover opções secundárias restantes para áreas recolhíveis ou contextuais.
 - [ ] Concluir a reformulação visual dos subpainéis internos de Pipeline, Radar, Inteligência e Mensagens.
 - [ ] Validar explicitamente, aba por aba, os fluxos visuais de Pipeline, Radar, Inteligência e Mensagens após as mudanças.
+- [x] Executar as melhorias visuais em lote, sem perguntas ou confirmações desnecessárias ao usuário.

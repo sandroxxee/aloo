@@ -1543,8 +1543,11 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             </div>
 
             {/* State Quick Tabs (UF Badges) */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
-              <span className="text-xs  text-slate-400 shrink-0 mr-1">UF:</span>
+            <details className="group">
+              <summary className="cursor-pointer list-none text-xs font-bold text-slate-500">
+                Atalhos de UF <span className="text-slate-400 group-open:hidden">(27)</span><span className="hidden text-slate-400 group-open:inline">— recolher</span>
+              </summary>
+              <div className="mt-2 flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
               {['ALL', 'SP', 'RJ', 'MG', 'PR', 'RS', 'SC', 'BA', 'PE', 'CE', 'GO', 'DF', 'MT', 'MS', 'PA', 'ES', 'MA', 'PB', 'RN', 'AL', 'SE', 'PI', 'AM', 'RO', 'AC', 'RR', 'AP', 'TO'].map((uf) => (
                 <button
                   key={uf}
@@ -1568,10 +1571,11 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                       : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
                   }`}
                 >
-                  {uf === 'ALL' ? '🇧🇷 TODOS' : uf}
+                  {uf === 'ALL' ? 'TODOS' : uf}
                 </button>
               ))}
-            </div>
+              </div>
+            </details>
 
             {/* City Selection Controls: City Dropdown + Search Input + Scan Button */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-end">
@@ -1672,10 +1676,11 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             </div>
 
             {/* Quick City Chips for the selected State */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              <span className="text-xs text-slate-500 font-bold mr-1">
-                Cidades em Destaque ({selectedStateUf}):
-              </span>
+            <details className="group pt-1">
+              <summary className="cursor-pointer list-none text-xs font-bold text-slate-500">
+                Cidades em destaque ({selectedStateUf}) <span className="text-slate-400 group-open:hidden">— abrir atalhos</span><span className="hidden text-slate-400 group-open:inline">— recolher</span>
+              </summary>
+              <div className="mt-2 flex flex-wrap items-center gap-1.5">
               {selectedStateUf !== 'ALL' && (
                 <button
                   type="button"
@@ -1715,7 +1720,8 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                   {c.name}
                 </button>
               ))}
-            </div>
+              </div>
+            </details>
 
           </div>
 
@@ -1772,7 +1778,9 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             </div>
             
             {/* Quick Radius Buttons */}
-            <div className="grid grid-cols-5 gap-1">
+            <details className="group">
+              <summary className="cursor-pointer list-none text-xs font-bold text-slate-500">Atalhos de raio <span className="text-slate-400 group-open:hidden">— abrir</span><span className="hidden text-slate-400 group-open:inline">— recolher</span></summary>
+              <div className="mt-2 grid grid-cols-5 gap-1">
               {[15, 50, 100, 300, 600].map(r => (
                 <button
                   key={r}
@@ -1788,10 +1796,11 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                   }`}
                   title={r === 600 ? 'Varredura Macro-Regional Máxima de até 600 km' : `Raio de ${r} km`}
                 >
-                  {r === 600 ? '600km 🚀' : `${r}km`}
+                  {`${r}km`}
                 </button>
               ))}
-            </div>
+              </div>
+            </details>
           </div>
 
         </div>

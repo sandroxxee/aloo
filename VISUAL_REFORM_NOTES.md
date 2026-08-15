@@ -31,3 +31,9 @@ Os filtros detalhados e os atalhos de filtro agora ficam recolhidos por padrão.
 ## Validação de layout
 
 A Visão Geral foi conferida em desktop e mobile. A navegação móvel permanece horizontal, os filtros adicionais ficam recolhidos e o painel de operação não perde controles essenciais em telas estreitas.
+
+A aba Leads foi validada com a categoria em seletor único; a busca, o filtro regional, os filtros detalhados recolhidos, a tabela e o estado vazio continuam acessíveis sem disparar ações externas.
+
+O Pipeline foi validado com busca principal e filtros recolhíveis. No Radar, os controles principais e os painéis de lote/autonomia permanecem acessíveis; a próxima simplificação concentra os atalhos geográficos excessivos em grupos recolhíveis.
+
+Inteligência foi validada com ações de fila e módulos secundários agrupados. Mensagens mantém início, configuração e os módulos mais usados no primeiro nível; os demais módulos ficam concentrados em “Mais módulos”, sem disparos ou conexões executados durante a revisão.
