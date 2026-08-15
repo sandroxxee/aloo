@@ -397,6 +397,23 @@ button:active {
   animation: none !important;
 }
 
+.asset-intelligence-shell .animate-soft-pulse,
+.asset-intelligence-shell .animate-soft-pulse-subtle {
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+.asset-intelligence-shell .glass-panel {
+  background: var(--ai-surface) !important;
+  border-color: var(--ai-border) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.asset-intelligence-shell #lead-table-list-container > div > div {
+  animation: none !important;
+}
+
 .asset-intelligence-shell [class*="backdrop-blur"] {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;

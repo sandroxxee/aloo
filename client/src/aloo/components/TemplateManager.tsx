@@ -198,20 +198,21 @@ export const TemplateManager: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <div className={`w-10 h-5 rounded-full transition-colors relative ${formData.sendAsAudioTTS ? 'bg-indigo-600' : 'bg-slate-300'}`}>
-                    <input 
-                      type="checkbox" 
-                      className="hidden" 
+              <details className="group">
+                <summary className="cursor-pointer list-none text-xs font-bold text-slate-500">Opções de entrega <span className="text-slate-400 group-open:hidden">— configurar</span><span className="hidden text-slate-400 group-open:inline">— recolher</span></summary>
+                <label className="mt-3 flex cursor-pointer items-center gap-2">
+                  <div className={`relative h-5 w-10 rounded-full transition-colors ${formData.sendAsAudioTTS ? 'bg-indigo-600' : 'bg-slate-300'}`}>
+                    <input
+                      type="checkbox"
+                      className="hidden"
                       checked={formData.sendAsAudioTTS}
                       onChange={e => setFormData({...formData, sendAsAudioTTS: e.target.checked})}
                     />
-                    <div className={`absolute top-1 left-1 w-3 h-3 bg-white rounded-full transition-transform ${formData.sendAsAudioTTS ? 'translate-x-5' : ''}`} />
+                    <div className={`absolute top-1 left-1 h-3 w-3 rounded-full bg-white transition-transform ${formData.sendAsAudioTTS ? 'translate-x-5' : ''}`} />
                   </div>
-                  <span className="text-xs font-bold text-slate-600 group-hover:text-indigo-600 transition-colors">Enviar como Áudio (TTS)</span>
+                  <span className="text-xs font-bold text-slate-600">Enviar como áudio (TTS)</span>
                 </label>
-              </div>
+              </details>
               <div className="flex items-center gap-3">
                 <button 
                   type="button"
