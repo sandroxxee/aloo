@@ -1,0 +1,6 @@
+{
+  "name": "Asset Intelligence & Business Sync",
+  "description": "Plataforma avançada para análise de mercado, sincronização de ativos e inteligência comercial regional. Inclui expansão estratégica de termos, descoberta B2B e IA para otimização de fluxos de comunicação profissional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

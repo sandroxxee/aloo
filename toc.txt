@@ -1,0 +1,77 @@
+25:app.use((req, res, next) => {
+31:app.use(express.json({ limit: '10mb' }));
+45:function broadcastLog(msg: string) {
+55:function logWhatsapp(msg: string) {
+84:function initMemoryDB() {
+100:function saveMemoryDB() {
+474:app.get('/api/whatsapp/native/status', (req, res) => {
+489:app.post('/api/whatsapp/native/logout', async (req, res) => {
+530:app.post('/api/whatsapp/native/restart', async (req, res) => {
+587:function startBackgroundWatchdog() {
+631:app.get('/api/whatsapp/native/watchdog/status', (req, res) => {
+642:app.post('/api/whatsapp/native/watchdog/config', (req, res) => {
+659:app.post('/api/whatsapp/native/ai-heal', async (req, res) => {
+786:function saveQueueState() {
+804:function broadcastQueueStatus() {
+826:function loadQueueState() {
+1029:app.post('/api/whatsapp/native/queue/start', (req, res) => {
+1056:app.post('/api/whatsapp/native/queue/pause', (req, res) => {
+1070:app.post('/api/whatsapp/native/queue/resume', (req, res) => {
+1079:app.post('/api/whatsapp/native/queue/cancel', (req, res) => {
+1095:app.get('/api/whatsapp/native/queue/status', (req, res) => {
+1108:app.get('/api/whatsapp/native/queue/export', (req, res) => {
+1122:app.post('/api/whatsapp/native/send', async (req, res) => {
+1165:app.get('/api/whatsapp/bot/config', (req, res) => {
+1174:app.post('/api/whatsapp/bot/config', (req, res) => {
+1194:app.get('/api/whatsapp/bot/logs', (req, res) => {
+1201:app.post('/api/whatsapp/bot/logs/clear', (req, res) => {
+1206:app.post('/api/whatsapp/bot/test', async (req, res) => {
+1217:function getAiClient(customKeyOrReq?: string | express.Request): GoogleGenAI | null {
+1284:app.post('/api/ai/generate-whatsapp-message', async (req, res) => {
+1361:app.post('/api/ai/analyze-sentiment', async (req, res) => {
+1418:app.post('/api/ai/generate-tts-script', async (req, res) => {
+1445:function getRandomUserAgent(): string {
+1449:function getRandomHeaders() {
+1485:function isQuotaError(err: any): boolean {
+1509:function getFromCache<T>(cacheMap: Map<string, CacheEntry<T>>, key: string): T | null {
+1519:function setToCache<T>(cacheMap: Map<string, CacheEntry<T>>, key: string, data: T): void {
+1528:app.get('/api/health', (_req, res) => {
+1540:app.post('/api/cache/clear', (_req, res) => {
+1562:app.get('/api/turbo/config', (_req, res) => {
+1567:app.post('/api/turbo/config', (req, res) => {
+1575:app.get('/api/turbo/report', (_req, res) => {
+1663:app.get('/api/cron/config', (_req, res) => {
+1668:app.post('/api/cron/config', (req, res) => {
+1676:app.get('/api/cron/logs', (_req, res) => {
+1681:app.post('/api/cron/trigger', async (req, res) => {
+1714:app.post('/api/ai/keywords', async (req, res) => {
+1834:app.post('/api/ai/niche-strategy', async (req, res) => {
+1895:app.post('/api/ai/analyze-conversions', async (req, res) => {
+1982:app.post('/api/ai/auto-enhance-keywords', async (req, res) => {
+2122:app.post('/api/ai/pitch', async (req, res) => {
+2203:app.post('/api/ai/sentiment', async (req, res) => {
+2281:app.post('/api/ai/profile', async (req, res) => {
+2389:app.post('/api/ai/auto-respond', async (req, res) => {
+2476:app.post('/api/ai/reformulate', async (req, res) => {
+2531:function getSmartFallbackChatResponse(userMessage: string): string {
+2552:app.post('/api/ai/chat', async (req, res) => {
+2588:app.post('/api/ai/test-key', async (req, res) => {
+2622:app.post('/api/ai/lead-audit', async (req, res) => {
+2722:app.post('/api/ai/portfolio-dossier', async (req, res) => {
+2958:app.get('/api/webhook/config', (_req, res) => {
+2962:app.post('/api/webhook/config', (req, res) => {
+2974:app.get('/api/webhook/logs', (_req, res) => {
+2978:app.post('/api/webhook/dispatch', async (req, res) => {
+2992:app.post('/api/whatsapp/validate', async (req, res) => {
+3148:app.post('/api/whatsapp/send-cloud', async (req, res) => {
+3272:app.post('/api/search', async (req, res) => {
+3626:app.get('/api/cron/config', (_req, res) => {
+3630:app.post('/api/cron/config', (req, res) => {
+3642:app.post('/api/cron/test-webhook', async (req, res) => {
+3693:app.post('/api/cron/test-email', async (req, res) => {
+3716:app.post('/api/cron/run-now', (req, res) => {
+3751:app.post(['/api/proxy', '/api/scrape/portal'], async (req, res) => {
+3833:app.post('/api/instagram/scan', async (req, res) => {
+4041:app.post('/api/ads/scan', async (req, res) => {
+4208:app.post('/api/ai/qualify-lead', async (req, res) => {
+4253:app.post('/api/social/scan', async (req, res) => {

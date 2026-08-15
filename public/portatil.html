@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Sync LITE - Sincronização e Inteligência</title>
+  <style>
+    /* Tema Escuro Moderno - Inspirado no GitHub Dark e Design Pro */
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --border-color: #30363d;
+      --text-color: #c9d1d9;
+      --text-muted: #8b949e;
+      --primary-color: #58a6ff;
+      --success-color: #2ea44f;
+      --warning-color: #d29922;
+      --danger-color: #f85149;
+      --accent-green: #39d353;
+      --accent-blue: #1f6feb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* Cabeçalho */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .logo-container h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container h1 span {
+      background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-container p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Grid de Métricas */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-card .label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .metric-card .value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .metric-card.leads .value {
+      color: var(--success-color);
+    }
+
+    .metric-card.session .value {
+      color: var(--primary-color);
+    }
+
+    .metric-card.searches .value {
+      color: var(--warning-color);
+    }
+
+    /* Layout de Duas Colunas */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Formulários e Inputs */
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-color);
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      border-color: var(--primary-color);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Botões */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: #0d1117;
+    }
+
+    .btn-primary:hover {
+      background-color: #388bfd;
+    }
+
+    .btn-success {
+      background-color: var(--success-color);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background-color: #2c974b;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
+
+    .btn-outline:hover {
+      background-color: #21262d;
+      border-color: #8b949e;
+    }
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background-color: #da3633;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    /* Gerenciamento de Palavras-Chave */
+    .keyword-list {
+      max-height: 180px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      background-color: var(--bg-color);
+      margin-bottom: 12px;
+    }
+
+    .keyword-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      font-size: 13px;
+      border-radius: 4px;
+      background-color: var(--card-bg);
+      margin-bottom: 4px;
+    }
+
+    .keyword-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .keyword-item .remove-kw {
+      color: var(--danger-color);
+      cursor: pointer;
+      font-weight: bold;
+      padding: 0 4px;
+    }
+
+    /* Sugestões de Palavras-Chave */
+    .suggestions-container {
+      margin-top: 12px;
+    }
+
+    .suggestions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .suggestion-chip {
+      background-color: #21262d;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .suggestion-chip:hover {
+      background-color: #30363d;
+      color: #fff;
+    }
+
+    /* Loop Híbrido Controles */
+    .loop-status-box {
+      margin-top: 12px;
+      padding: 12px;
+      background-color: var(--bg-color);
+      border-radius: 6px;
+      border-left: 4px solid var(--warning-color);
+      font-size: 13px;
+    }
+
+    .loop-status-box.active {
+      border-left-color: var(--success-color);
+    }
+
+    .loop-status-box.paused {
+      border-left-color: var(--danger-color);
+    }
+
+    /* Painel Central e Abas */
+    .tabs-header {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 16px;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    /* Tabelas */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background-color: var(--card-bg);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      background-color: #1f242c;
+      color: #fff;
+      padding: 12px 16px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-color);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #1f242c;
+    }
+
+    .phone-badge {
+      background-color: rgba(57, 211, 83, 0.15);
+      color: var(--accent-green);
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .intent-badge {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .intent-badge.vendedor { background-color: rgba(31, 111, 235, 0.15); color: var(--primary-color); }
+    .intent-badge.comprador { background-color: rgba(46, 164, 79, 0.15); color: var(--success-color); }
+    .intent-badge.troca { background-color: rgba(210, 153, 34, 0.15); color: var(--warning-color); }
+    .intent-badge.aluguel { background-color: rgba(139, 148, 158, 0.15); color: var(--text-muted); }
+
+    .source-badge {
+      background-color: #21262d;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    /* Logs de Execução */
+    .log-container {
+      background-color: #000;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 12px;
+      height: 180px;
+      overflow-y: auto;
+      margin-top: 16px;
+      color: #39d353;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+    }
+
+    .log-line.error { color: var(--danger-color); }
+    .log-line.warn { color: var(--warning-color); }
+    .log-line.info { color: #58a6ff; }
+
+    /* Modal / Instruções de Pausa Híbrida */
+    .pause-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .pause-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .pause-modal {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .pause-modal h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--warning-color);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pause-modal p {
+      font-size: 14px;
+      margin-bottom: 16px;
+      color: var(--text-color);
+    }
+
+    .empty-state {
+      padding: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Cabeçalho -->
+    <header>
+      <div class="logo-container">
+        <h1>⚡ Asset Sync <span>LITE</span></h1>
+        <p>Busca automática multi-motor e modo híbrido ultra-veloz em JavaScript Vanilla</p>
+      </div>
+      <div>
+        <button class="btn btn-outline" onclick="exportToCSV()" style="width: auto;">📥 Exportar Leads (CSV)</button>
+      </div>
+    </header>
+
+    <!-- Grid de Métricas -->
+    <div class="metrics-grid">
+      <div class="metric-card leads">
+        <span class="label">Total de Leads Extraídos</span>
+        <span class="value" id="metric-total-leads">0</span>
+      </div>
+      <div class="metric-card session">
+        <span class="label">Novos nesta Sessão</span>
+        <span class="value" id="metric-session-leads">0</span>
+      </div>
+      <div class="metric-card searches">
+        <span class="label">Pesquisas Realizadas</span>
+        <span class="value" id="metric-total-searches">0</span>
+      </div>
+    </div>
+
+    <!-- Layout Principal -->
+    <div class="main-layout">
+      
+      <!-- Coluna Esquerda: Controles, Palavras-chave e Loop -->
+      <div class="sidebar">
+        
+        <!-- Bloco 1: Palavras-chave -->
+        <div class="card">
+          <div class="card-title">🔑 Palavras-Chave</div>
+          <div class="keyword-list" id="kw-list-container">
+            <!-- Inserido dinamicamente -->
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="new-kw-input" placeholder="Ex: vendo scania">
+            <button class="btn btn-primary" onclick="addKeyword()" style="width: auto; padding: 0 16px;">+</button>
+          </div>
+          
+          <!-- Bloco 1.1 Sugestões Progressivas -->
+          <div class="suggestions-container" id="suggestions-box" style="display: none;">
+            <label>💡 Novas Sugestões (IA/Padrão)</label>
+            <div class="suggestions-grid" id="suggestions-grid-container">
+              <!--Chips de sugestões dinâmicas -->
+            </div>
+            <button class="btn btn-outline" onclick="addAllSuggestions()" style="margin-top: 10px; font-size: 11px; padding: 4px 8px;">Adicionar Todas</button>
+          </div>
+        </div>
+
+        <!-- Bloco 2: Loop Híbrido Controles -->
+        <div class="card">
+          <div class="card-title">🤖 Navegação Autônoma</div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+            Percorre as palavras-chave salvas a cada 6s. Se falhar, pausa para você colar o HTML.
+          </p>
+          <div class="btn-group">
+            <button class="btn btn-success" id="btn-start-loop" onclick="startLoop()">Iniciar Loop</button>
+            <button class="btn btn-danger" id="btn-stop-loop" onclick="stopLoop()" disabled>Pausar</button>
+          </div>
+          <div class="loop-status-box" id="loop-status-info">
+            Loop ocioso. Insira palavras-chave e clique em "Iniciar Loop".
+          </div>
+        </div>
+
+        <!-- Bloco 3: Modo Manual Direto -->
+        <div class="card">
+          <div class="card-title">📂 Extração de HTML Manual</div>
+          <label for="manual-html-textarea">Cole o código fonte (Google, Facebook, etc.):</label>
+          <textarea id="manual-html-textarea" placeholder="Cole o HTML completo ou texto da página aqui..."></textarea>
+          <button class="btn btn-primary" onclick="extractFromManualHtml()" style="margin-top: 12px;">⚡ Extrair Telefones deste HTML</button>
+        </div>
+
+      </div>
+
+      <!-- Coluna Direita: Resultados e Painéis -->
+      <div class="main-content">
+        
+        <!-- Abas do CRM de Leads -->
+        <div class="tabs-header">
+          <button class="tab-btn active" onclick="switchTab('all', this)">Todos Leads (<span id="count-all">0</span>)</button>
+          <button class="tab-btn" onclick="switchTab('vendedor', this)">Vendedores (<span id="count-vendedor">0</span>)</button>
+          <button class="tab-btn" onclick="switchTab('comprador', this)">Compradores (<span id="count-comprador">0</span>)</button>
+          <button class="tab-btn" onclick="switchTab('troca', this)">Trocas (<span id="count-troca">0</span>)</button>
+          <button class="tab-btn" onclick="switchTab('aluguel', this)">Aluguel (<span id="count-aluguel">0</span>)</button>
+        </div>
+
+        <!-- Tabela de Leads -->
+        <div class="table-responsive">
+          <table id="leads-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Telefone</th>
+                <th>Nome</th>
+                <th>Intenção</th>
+                <th>Item/Marca</th>
+                <th>Origem</th>
+                <th>Fonte</th>
+              </tr>
+            </thead>
+            <tbody id="leads-table-body">
+              <!-- Conteúdo Dinâmico -->
+            </tbody>
+          </table>
+          <div id="table-empty-state" class="empty-state">
+            Nenhum lead armazenado ainda. Inicie o loop automático ou use a extração manual acima!
+          </div>
+        </div>
+
+        <!-- Console de Logs -->
+        <div class="card" style="margin-top: 24px; padding: 15px;">
+          <div class="card-title">🖥️ Console de Monitoramento</div>
+          <div class="log-container" id="log-box">
+            <div class="log-line info">[SISTEMA] Asset Sync LITE pronto para operação comercial.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de Pausa Inteligente Híbrida (Item 4) -->
+  <div class="pause-overlay" id="pause-modal-overlay">
+    <div class="pause-modal">
+      <h2>⚠️ Loop Automático Pausado</h2>
+      <p>A busca automática não retornou resultados públicos suficientes para a palavra-chave: <strong id="paused-keyword-name" style="color: var(--primary-color);">...</strong></p>
+      <p>Para prosseguir sem depender de chaves de API, faça o seguinte:</p>
+      <ol style="margin-left: 20px; font-size: 13px; margin-bottom: 16px; color: var(--text-color); display: flex; flex-direction: column; gap: 6px;">
+        <li>Abra o buscador de sua preferência no seu navegador.</li>
+        <li>Pesquise por: <code style="background-color: #1f242c; padding: 2px 6px; border-radius: 4px; font-weight: bold;" id="paused-keyword-search-term">...</code></li>
+        <li>Pressione <kbd style="background: #30363d; padding: 2px 4px; border-radius: 3px;">Ctrl + U</kbd> (ou clique com botão direito e vá em "Exibir código fonte").</li>
+        <li>Selecione tudo (<kbd>Ctrl + A</kbd>), copie (<kbd>Ctrl + C</kbd>) e cole o código fonte no campo abaixo:</li>
+      </ol>
+      <textarea id="modal-html-textarea" placeholder="Cole o código fonte (HTML) da página de resultados aqui..." style="min-height: 120px; margin-bottom: 12px;"></textarea>
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="resumeLoopWithHtml()">⚡ Extrair e Continuar Loop</button>
+        <button class="btn btn-outline" onclick="skipLoopStep()">Pular Palavra-Chave</button>
+        <button class="btn btn-danger" onclick="abortLoopFromModal()">Abortar Loop</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configurações, Estado e Persistência Local (Local Storage)
+    let keywords = JSON.parse(localStorage.getItem('keywords')) || ['vendo caminhao', 'compro scania', 'repasse volvo fh', 'aluga bitruck'];
+    let leads = JSON.parse(localStorage.getItem('leads')) || [];
+    let suggestedKeywords = JSON.parse(localStorage.getItem('suggested_keywords')) || [];
+    let usedSuggestions = JSON.parse(localStorage.getItem('used_suggestions')) || [];
+
+    let sessionLeadsCount = 0;
+    let totalSearchesCount = parseInt(localStorage.getItem('total_searches_count')) || 0;
+    let activeTab = 'all';
+
+    // Estados do Loop Autônomo
+    let loopActive = false;
+    let loopIndex = 0;
+    let loopTimeoutId = null;
+
+    // Inicialização
+    window.addEventListener('DOMContentLoaded', () => {
+      saveKeywords();
+      renderKeywords();
+      renderLeadsTable();
+      updateMetrics();
+      renderSuggestions();
+      writeLog('Carregado banco de dados local com ' + leads.length + ' leads e ' + keywords.length + ' palavras-chave.');
+    });
+
+    // Logger
+    function writeLog(text, level = 'info') {
+      const logBox = document.getElementById('log-box');
+      const line = document.createElement('div');
+      line.className = 'log-line ' + level;
+      line.innerText = '[' + new Date().toLocaleTimeString('pt-BR') + '] ' + text;
+      logBox.appendChild(line);
+      logBox.scrollTop = logBox.scrollHeight;
+      console.log(line.innerText);
+    }
+
+    // Persistência das Palavras-Chave
+    function saveKeywords() {
+      localStorage.setItem('keywords', JSON.stringify(keywords));
+    }
+
+    // Renderização das Palavras-Chave
+    function renderKeywords() {
+      const container = document.getElementById('kw-list-container');
+      container.innerHTML = '';
+      keywords.forEach((kw, index) => {
+        const item = document.createElement('div');
+        item.className = 'keyword-item';
+        item.innerHTML = `
+          <span>${kw}</span>
+          <span class="remove-kw" onclick="removeKeyword(${index})">×</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // Adiciona uma Palavra-Chave
+    function addKeyword() {
+      const input = document.getElementById('new-kw-input');
+      const val = input.value.trim();
+      if (val && !keywords.includes(val)) {
+        keywords.push(val);
+        saveKeywords();
+        renderKeywords();
+        writeLog(`Adicionada nova palavra-chave: "${val}"`);
+        input.value = '';
+      }
+    }
+
+    // Remove Palavra-Chave
+    function removeKeyword(index) {
+      const removed = keywords[index];
+      keywords.splice(index, 1);
+      saveKeywords();
+      renderKeywords();
+      writeLog(`Removida palavra-chave: "${removed}"`);
+    }
+
+    // 1. Busca Automática Multi-Motor (Sem API Key)
+    async function searchAutoWithFallback(query) {
+      writeLog(`Iniciando busca automática de multi-motor para: "${query}"...`);
+      totalSearchesCount++;
+      localStorage.setItem('total_searches_count', totalSearchesCount.toString());
+      updateMetrics();
+
+      const sources = [
+        // a) SearX.be JSON
+        {
+          name: 'SearX.be',
+          url: `https://searx.be/search?format=json&language=pt&q=${encodeURIComponent(query)}`,
+          parser: (data) => {
+            if (data && Array.isArray(data.results)) {
+              return data.results.map(r => ({ title: r.title || '', snippet: r.content || r.snippet || '', url: r.url || '' }));
+            }
+            return [];
+          }
+        },
+        // b) DuckDuckGo API JSON
+        {
+          name: 'DuckDuckGo API',
+          url: `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`,
+          parser: (data) => {
+            const results = [];
+            if (data) {
+              if (data.AbstractText) {
+                results.push({ title: data.Heading || '', snippet: data.AbstractText, url: data.AbstractURL || '' });
+              }
+              if (Array.isArray(data.RelatedTopics)) {
+                data.RelatedTopics.forEach(t => {
+                  if (t.Text) {
+                    results.push({ title: '', snippet: t.Text, url: t.FirstURL || '' });
+                  }
+                });
+              }
+            }
+            return results;
+          }
+        },
+        // c) DuckDuckGo HTML simples
+        {
+          name: 'DuckDuckGo HTML',
+          url: `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
+          parser: (htmlText) => {
+            const results = [];
+            try {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(htmlText, 'text/html');
+              const links = doc.querySelectorAll('.result__snippet');
+              links.forEach(el => {
+                const titleEl = el.closest('.result-body')?.previousElementSibling?.querySelector('.result__a');
+                results.push({
+                  title: titleEl ? titleEl.textContent : '',
+                  snippet: el.textContent || '',
+                  url: titleEl ? titleEl.getAttribute('href') : ''
+                });
+              });
+            } catch (e) {
+              console.error('Error parsing DuckDuckGo HTML:', e);
+            }
+            return results;
+          }
+        }
+      ];
+
+      for (const src of sources) {
+        writeLog(`Tentando motor: ${src.name}...`, 'info');
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000); // Timeout de 5 segundos
+
+          const response = await fetch(src.url, { signal: controller.signal });
+          clearTimeout(timeoutId);
+
+          if (!response.ok) {
+            writeLog(`Motor ${src.name} retornou status de erro: ${response.status}`, 'warn');
+            continue;
+          }
+
+          let results = [];
+          if (src.name === 'DuckDuckGo HTML') {
+            const htmlText = await response.text();
+            results = src.parser(htmlText);
+          } else {
+            const jsonData = await response.json();
+            results = src.parser(jsonData);
+          }
+
+          if (results.length >= 3) {
+            writeLog(`Sucesso no motor ${src.name}! Encontrados ${results.length} snippets de conteúdo.`);
+            // Analisar snippets para extrair leads
+            const extractedLeads = analyzeAndExtractLeads(results, query, 'Automático');
+            if (extractedLeads.length > 0) {
+              return extractedLeads;
+            }
+            writeLog(`Nenhum contato qualificado nos snippets do motor ${src.name}.`, 'warn');
+          } else {
+            writeLog(`Motor ${src.name} retornou poucos snippets (${results.length}). Pulando...`, 'warn');
+          }
+        } catch (err) {
+          writeLog(`Falha ou timeout no motor ${src.name}: ${err.message}`, 'warn');
+        }
+      }
+
+      writeLog(`Todos os motores automáticos falharam para: "${query}".`, 'error');
+      return []; // Falhou em tudo
+    }
+
+    // 2. Extrator e Classificador Determinístico de Leads
+    function analyzeAndExtractLeads(snippets, query, sourceLabel) {
+      const tempLeads = [];
+      const phoneRegex = /(?:\(?\d{2}\)?\s?)?9\d{4}[\s.-]?\d{4}|\(?\d{2}\)?\s?[2-8]\d{3}[\s.-]?\d{4}/g;
+
+      snippets.forEach(item => {
+        const fullText = (item.title + ' ' + item.snippet).replace(/\s+/g, ' ');
+        const phones = fullText.match(phoneRegex);
+
+        if (phones) {
+          phones.forEach(rawPhone => {
+            // Limpa o número para conter apenas dígitos
+            const cleanPhone = rawPhone.replace(/\D/g, '');
+            if (cleanPhone.length >= 10 && cleanPhone.length <= 11) {
+              
+              // Determina a intenção (Vendedor, Comprador, Troca, Aluguel)
+              let intent = 'vendedor'; // Padrão
+              const textLower = fullText.toLowerCase();
+
+              if (textLower.includes('compro') || textLower.includes('comprar') || textLower.includes('procuro') || textLower.includes('compras')) {
+                intent = 'comprador';
+              } else if (textLower.includes('troco') || textLower.includes('troca') || textLower.includes('aceito troca')) {
+                intent = 'troca';
+              } else if (textLower.includes('alugo') || textLower.includes('aluguel') || textLower.includes('locação') || textLower.includes('aluga')) {
+                intent = 'aluguel';
+              }
+
+              // Extrai nome aproximado do vendedor
+              let name = 'Particular';
+              const namePatterns = [
+                /falar com\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                /tratar com\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                /proprietário\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                /vendedor\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                /falar c\/\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                /(?:sr\.|sra\.)\s+([A-Z][a-z]+)/i
+              ];
+
+              for (const pattern of namePatterns) {
+                const match = fullText.match(pattern);
+                if (match && match[1]) {
+                  name = match[1].trim();
+                  break;
+                }
+              }
+
+              // Identifica Marca/Modelo
+              let brandItem = 'Caminhão/Peças';
+              const brands = ['Scania', 'Volvo', 'Mercedes', 'Mercedes-Benz', 'Iveco', 'MAN', 'DAF', 'Randon', 'Guerra', 'Noma'];
+              for (const brand of brands) {
+                const regexBrand = new RegExp(brand, 'i');
+                if (regexBrand.test(fullText)) {
+                  brandItem = brand;
+                  break;
+                }
+              }
+
+              // Busca por Preço
+              let priceStr = 'Sob Consulta';
+              const priceMatch = fullText.match(/r\$\s*([\d.,]+)/i);
+              if (priceMatch && priceMatch[1]) {
+                priceStr = 'R$ ' + priceMatch[1].trim();
+              }
+
+              // Localização aproximada (Estado por DDD)
+              let localStr = 'Brasil';
+              const ddd = cleanPhone.slice(0, 2);
+              const dddStateMap = {
+                '11': 'São Paulo (SP)', '19': 'Campinas (SP)', '15': 'Sorocaba (SP)', '16': 'Rib. Preto (SP)',
+                '31': 'Belo Horizonte (MG)', '34': 'Uberlândia (MG)', '35': 'Pouso Alegre (MG)',
+                '41': 'Curitiba (PR)', '43': 'Londrina (PR)', '45': 'Cascavel (PR)',
+                '47': 'Joinville (SC)', '48': 'Florianópolis (SC)',
+                '51': 'Porto Alegre (RS)', '54': 'Caxias do Sul (RS)',
+                '21': 'Rio de Janeiro (RJ)', '62': 'Goiânia (GO)', '71': 'Salvador (BA)'
+              };
+              if (dddStateMap[ddd]) {
+                localStr = dddStateMap[ddd];
+              }
+
+              tempLeads.push({
+                phone: cleanPhone,
+                formattedPhone: rawPhone.trim(),
+                name,
+                intent,
+                brandItem,
+                price: priceStr,
+                local: localStr,
+                query,
+                date: new Date().toLocaleDateString('pt-BR'),
+                source: sourceLabel
+              });
+            }
+          });
+        }
+      });
+
+      // Deduplica internamente
+      const uniqueLeads = [];
+      const seen = new Set();
+      tempLeads.forEach(l => {
+        if (!seen.has(l.phone)) {
+          seen.add(l.phone);
+          uniqueLeads.push(l);
+        }
+      });
+
+      return uniqueLeads;
+    }
+
+    // Armazenamento Geral e Tratamento de Duplicatas
+    function saveExtractedLeads(newLeads) {
+      let addedCount = 0;
+      newLeads.forEach(nl => {
+        const exists = leads.some(l => l.phone === nl.phone);
+        if (!exists) {
+          leads.push(nl);
+          addedCount++;
+          sessionLeadsCount++;
+        }
+      });
+
+      if (addedCount > 0) {
+        localStorage.setItem('leads', JSON.stringify(leads));
+        renderLeadsTable();
+        updateMetrics();
+        writeLog(`Sucesso! Armazenados ${addedCount} novos leads qualificados na base local.`, 'success');
+
+        // Memória Progressiva de Palavras-Chave (Item 3)
+        if (addedCount >= 1) {
+          analyzeKeywordsProgressiveMemory(newLeads);
+        }
+      } else {
+        writeLog('Nenhum lead novo. Todos os contatos encontrados já existem no banco de dados.', 'warn');
+      }
+
+      return addedCount;
+    }
+
+    // 3. Memória Progressiva de Palavras-Chave
+    function analyzeKeywordsProgressiveMemory(extractedLeads) {
+      writeLog('Analisando snippets para gerar sugestões comerciais inteligentes...', 'info');
+      const tempSuggestions = [];
+      const models = ['R440', 'FH 540', 'FH 460', 'VM 270', 'Bitruck', 'Axor', 'Actros', 'Atego', 'Vanderleia', 'Bicaçamba', 'Graneleira'];
+      const actions = ['venda', 'compro', 'repasse', 'urgente'];
+
+      extractedLeads.forEach(l => {
+        const brand = l.brandItem;
+        if (brand && brand !== 'Caminhão/Peças') {
+          // Combina marcas de frotas com modelos comerciais
+          models.forEach(model => {
+            actions.forEach(action => {
+              const kwProposal = `${action} ${brand.toLowerCase()} ${model.toLowerCase()}`;
+              if (!keywords.includes(kwProposal) && !suggestedKeywords.includes(kwProposal) && !usedSuggestions.includes(kwProposal)) {
+                tempSuggestions.push(kwProposal);
+              }
+            });
+          });
+        }
+      });
+
+      // Se houver novas sugestões únicas, mostra na interface
+      const uniqueNewSuggestions = [...new Set(tempSuggestions)].slice(0, 5);
+      if (uniqueNewSuggestions.length > 0) {
+        suggestedKeywords = [...new Set([...suggestedKeywords, ...uniqueNewSuggestions])].slice(0, 8);
+        localStorage.setItem('suggested_keywords', JSON.stringify(suggestedKeywords));
+        renderSuggestions();
+      }
+    }
+
+    function renderSuggestions() {
+      const container = document.getElementById('suggestions-grid-container');
+      const box = document.getElementById('suggestions-box');
+      container.innerHTML = '';
+
+      if (suggestedKeywords.length > 0) {
+        box.style.display = 'block';
+        suggestedKeywords.forEach(kw => {
+          const chip = document.createElement('div');
+          chip.className = 'suggestion-chip';
+          chip.innerText = kw;
+          chip.onclick = () => acceptSuggestion(kw);
+          container.appendChild(chip);
+        });
+      } else {
+        box.style.display = 'none';
+      }
+    }
+
+    function acceptSuggestion(kw) {
+      if (!keywords.includes(kw)) {
+        keywords.push(kw);
+        saveKeywords();
+        renderKeywords();
+        writeLog(`Sugestão aceita e adicionada: "${kw}"`, 'success');
+      }
+      // Remove das sugestões
+      suggestedKeywords = suggestedKeywords.filter(item => item !== kw);
+      usedSuggestions.push(kw);
+      localStorage.setItem('suggested_keywords', JSON.stringify(suggestedKeywords));
+      localStorage.setItem('used_suggestions', JSON.stringify(usedSuggestions));
+      renderSuggestions();
+    }
+
+    function addAllSuggestions() {
+      suggestedKeywords.forEach(kw => {
+        if (!keywords.includes(kw)) {
+          keywords.push(kw);
+          usedSuggestions.push(kw);
+        }
+      });
+      saveKeywords();
+      renderKeywords();
+      writeLog(`Todas as sugestões comerciais foram integradas à lista principal.`, 'success');
+      suggestedKeywords = [];
+      localStorage.setItem('suggested_keywords', JSON.stringify([]));
+      localStorage.setItem('used_suggestions', JSON.stringify(usedSuggestions));
+      renderSuggestions();
+    }
+
+    // 2. Modo Manual Inteligente (Extração de HTML Colado)
+    function extractFromManualHtml() {
+      const txt = document.getElementById('manual-html-textarea').value.trim();
+      if (!txt) {
+        alert('Por favor, cole o HTML ou texto completo de uma página de busca antes de extrair.');
+        return;
+      }
+
+      writeLog('Iniciando extração manual de código colado...');
+      const fakeSnippets = [{ title: 'Manual Raw Source', snippet: txt }];
+      const extracted = analyzeAndExtractLeads(fakeSnippets, 'Filtro Manual', 'Manual');
+
+      if (extracted.length > 0) {
+        const added = saveExtractedLeads(extracted);
+        writeLog(`Extração Concluída. Foram detectados ${extracted.length} telefones na página. ${added} novos cadastrados.`);
+        document.getElementById('manual-html-textarea').value = '';
+      } else {
+        writeLog('Nenhum telefone brasileiro com 10 ou 11 dígitos foi encontrado no código colado.', 'warn');
+        alert('Nenhum número de telefone válido foi encontrado no HTML colado. Certifique-se de copiar o código fonte completo.');
+      }
+    }
+
+    // 4. Navegação Autônoma (Loop Híbrido)
+    async function startLoop() {
+      if (keywords.length === 0) {
+        alert('Adicione pelo menos uma palavra-chave para iniciar o loop de varredura.');
+        return;
+      }
+
+      loopActive = true;
+      document.getElementById('btn-start-loop').disabled = true;
+      document.getElementById('btn-stop-loop').disabled = false;
+      
+      const statusBox = document.getElementById('loop-status-info');
+      statusBox.className = 'loop-status-box active';
+
+      writeLog('=== INICIANDO ROBÔ DE VARREDURA AUTÔNOMA ===', 'info');
+      runLoopStep();
+    }
+
+    function stopLoop() {
+      loopActive = false;
+      if (loopTimeoutId) clearTimeout(loopTimeoutId);
+      
+      document.getElementById('btn-start-loop').disabled = false;
+      document.getElementById('btn-stop-loop').disabled = true;
+      
+      const statusBox = document.getElementById('loop-status-info');
+      statusBox.className = 'loop-status-box';
+      statusBox.innerText = 'Loop Pausado pelo usuário.';
+      writeLog('Robô de busca pausado pelo usuário.', 'warn');
+    }
+
+    async function runLoopStep() {
+      if (!loopActive) return;
+
+      if (loopIndex >= keywords.length) {
+        loopIndex = 0; // Reinicia o loop
+        writeLog('Ciclo completo concluído. Reiniciando a lista de palavras-chave...', 'info');
+      }
+
+      const kw = keywords[loopIndex];
+      const statusBox = document.getElementById('loop-status-info');
+      statusBox.innerText = `Varrendo palavra (${loopIndex + 1}/${keywords.length}): "${kw}"`;
+
+      // Executa a busca automática
+      const results = await searchAutoWithFallback(kw);
+
+      if (results.length > 0) {
+        // Encontrou leads! Salva e agenda o próximo passo para daqui a 6 segundos
+        const added = saveExtractedLeads(results);
+        writeLog(`Aguardando delay de 6 segundos antes da próxima palavra-chave comercial...`);
+        
+        loopIndex++;
+        loopTimeoutId = setTimeout(() => {
+          runLoopStep();
+        }, 6000);
+      } else {
+        // Pausa Híbrida Inteligente (Item 4)
+        writeLog(`[Pausa Híbrida] Nenhuma extração direta para: "${kw}". Acionando interface manual de suporte contra bloqueio.`, 'warn');
+        triggerHybridPause(kw);
+      }
+    }
+
+    // Abre modal para o usuário colar o HTML
+    function triggerHybridPause(kw) {
+      loopActive = false;
+      const overlay = document.getElementById('pause-modal-overlay');
+      document.getElementById('paused-keyword-name').innerText = kw;
+      document.getElementById('paused-keyword-search-term').innerText = kw + ' telefone';
+      document.getElementById('modal-html-textarea').value = '';
+      overlay.classList.add('show');
+    }
+
+    // Retoma o loop usando o HTML colado no modal
+    function resumeLoopWithHtml() {
+      const htmlText = document.getElementById('modal-html-textarea').value.trim();
+      const kw = keywords[loopIndex];
+      const overlay = document.getElementById('pause-modal-overlay');
+
+      if (!htmlText) {
+        alert('Por favor, cole o código fonte ou texto da página de resultados para continuar.');
+        return;
+      }
+
+      writeLog(`Processando HTML manual fornecido pelo usuário no loop para "${kw}"...`);
+      const fakeSnippets = [{ title: 'Manual Loop Override', snippet: htmlText }];
+      const extracted = analyzeAndExtractLeads(fakeSnippets, kw, 'Manual');
+
+      if (extracted.length > 0) {
+        const added = saveExtractedLeads(extracted);
+        writeLog(`Sucesso! Encontrados ${extracted.length} contatos. Retomando robô automático...`, 'success');
+        
+        // Esconde modal e avança o loop
+        overlay.classList.remove('show');
+        loopIndex++;
+        loopActive = true;
+        document.getElementById('btn-start-loop').disabled = true;
+        document.getElementById('btn-stop-loop').disabled = false;
+        
+        const statusBox = document.getElementById('loop-status-info');
+        statusBox.className = 'loop-status-box active';
+        
+        runLoopStep();
+      } else {
+        alert('Nenhum telefone encontrado neste HTML. Certifique-se de copiar a página completa contendo telefones.');
+      }
+    }
+
+    function skipLoopStep() {
+      const overlay = document.getElementById('pause-modal-overlay');
+      overlay.classList.remove('show');
+      writeLog('Ignorando palavra-chave atual no loop híbrido.');
+      
+      loopIndex++;
+      loopActive = true;
+      document.getElementById('btn-start-loop').disabled = true;
+      document.getElementById('btn-stop-loop').disabled = false;
+      
+      const statusBox = document.getElementById('loop-status-info');
+      statusBox.className = 'loop-status-box active';
+      
+      runLoopStep();
+    }
+
+    function abortLoopFromModal() {
+      const overlay = document.getElementById('pause-modal-overlay');
+      overlay.classList.remove('show');
+      stopLoop();
+    }
+
+    // 5. Interface, Abas e Métricas
+    function updateMetrics() {
+      document.getElementById('metric-total-leads').innerText = leads.length;
+      document.getElementById('metric-session-leads').innerText = sessionLeadsCount;
+      document.getElementById('metric-total-searches').innerText = totalSearchesCount;
+
+      // Abas de contagem
+      document.getElementById('count-all').innerText = leads.length;
+      document.getElementById('count-vendedor').innerText = leads.filter(l => l.intent === 'vendedor').length;
+      document.getElementById('count-comprador').innerText = leads.filter(l => l.intent === 'comprador').length;
+      document.getElementById('count-troca').innerText = leads.filter(l => l.intent === 'troca').length;
+      document.getElementById('count-aluguel').innerText = leads.filter(l => l.intent === 'aluguel').length;
+    }
+
+    function switchTab(tab, element) {
+      activeTab = tab;
+      
+      // Ajusta classe ativa do botão
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+
+      renderLeadsTable();
+    }
+
+    function renderLeadsTable() {
+      const body = document.getElementById('leads-table-body');
+      const emptyState = document.getElementById('table-empty-state');
+      body.innerHTML = '';
+
+      // Filtra leads com base na aba ativa
+      const filteredLeads = leads.filter(l => {
+        if (activeTab === 'all') return true;
+        return l.intent === activeTab;
+      });
+
+      if (filteredLeads.length > 0) {
+        emptyState.style.display = 'none';
+        
+        // Exibe do mais recente para o mais antigo
+        const reversedLeads = [...filteredLeads].reverse();
+        
+        reversedLeads.forEach(l => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td style="color: var(--text-muted); font-size: 11px;">${l.date || 'Hoje'}</td>
+            <td><span class="phone-badge">${l.formattedPhone}</span></td>
+            <td><strong style="color: #fff;">${l.name}</strong></td>
+            <td><span class="intent-badge ${l.intent}">${l.intent}</span></td>
+            <td>${l.brandItem} <span style="color: var(--text-muted); font-size: 11px; margin-left: 4px;">(${l.price})</span></td>
+            <td style="color: var(--text-muted); font-size: 12px;">${l.local}</td>
+            <td><span class="source-badge">${l.source}</span></td>
+          `;
+          body.appendChild(row);
+        });
+      } else {
+        emptyState.style.display = 'block';
+      }
+    }
+
+    // 5. Exportar CSV
+    function exportToCSV() {
+      if (leads.length === 0) {
+        alert('Não há contatos cadastrados para exportar.');
+        return;
+      }
+
+      writeLog('Iniciando exportação de arquivo CSV comercial...');
+      const headers = ['Data', 'Telefone', 'Nome', 'Intencao', 'Item', 'Preco', 'Local', 'Origem', 'Fonte'];
+      const csvRows = [];
+      
+      // Adiciona cabeçalho
+      csvRows.push(headers.join(';'));
+
+      leads.forEach(l => {
+        const row = [
+          l.date,
+          l.phone,
+          l.name.replace(/;/g, ' '),
+          l.intent,
+          l.brandItem.replace(/;/g, ' '),
+          l.price.replace(/;/g, ' '),
+          l.local.replace(/;/g, ' '),
+          l.query.replace(/;/g, ' '),
+          l.source
+        ];
+        csvRows.push(row.join(';'));
+      });
+
+      // Força o download do arquivo no navegador
+      const blob = new Blob(['\ufeff' + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'leads_minerados_' + new Date().toLocaleDateString('pt-BR').replace(/\//g, '_') + '.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      writeLog('Arquivo de leads CSV exportado com sucesso!', 'success');
+    }
+  </script>
+</body>
+</html>
