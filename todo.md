@@ -96,7 +96,15 @@
 - [ ] Validar os fluxos principais por grupos de abas, sem iniciar ações externas ou alterar dados sem solicitação explícita.
 - [x] Remover o cartão residual de análise da Visão Geral após a exclusão da aba Análises.
 - [ ] Aplicar o tema sóbrio aos painéis internos restantes de Radar, Inteligência, Mensagens e modais, eliminando gradientes e efeitos chamativos residuais.
+- [ ] Neutralizar o visual residual de LeadTable, Header e CommercialIntelligenceCenter, reduzindo acentos concorrentes, animações e sombras pesadas.
+- [ ] Remover efeitos residuais dos subpainéis e modais de Inteligência e Mensagens, substituindo pulsos e blur por superfícies neutras.
+- [ ] Executar uma varredura final por gradientes, animações decorativas e blur nas áreas de Radar, Inteligência e Mensagens antes da validação final.
 - [ ] Revisar os toggles ainda expostos e mover opções secundárias restantes para áreas recolhíveis ou contextuais.
 - [ ] Concluir a reformulação visual dos subpainéis internos de Pipeline, Radar, Inteligência e Mensagens.
 - [ ] Validar explicitamente, aba por aba, os fluxos visuais de Pipeline, Radar, Inteligência e Mensagens após as mudanças.
 - [x] Executar as melhorias visuais em lote, sem perguntas ou confirmações desnecessárias ao usuário.
+- [x] Neutralizar os efeitos visuais residuais do Radar fora dos painéis principais já revisados.
+- [x] Neutralizar skeletons, ornamentos, escalas e sombras fortes no CommercialIntelligenceCenter.
+- [ ] Executar varredura final com caminhos explícitos para confirmar a ausência de gradientes, pulsos, bounce, ping e blur nas áreas revisadas.
+- [ ] Incluir modais de Mensagens fora do padrão WhatsApp e subpainéis de keywordIntelligence na varredura visual final.
+- [ ] Reduzir sombras, escalas e acentos concorrentes restantes na LeadTable após varredura específica.

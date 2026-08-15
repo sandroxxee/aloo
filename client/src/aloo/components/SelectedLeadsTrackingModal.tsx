@@ -127,14 +127,14 @@ export const SelectedLeadsTrackingModal: React.FC<SelectedLeadsTrackingModalProp
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4">
+      <div className="flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900">
         
         {/* MODAL HEADER */}
         <div className="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-500/30">
-              <CheckCheck className="w-6 h-6 animate-pulse" />
+              <CheckCheck className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -194,7 +194,7 @@ export const SelectedLeadsTrackingModal: React.FC<SelectedLeadsTrackingModalProp
             <span className="text-[10px] font-extrabold uppercase text-emerald-500 block tracking-wider">Respondidos 💬</span>
             <span className="text-lg font-black text-emerald-600 dark:text-emerald-400 font-mono flex items-center gap-1">
               {metrics.replied}
-              {metrics.replied > 0 && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />}
+              {metrics.replied > 0 && <span className="w-2 h-2 rounded-full bg-emerald-500" />}
             </span>
           </div>
 
@@ -309,7 +309,7 @@ export const SelectedLeadsTrackingModal: React.FC<SelectedLeadsTrackingModalProp
                   <div className="flex items-center gap-3 shrink-0">
                     <div className="text-right space-y-0.5">
                       {isReplied ? (
-                        <div className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500 text-white font-extrabold text-xs rounded-lg shadow-sm animate-pulse">
+                        <div className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500 text-white font-extrabold text-xs rounded-lg shadow-sm">
                           <MessageSquare className="w-3.5 h-3.5 fill-current" />
                           <span>RESPONDIDO! 💬</span>
                         </div>

@@ -217,7 +217,7 @@ const LeadTableRow = React.memo(({
                  </span>
                  {isReplied && (
                     <div className="flex items-center gap-1 px-2 py-0.5 bg-emerald-600 text-white rounded-md">
-                       <div className="w-1 h-1 rounded-full bg-white animate-pulse" />
+                       <div className="w-1 h-1 rounded-full bg-white" />
                        <span className="text-[8px] font-black uppercase">REPLIED</span>
                     </div>
                  )}
@@ -947,14 +947,14 @@ export const LeadTable: React.FC<LeadTableProps> = ({
         
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-slate-900 dark:bg-white flex items-center justify-center text-white dark:text-slate-900 shadow-2xl shadow-slate-900/20">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm dark:bg-white dark:text-slate-900">
               <Layers className="w-8 h-8" />
             </div>
             <div>
               <div className="flex items-center gap-3">
                 <h3 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">Base de leads</h3>
-                <div className="flex items-center gap-2 px-3 py-1 bg-blue-600 text-white rounded-lg shadow-lg shadow-blue-500/20">
-                  <Activity className="w-3.5 h-3.5 animate-pulse" />
+                <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-100 px-3 py-1 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  <Activity className="h-3.5 w-3.5" />
                   <span className="text-[10px] font-black tracking-widest uppercase">Atualização em tempo real</span>
                 </div>
               </div>
@@ -968,7 +968,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
           <div className="flex flex-wrap items-center gap-3">
              <button
               onClick={() => setIsSmartExportOpen(true)}
-              className="flex items-center gap-3 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              className="flex cursor-pointer items-center gap-3 rounded-xl bg-emerald-600 px-6 py-3.5 text-[10px] font-black uppercase tracking-widest text-white shadow-sm transition-colors hover:bg-emerald-700 active:scale-95"
             >
               <FileSpreadsheet className="w-4.5 h-4.5" />
               Exportar
@@ -1356,7 +1356,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             <button
               type="button"
               onClick={() => setIsTrackingModalOpen(true)}
-              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs rounded-xl shadow-lg shadow-emerald-500/30 flex items-center gap-2 transition-all cursor-pointer animate-pulse"
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs rounded-xl shadow-sm flex items-center gap-2 transition-colors cursor-pointer"
             >
               <Zap className="w-4 h-4 fill-current" />
               <span>⚡ Acompanhar Envios em Tempo Real</span>
@@ -1485,8 +1485,8 @@ export const LeadTable: React.FC<LeadTableProps> = ({
 
       {/* AI Pitch Generator Modal */}
       {isPitchModalOpen && pitchLead && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+          <div className="max-w-lg w-full space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-800 dark:bg-slate-900">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div className="flex items-center gap-2">
                 <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 border border-amber-200 dark:border-amber-900">
@@ -1508,7 +1508,7 @@ export const LeadTable: React.FC<LeadTableProps> = ({
             {isGeneratingPitch ? (
               <div className="py-12 flex flex-col items-center justify-center space-y-3">
                 <div className="w-8 h-8 border-3 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-                <p className="text-xs font-medium text-slate-600 dark:text-slate-400 animate-pulse">IA redigindo pitch comercial persuasivo...</p>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-400">IA redigindo pitch comercial persuasivo...</p>
               </div>
             ) : (
               <div className="space-y-3">

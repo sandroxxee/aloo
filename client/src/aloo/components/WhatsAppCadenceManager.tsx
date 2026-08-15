@@ -86,7 +86,7 @@ export const WhatsAppCadenceManager: React.FC<WhatsAppCadenceManagerProps> = ({ 
                     <span className="text-xs font-bold text-slate-800 tracking-tight">IA Áudio PTT</span>
                   </div>
                   {stage.step === 2 && (
-                    <span className="px-1.5 py-0.5 bg-amber-500 text-white text-[8px] font-bold rounded animate-pulse">Recomendado</span>
+                    <span className="px-1.5 py-0.5 bg-amber-500 text-white text-[8px] font-bold rounded">Recomendado</span>
                   )}
                 </div>
                 

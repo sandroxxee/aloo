@@ -196,7 +196,7 @@ export const WhatsAppBroadcastComposer: React.FC<WhatsAppBroadcastComposerProps>
             disabled={pendingCount === 0 || isAiNicheGenerating}
             className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-md"
           >
-             {isAiNicheGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 fill-current animate-pulse text-amber-300" />}
+             {isAiNicheGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 fill-current text-amber-300" />}
             <span>Adicionar na Fila ({pendingCount} Leads)</span>
           </button>
         </div>

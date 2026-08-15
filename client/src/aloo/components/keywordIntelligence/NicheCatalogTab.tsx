@@ -21,7 +21,7 @@ export const NicheCatalogTab: React.FC<NicheCatalogTabProps> = ({ onAddMultipleK
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-6 rounded-3xl text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border border-slate-700 bg-slate-900 p-6 text-white shadow-sm md:flex-row">
         <div className="space-y-1">
           <span className="text-xs font-bold text-blue-400 flex items-center gap-1">
             <Layers className="w-3.5 h-3.5" /> Banco Nacional de Nichos B2B
@@ -39,7 +39,7 @@ export const NicheCatalogTab: React.FC<NicheCatalogTabProps> = ({ onAddMultipleK
             setToastNotice(`🔥 TODOS os ${NATIONAL_NICHES_CATALOG.length} nichos nacionais injetados (${all.length} termos)!`);
             setTimeout(() => setToastNotice(null), 4000);
           }}
-          className="px-5 py-3 bg-emerald-500 hover:bg-emerald-600 font-bold text-xs rounded-2xl shadow-md transition-all shrink-0 cursor-pointer flex items-center gap-2"
+          className="flex shrink-0 cursor-pointer items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-xs font-bold shadow-sm transition-colors hover:bg-emerald-600"
         >
           <Sparkles className="w-4 h-4" /> Ativar Todos os Nichos ({NATIONAL_NICHES_CATALOG.length})
         </button>

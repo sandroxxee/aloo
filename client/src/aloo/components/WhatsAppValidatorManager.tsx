@@ -92,7 +92,7 @@ export const WhatsAppValidatorManager: React.FC<WhatsAppValidatorManagerProps> =
         ) : (
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs text-indigo-600 font-bold">
-              <span className="flex items-center gap-1.5 animate-pulse">
+              <span className="flex items-center gap-1.5">
                 <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Verificando contatos...
               </span>
               <span>{validationProgress}%</span>

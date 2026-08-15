@@ -57,7 +57,7 @@ export const CombinatorialExpanderTab: React.FC<CombinatorialExpanderTabProps> =
       {/* Top Banner */}
       <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-2xl shadow-md">
+          <div className="rounded-2xl bg-slate-800 p-3 text-white shadow-sm">
             <Layers className="w-6 h-6" />
           </div>
           <div>
@@ -165,7 +165,7 @@ export const CombinatorialExpanderTab: React.FC<CombinatorialExpanderTabProps> =
         <div className="pt-2 border-t border-slate-100 flex justify-end">
           <button
             onClick={handleGenerateMatrix}
-            className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-xs rounded-2xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            className="flex cursor-pointer items-center gap-2 rounded-2xl bg-indigo-600 px-6 py-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-indigo-700"
           >
             <Sparkles className="w-4 h-4" /> Gerar Matriz Combinatória
           </button>

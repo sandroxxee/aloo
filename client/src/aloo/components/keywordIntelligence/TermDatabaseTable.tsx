@@ -396,8 +396,8 @@ export const TermDatabaseTable: React.FC<TermDatabaseTableProps> = ({
 
       {/* Detail Modal */}
       {selectedTermDetail && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-xl w-full shadow-2xl border border-slate-100 space-y-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+          <div className="max-w-xl w-full space-y-4 rounded-3xl border border-slate-100 bg-white p-6 shadow-lg">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <span className="text-xs font-bold text-blue-600">Histórico & Ficha do Termo</span>

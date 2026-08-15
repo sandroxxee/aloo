@@ -1209,7 +1209,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
         </summary>
         <div className={`mt-3 p-4 rounded-2xl border transition-all ${
         isBatchScanning
-          ? 'bg-gradient-to-r from-amber-950 via-slate-900 to-indigo-950 border-amber-500 shadow-xl text-white'
+          ? 'bg-slate-900 border-slate-700 shadow-sm text-white'
           : 'bg-amber-50/80 border-amber-200/90 text-slate-800'
       }`}>
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -1217,7 +1217,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
           {/* Left Info Header */}
           <div className="flex items-start gap-3">
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md ${
-              isBatchScanning ? 'bg-amber-500 text-slate-950 animate-pulse' : 'bg-amber-100 text-amber-800'
+              isBatchScanning ? 'bg-amber-500 text-slate-950' : 'bg-amber-100 text-amber-800'
             }`}>
               <Zap className="w-6 h-6 fill-current" />
             </div>
@@ -1229,7 +1229,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                     ? 'bg-amber-400/20 text-amber-300 border border-amber-400/30'
                     : 'bg-amber-200/80 text-amber-900'
                 }`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${isBatchScanning ? 'bg-amber-400 animate-ping' : 'bg-amber-600'}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${isBatchScanning ? 'bg-amber-400' : 'bg-amber-600'}`} />
                   {isBatchScanning ? 'EXTRAÇÃO EM LOTE EM EXECUÇÃO' : 'EXTRAÇÃO EM LOTE SIMULTÂNEA'}
                 </span>
 
@@ -1253,7 +1253,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
               {isBatchScanning && (
                 <div className="w-full bg-black/40 rounded-full h-2 mt-2 overflow-hidden border border-amber-500/30">
                   <div
-                    className="bg-gradient-to-r from-amber-400 to-emerald-400 h-full transition-all duration-300"
+                    className="h-full bg-emerald-500 transition-[width] duration-200"
                     style={{ width: `${Math.round((batchCurrentStep / batchTotalSteps) * 100)}%` }}
                   />
                 </div>
@@ -1326,7 +1326,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
               <button
                 type="button"
                 onClick={handleStopBatchScan}
-                className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2 animate-pulse"
+                className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-sm transition-colors cursor-pointer flex items-center gap-2"
               >
                 <Pause className="w-4 h-4 fill-current" />
                 <span>Interromper Lote</span>
@@ -1335,7 +1335,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
               <button
                 type="button"
                 onClick={handleStartBatchScan}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2 border border-amber-300"
+                className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-sm transition-colors cursor-pointer flex items-center gap-2 border border-amber-300"
               >
                 <Zap className="w-4 h-4 fill-current text-slate-950" />
                 <span>Extração em Lote ({batchPointsDensity} Pontos)</span>
@@ -1356,13 +1356,13 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
         </summary>
         <div className={`mt-3 p-4 rounded-2xl border transition-all ${
         isAutoPilot
-          ? 'bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 border-indigo-500 shadow-xl text-white'
+          ? 'bg-slate-900 border-slate-700 shadow-sm text-white'
           : 'bg-indigo-50/70 border-indigo-200 text-slate-800'
       }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md ${
-              isAutoPilot ? 'bg-indigo-600 text-white animate-pulse' : 'bg-indigo-100 text-indigo-700'
+              isAutoPilot ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-700'
             }`}>
               <Bot className="w-6 h-6" />
             </div>
@@ -1374,7 +1374,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                     ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                     : 'bg-indigo-100 text-indigo-700'
                 }`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${isAutoPilot ? 'bg-emerald-400 animate-ping' : 'bg-indigo-500'}`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${isAutoPilot ? 'bg-emerald-400' : 'bg-indigo-500'}`} />
                   {isAutoPilot ? 'PILOTO AUTOMÁTICO ATIVO' : 'MODO AUTÔNOMO DISPONÍVEL'}
                 </span>
 
@@ -1446,7 +1446,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
               onClick={toggleAutoPilot}
               className={`px-4 py-2 rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer flex items-center gap-2 ${
                 isAutoPilot
-                  ? 'bg-rose-600 hover:bg-rose-500 text-white animate-pulse'
+                  ? 'bg-rose-600 hover:bg-rose-500 text-white'
                   : 'bg-indigo-600 hover:bg-indigo-500 text-white'
               }`}
             >
@@ -1477,7 +1477,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-white tracking-tight">Busca com limites seguros</span>
               <span className="px-2 py-0.5 rounded-full text-xs  bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 Proteção ativa
               </span>
             </div>
@@ -1653,7 +1653,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                   <button
                     type="button"
                     onClick={handleStopScan}
-                    className="w-full py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 animate-pulse"
+                    className="w-full py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Pause className="w-4 h-4 fill-current" />
                     <span>Parar</span>
@@ -1919,7 +1919,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
 
       {/* Progress Bar during Scanning */}
       {isScanning && (
-        <div className="bg-blue-50 border border-blue-200 p-4 rounded-2xl space-y-2 animate-pulse">
+        <div className="bg-blue-50 border border-blue-200 p-4 rounded-2xl space-y-2">
           <div className="flex items-center justify-between text-xs font-bold text-blue-900">
             <span className="flex items-center gap-2">
               <RotateCw className="w-4 h-4 animate-spin text-blue-600" />
@@ -1966,7 +1966,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsSidePanelOpen(true)}
-                  className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-lg shadow-md transition-all cursor-pointer flex items-center gap-1.5 animate-pulse"
+                  className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-lg shadow-sm transition-colors cursor-pointer flex items-center gap-1.5"
                   title="Expandir Lista Retráctil de Contatos"
                 >
                   <PanelRightOpen className="w-4 h-4" />

@@ -206,7 +206,7 @@ export const WhatsAppConfigManager: React.FC<WhatsAppConfigManagerProps> = ({ on
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between shadow-xs">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
             <h4 className="text-xs font-bold text-slate-800 flex items-center gap-2">
-              <Radio className="w-4 h-4 text-indigo-600 animate-pulse" />
+              <Radio className="w-4 h-4 text-indigo-600" />
               <span>Monitoramento Ativo</span>
             </h4>
             <span className={`px-2 py-0.5 rounded-md text-xs  border ${watchdogEnabled ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-50 text-slate-500 border-slate-200'}`}>
@@ -330,7 +330,7 @@ export const WhatsAppConfigManager: React.FC<WhatsAppConfigManagerProps> = ({ on
                     </div>
                     <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
                       nativeStatus?.status === 'open' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                      nativeStatus?.status === 'connecting' ? 'bg-amber-50 text-amber-700 border-amber-200 animate-pulse' :
+                      nativeStatus?.status === 'connecting' ? 'bg-amber-50 text-amber-700 border-amber-200' :
                       'bg-slate-50 text-slate-500 border-slate-200'
                     }`}>
                       {nativeStatus?.status === 'open' ? 'CONECTADO' :
@@ -374,7 +374,7 @@ export const WhatsAppConfigManager: React.FC<WhatsAppConfigManagerProps> = ({ on
                         </div>
                       ) : (
                         <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-4 text-center text-xs text-slate-600">
-                          <Smartphone className="w-8 h-8 text-slate-400 mx-auto mb-2 animate-bounce" />
+                          <Smartphone className="w-8 h-8 text-slate-400 mx-auto mb-2" />
                           <p className=" text-slate-800 tracking-wide">Nenhuma conexão ativa iniciada.</p>
                           <p className="text-xs text-slate-500 mt-1 max-w-[400px] mx-auto leading-relaxed">
                             O código QR não será gerado sozinho para poupar bateria e performance. Clique no botão abaixo para gerar.
@@ -595,4 +595,3 @@ export const WhatsAppConfigManager: React.FC<WhatsAppConfigManagerProps> = ({ on
     </div>
   );
 };
-

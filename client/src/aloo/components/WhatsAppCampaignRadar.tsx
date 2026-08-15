@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, ShieldCheck, Zap } from 'lucide-react';
+import { ShieldCheck, Zap } from 'lucide-react';
 
 interface WhatsAppCampaignRadarProps {
   sentCount: number;
@@ -14,72 +14,68 @@ export const WhatsAppCampaignRadar: React.FC<WhatsAppCampaignRadarProps> = ({
   repliedCount,
   progressPercent,
   isRunning,
-  onOpenTrackingModal
+  onOpenTrackingModal,
 }) => {
   return (
-    <div className="bg-gradient-to-r from-indigo-900 to-slate-900 rounded-xl p-5 border border-indigo-500/30 shadow-lg relative overflow-hidden group">
-      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-        <Activity className="w-24 h-24 text-white" />
-      </div>
-      
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div className="rounded-xl border border-slate-700 bg-slate-900 p-5 shadow-sm">
+      <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <h3 className="text-indigo-100 text-xs font-bold tracking-[0.2em]">Radar de Saúde da Campanha V3.2</h3>
+            <div className="h-2 w-2 rounded-full bg-emerald-500" />
+            <h3 className="text-xs font-bold tracking-[0.16em] text-slate-300">Radar de saúde da campanha</h3>
           </div>
-          <h4 className="text-white text-xl font-display font-medium">Painel de desempenho comercial</h4>
-          <p className="text-indigo-300/70 text-xs max-w-md">
+          <h4 className="font-display text-xl font-medium text-slate-100">Painel de desempenho comercial</h4>
+          <p className="max-w-md text-xs text-slate-400">
             Monitoramento em tempo real de entrega, taxa de conversão e triagem semântica via IA Gemini.
           </p>
         </div>
 
-        <div className="flex items-center gap-8 bg-black/30 backdrop-blur-sm p-4 rounded-xl border border-white/10">
+        <div className="flex items-center gap-8 rounded-xl border border-slate-800 bg-slate-950/60 p-4">
           <div className="text-center">
-            <span className="text-xs font-bold text-indigo-300 block mb-1">Entregues</span>
-            <span className="text-2xl font-display font-medium text-white">{sentCount}</span>
+            <span className="mb-1 block text-xs font-bold text-slate-400">Entregues</span>
+            <span className="font-display text-2xl font-medium text-slate-100">{sentCount}</span>
           </div>
-          <div className="w-px h-8 bg-white/10" />
+          <div className="h-8 w-px bg-slate-800" />
           <div className="text-center">
-            <span className="text-xs font-bold text-emerald-300 block mb-1">Respostas</span>
-            <span className="text-2xl font-display font-medium text-emerald-400">{repliedCount}</span>
+            <span className="mb-1 block text-xs font-bold text-slate-400">Respostas</span>
+            <span className="font-display text-2xl font-medium text-emerald-400">{repliedCount}</span>
           </div>
-          <div className="w-px h-8 bg-white/10" />
+          <div className="h-8 w-px bg-slate-800" />
           <div className="text-center">
-            <span className="text-xs font-bold text-amber-300 block mb-1">Taxa de retorno %</span>
-            <span className="text-2xl font-display font-medium text-amber-400">
+            <span className="mb-1 block text-xs font-bold text-slate-400">Taxa de retorno</span>
+            <span className="font-display text-2xl font-medium text-slate-100">
               {sentCount > 0 ? ((repliedCount / sentCount) * 100).toFixed(1) : '0.0'}%
             </span>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2.5 w-full md:w-52">
+        <div className="flex w-full flex-col gap-2.5 md:w-52">
           {onOpenTrackingModal && (
             <button
               type="button"
               onClick={onOpenTrackingModal}
-              className="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs rounded-xl shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 transition-all cursor-pointer animate-pulse active:scale-95"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-slate-100 px-3.5 py-2 text-xs font-bold text-slate-900 transition-colors hover:bg-white active:scale-95"
             >
-              <Zap className="w-4 h-4 fill-current" />
-              <span>Acompanhamento Real 💬</span>
+              <Zap className="h-4 w-4 fill-current" />
+              <span>Acompanhamento</span>
             </button>
           )}
 
           <div>
-            <div className="flex items-center justify-between text-xs font-bold text-white mb-1">
-              <span>Saúde da Campanha</span>
+            <div className="mb-1 flex items-center justify-between text-xs font-bold text-slate-200">
+              <span>Saúde da campanha</span>
               <span>{progressPercent}%</span>
             </div>
-            <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 transition-all duration-1000"
+            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+              <div
+                className="h-full bg-emerald-500 transition-[width] duration-200"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-indigo-300 font-medium">
-            <ShieldCheck className="w-3 h-3 text-emerald-500" />
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+            <ShieldCheck className="h-3 w-3 text-emerald-500" />
             Proteção: {isRunning ? 'ATIVADA' : 'EM ESPERA'}
           </div>
         </div>

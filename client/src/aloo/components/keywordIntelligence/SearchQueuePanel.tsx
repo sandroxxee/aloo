@@ -27,7 +27,7 @@ export const SearchQueuePanel: React.FC = () => {
         >
           <div className="relative">
             <Search className="w-5 h-5 text-emerald-400 group-hover:rotate-12 transition-transform" />
-            <span className="absolute -top-2 -right-2 w-5 h-5 bg-emerald-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-slate-900 animate-pulse">
+            <span className="absolute -top-2 -right-2 w-5 h-5 bg-emerald-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-slate-900">
               {activeCount}
             </span>
           </div>
@@ -90,7 +90,7 @@ export const SearchQueuePanel: React.FC = () => {
                           {task.keyword}
                         </span>
                         {task.status === 'running' && (
-                          <span className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-500 text-[8px] font-black uppercase rounded-sm animate-pulse">
+                          <span className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-500 text-[8px] font-black uppercase rounded-sm">
                             Processando
                           </span>
                         )}
@@ -143,7 +143,7 @@ export const SearchQueuePanel: React.FC = () => {
           {/* Footer Info */}
           <div className="px-6 py-4 bg-slate-950 text-white flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
+              <div className="w-2 h-2 bg-emerald-500 rounded-full" />
               <span className="text-[9px] font-black uppercase tracking-widest text-slate-400">Motor Enterprise V3.8 Ativo</span>
             </div>
             {tasks.some(t => t.status === 'completed') && (

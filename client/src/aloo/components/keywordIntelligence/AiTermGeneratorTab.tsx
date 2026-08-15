@@ -118,7 +118,7 @@ export const AiTermGeneratorTab: React.FC<AiTermGeneratorTabProps> = ({
       {/* Header & Mode Selector */}
       <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-5">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl shadow-md">
+          <div className="rounded-2xl bg-slate-800 p-3 text-white shadow-sm">
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
@@ -139,7 +139,7 @@ export const AiTermGeneratorTab: React.FC<AiTermGeneratorTabProps> = ({
                 onClick={() => setSelectedMode(m.mode)}
                 className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-blue-600 border-blue-600 text-white shadow-md scale-102'
+                    ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
                     : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -164,7 +164,7 @@ export const AiTermGeneratorTab: React.FC<AiTermGeneratorTabProps> = ({
           <button
             type="submit"
             disabled={isGenerating}
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-blue-700 disabled:opacity-50"
           >
             {isGenerating ? (
               <>

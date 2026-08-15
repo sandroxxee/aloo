@@ -94,7 +94,7 @@ export const CrossScannerTab: React.FC<CrossScannerTabProps> = ({ onAddMultipleK
       {/* Banner */}
       <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-gradient-to-br from-emerald-600 to-teal-600 text-white rounded-2xl shadow-md">
+          <div className="rounded-2xl bg-slate-800 p-3 text-white shadow-sm">
             <Target className="w-6 h-6" />
           </div>
           <div>

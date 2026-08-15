@@ -76,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
   const { lastSearchLatency, isLatencyHigh, dismissWarning } = useConnectionMonitor();
 
   return (
-    <header className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-900 sticky top-0 z-50 transition-colors duration-200">
+    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white dark:border-slate-900 dark:bg-slate-950 transition-colors duration-200">
       <div className="max-w-[1920px] mx-auto h-16 px-4 sm:px-6 flex items-center justify-between gap-4 lg:gap-8">
         
         {/* Brand Section */}
@@ -147,7 +147,7 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 hover:border-slate-900 dark:hover:border-white'
             }`}
           >
-            <Cloud className={`w-3.5 h-3.5 ${currentUser ? 'animate-bounce' : ''}`} />
+            <Cloud className="w-3.5 h-3.5" />
             <span className="hidden xl:inline">{currentUser ? 'Nuvem ativa' : 'Sincronizar'}</span>
           </button>
 

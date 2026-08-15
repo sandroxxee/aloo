@@ -38,7 +38,7 @@ export const WhatsAppQueueMonitor: React.FC<WhatsAppQueueMonitorProps> = ({
         {activeTab === 'queue' ? (
           <div className="space-y-2">
             <div className="text-xs font-medium text-slate-500 flex items-center gap-2 mb-3">
-              <div className="w-1 h-1 bg-indigo-500 rounded-full animate-ping"></div>
+              <div className="w-1 h-1 bg-indigo-500 rounded-full"></div>
               Próximos Leads na Fila
             </div>
             {pendingLeads.slice(0, 10).map((lead, index) => (
@@ -92,7 +92,7 @@ export const WhatsAppQueueMonitor: React.FC<WhatsAppQueueMonitorProps> = ({
       <div className="bg-slate-900 p-4 border-t border-slate-800">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+            <Activity className="w-3.5 h-3.5 text-emerald-400" />
             <span className="text-xs font-bold text-white ">Processador em tempo real</span>
           </div>
           <div className="flex items-center gap-2">

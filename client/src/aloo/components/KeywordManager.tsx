@@ -492,7 +492,7 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
 
       {/* IMPORT MODAL */}
       {showImportModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
           <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-4 animate-in fade-in">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-lg font-bold text-slate-800">Importar Lista de Palavras-Chave</h3>
@@ -528,7 +528,7 @@ export const KeywordManager: React.FC<KeywordManagerProps> = ({
 
       {/* BYOK Modal (Gemini Fallback) */}
       {showByokModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
             <div className="p-4 bg-indigo-50 border-b border-indigo-100 flex items-center gap-3">
               <div className="p-2 bg-indigo-100 rounded-lg">

@@ -365,7 +365,7 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
 
       {/* EVOLUTION QR CODE MODAL */}
       {evolution.showEvolutionQrModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200">
             <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
               <div className="flex items-center gap-2.5">
@@ -383,7 +383,7 @@ export const BackgroundAutoSender: React.FC<BackgroundAutoSenderProps> = ({
               {evolution.evolutionQrLoading ? (
                 <div className="flex flex-col items-center gap-4 text-emerald-600">
                   <Loader2 className="w-10 h-10 animate-spin" />
-                  <p className="text-xs font-bold animate-pulse">Gerando QR Code Oficial...</p>
+                  <p className="text-xs font-bold">Gerando QR Code Oficial...</p>
                 </div>
               ) : evolution.evolutionQrError ? (
                 <div className="text-center space-y-4">

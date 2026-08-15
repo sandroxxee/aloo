@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   History,
-  Zap,
-  TrendingUp,
   ShieldCheck,
   Brain,
   RefreshCw
@@ -85,9 +83,9 @@ export const CommercialIntelligenceCenter: React.FC<CommercialIntelligenceCenter
         
         <button
           onClick={handleBackup}
-          className="px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black uppercase tracking-[0.1em] rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-slate-900/10 dark:shadow-white/10 flex items-center gap-2 group cursor-pointer"
+          className="flex cursor-pointer items-center gap-2 rounded-xl bg-slate-900 px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.1em] text-white shadow-sm transition-colors active:scale-[0.98] dark:bg-white dark:text-slate-900"
         >
-          <History className="w-4 h-4 transition-transform group-hover:-rotate-45" />
+          <History className="w-4 h-4" />
           Atualizar registro
         </button>
       </div>
@@ -97,7 +95,7 @@ export const CommercialIntelligenceCenter: React.FC<CommercialIntelligenceCenter
         <AnimatePresence mode="popLayout">
           {loading ? (
             Array(3).fill(0).map((_, i) => (
-              <div key={i} className="h-48 bg-slate-100 dark:bg-slate-800/30 rounded-2xl animate-pulse border border-slate-200 dark:border-slate-800" />
+              <div key={i} className="h-48 rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-800/30" />
             ))
           ) : insights.length > 0 ? (
             insights.map((insight, idx) => (
@@ -105,27 +103,17 @@ export const CommercialIntelligenceCenter: React.FC<CommercialIntelligenceCenter
                 key={idx}
                 initial={{ opacity: 0, y: 15, scale: 0.97 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -5, scale: 1.01 }}
                 transition={{ 
                   delay: idx * 0.1,
-                  type: 'spring' as any,
-                  stiffness: 100,
-                  damping: 20
+                  duration: 0.2,
                 }}
-                className={`p-6 rounded-2xl border flex flex-col justify-between group relative overflow-hidden transition-all hover:shadow-xl cursor-default ${
+                className={`flex cursor-default flex-col justify-between rounded-2xl border p-6 shadow-sm ${
                   insight.priority === 'ALTA' 
                     ? 'bg-slate-900 text-white border-slate-800' 
                     : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'
                 }`}
               >
-                {/* Decorative Icon */}
-                <div className={`absolute -right-4 -bottom-4 p-8 opacity-5 group-hover:opacity-10 transition-all group-hover:scale-110 duration-500 ${
-                  insight.priority === 'ALTA' ? 'text-white' : 'text-slate-400'
-                }`}>
-                  {insight.priority === 'ALTA' ? <Zap className="w-24 h-24" /> : <TrendingUp className="w-24 h-24" />}
-                </div>
-
-                <div className="space-y-4 relative z-10">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className={`text-[9px] font-black px-2.5 py-1 rounded-lg tracking-[0.1em] uppercase ${
                       insight.priority === 'ALTA' ? 'bg-amber-500 text-slate-900' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
@@ -145,7 +133,7 @@ export const CommercialIntelligenceCenter: React.FC<CommercialIntelligenceCenter
                   </div>
                 </div>
 
-                <div className={`mt-6 pt-6 border-t flex items-center justify-between relative z-10 ${
+                <div className={`mt-6 flex items-center justify-between border-t pt-6 ${
                   insight.priority === 'ALTA' ? 'border-white/10' : 'border-slate-100 dark:border-slate-800'
                 }`}>
                   <div className="flex flex-col">
