@@ -539,6 +539,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [scanProgress, setScanProgress] = useState<number>(0);
   const [scannedBusinesses, setScannedBusinesses] = useState<ScannedBusiness[]>([]);
+  const [scanFeedback, setScanFeedback] = useState<{ kind: 'empty' | 'error'; message: string } | null>(null);
   const [activeBusiness, setActiveBusiness] = useState<ScannedBusiness | null>(null);
   const [filterText, setFilterText] = useState('');
   const [contactFilter, setContactFilter] = useState<'all' | 'whatsapp' | 'email' | 'website'>('all');
@@ -599,6 +600,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
     setIsScanning(true);
     setScanProgress(10);
     setScannedBusinesses([]);
+    setScanFeedback(null);
     setActiveBusiness(null);
 
     let currentLat = overrideCenter ? overrideCenter.lat : selectedCity.lat;
@@ -671,6 +673,11 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
       setScannedBusinesses(merged);
       if (merged.length > 0) {
         setActiveBusiness(merged[0]);
+      } else {
+        setScanFeedback({
+          kind: 'empty',
+          message: 'Nenhum contato real foi encontrado com estes critérios. Ajuste a cidade, categoria ou raio e tente novamente.'
+        });
       }
 
       setScanProgress(100);
@@ -750,6 +757,10 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
     } catch (err) {
       console.warn('Falha na busca por proximidade:', err);
       setScannedBusinesses([]);
+      setScanFeedback({
+        kind: 'error',
+        message: 'Não foi possível consultar fontes externas agora. Aguarde alguns instantes antes de tentar novamente.'
+      });
       setActiveBusiness(null);
       onAddLog({
         id: `log_map_scan_error_${Date.now()}`,
@@ -2237,8 +2248,14 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
               {/* Scroll-Optimized Business List Container */}
               <div className="max-h-[460px] overflow-y-auto space-y-2 pr-1 scrollbar-thin scroll-smooth">
                 {filteredBusinesses.length === 0 ? (
-                  <div className="text-center py-8 text-xs text-slate-500 font-medium">
-                    {isScanning ? 'Carregando estabelecimentos...' : 'Nenhuma empresa encontrada com este filtro.'}
+                  <div className={`text-center py-8 px-5 text-xs font-medium rounded-xl border ${
+                    scanFeedback?.kind === 'error'
+                      ? 'text-rose-700 bg-rose-50 border-rose-200'
+                      : 'text-slate-500 bg-slate-50 border-slate-200'
+                  }`}>
+                    {isScanning
+                      ? 'Consultando fontes disponíveis...'
+                      : scanFeedback?.message || 'Selecione uma cidade e inicie uma busca para listar empresas com contatos reais.'}
                   </div>
                 ) : (
                   filteredBusinesses.map((b) => (

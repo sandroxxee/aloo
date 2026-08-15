@@ -36,6 +36,8 @@ O painel será consolidado como um **centro de inteligência operacional**: supe
 
 > A recarga da prévia confirmou que o Radar abre com **0 empresas encontradas** e sem avaliações ou contatos gerados localmente. A próxima validação deve cobrir os fluxos acionados por cidade, lote e modo autônomo.
 
+> O painel de resultados do Radar agora orienta o usuário a iniciar uma busca real e diferencia visualmente carregamento, ausência de contatos e falha de consulta, sem preencher empresas artificiais.
+
 ## Passagem de validação
 
 | Fluxo | Resultado observado | Ação |
