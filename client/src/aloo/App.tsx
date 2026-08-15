@@ -2930,7 +2930,7 @@ export default function App() {
                     }`}
                   >
                     <Zap className={`w-3.5 h-3.5 ${dashboardSubTab === 'overview' || dashboardSubTab === 'robot' ? 'text-amber-400' : 'text-slate-400'}`} />
-                    <span>Overview</span>
+                    <span>Visão geral</span>
                   </button>
 
                   <button
@@ -2942,7 +2942,7 @@ export default function App() {
                     }`}
                   >
                     <BarChart3 className="w-3.5 h-3.5" />
-                    <span>Analytics</span>
+                    <span>Análises</span>
                   </button>
 
                   <button
@@ -2954,7 +2954,7 @@ export default function App() {
                     }`}
                   >
                     <Sliders className="w-4 h-4" />
-                    <span>Extras</span>
+                    <span>Mais opções</span>
                   </button>
 
 
