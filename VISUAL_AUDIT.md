@@ -44,6 +44,8 @@ O painel será consolidado como um **centro de inteligência operacional**: supe
 
 > A recarga posterior confirmou a navegação localizada do dashboard e novamente não registrou erros no console da prévia.
 
+> A troca de UF de São Paulo para Rio de Janeiro no Radar foi validada sem iniciar consulta externa: mapa, rótulos e cidades foram atualizados, enquanto a contagem de empresas permaneceu em zero.
+
 ## Passagem de validação
 
 | Fluxo | Resultado observado | Ação |
