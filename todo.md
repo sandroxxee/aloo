@@ -57,12 +57,12 @@
 - [x] Localizar e simplificar os controles prioritários e o estado vazio da tabela de leads.
 - [x] Localizar os estágios, reduzir a ênfase do descarte e orientar o estado vazio do Kanban.
 - [x] Remover controles e mensagens de rotação de IP/proxies do Radar, preservando apenas práticas de busca seguras.
-- [ ] Verificar e eliminar resultados, avaliações e contatos sintéticos do Radar antes da reformulação visual.
+- [x] Verificar e eliminar resultados, avaliações e contatos sintéticos do Radar antes da reformulação visual.
 - [ ] Remover a subaba e o subpainel residual de proxy das configurações e qualquer texto de evasão associado.
 - [ ] Excluir de `SystemSettingsTab.tsx` o tipo, estados, handlers e JSX residuais de proxy/VPN e validar as Configurações sem esse fluxo.
 - [x] Eliminar a infraestrutura residual de proxy e rotação não utilizada em `searchEngines.ts`.
 - [ ] Validar carga inicial, troca de local, busca manual, extração em lote e modo autônomo do Radar sem qualquer fallback sintético.
-- [ ] Revisar cada chamada de `getEmptyScannerResults` para assegurar que apenas resultados reais ou mensagens vazias/erro sejam exibidos.
+- [x] Revisar cada chamada de `getEmptyScannerResults` para assegurar que apenas resultados reais ou mensagens vazias/erro sejam exibidos.
 - [x] Criar estados explícitos de vazio e erro para o Radar quando a busca real não retornar contatos.
 - [ ] Simplificar os atalhos e localizar a terminologia residual nas áreas de Inteligência e Mensagens.
 - [x] Tornar o painel de Configurações transparente, sem histórico ou alertas aparentando estar ativos antes da configuração real.

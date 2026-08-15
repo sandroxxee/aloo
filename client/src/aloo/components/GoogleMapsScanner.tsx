@@ -437,14 +437,6 @@ const CATEGORIES = [
   { id: 'industria', label: 'Indústrias & Distribuidoras', icon: Briefcase },
 ];
 
-/**
- * O Radar não preenche a interface com empresas, telefones, avaliações ou
- * coordenadas estimadas. Resultados só podem ser exibidos após uma busca real.
- */
-function getEmptyScannerResults(..._ignored: unknown[]): ScannedBusiness[] {
-  return [];
-}
-
 // Memoized Card Component for fast, scroll-optimized side-list rendering
 const ScannedBusinessCard = React.memo(({
   b,
@@ -921,14 +913,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
       setBatchStepLabel(point.name);
       setScanProgress(Math.round(((stepIdx + 1) / gridPoints.length) * 100));
 
-      const pointResults = getEmptyScannerResults(
-        `${cityToUse} (${point.name})`,
-        selectedStateUf === 'ALL' ? 'SP' : selectedStateUf,
-        point.lat,
-        point.lng,
-        selectedCategory,
-        Math.max(5, Math.floor(batchRadiusKm / 2))
-      );
+      const pointResults: ScannedBusiness[] = [];
 
       pointResults.forEach(biz => {
         const cleanPhone = biz.rawPhone.replace(/\D/g, '');
@@ -1496,9 +1481,9 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                       const firstCity = newCityList[0];
                       setSelectedCity(firstCity);
                       setCustomMapCenter({ lat: firstCity.lat, lng: firstCity.lng });
-                      const results = getEmptyScannerResults(firstCity.name, newUf === 'ALL' ? 'SP' : newUf, firstCity.lat, firstCity.lng, selectedCategory, radiusKm);
-                      setScannedBusinesses(results);
-                      if (results.length > 0) setActiveBusiness(results[0]);
+                      setScannedBusinesses([]);
+                      setActiveBusiness(null);
+                      setScanFeedback(null);
                     }
                   }}
                   className="bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 cursor-pointer"
@@ -1528,9 +1513,9 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                       const firstCity = newCityList[0];
                       setSelectedCity(firstCity);
                       setCustomMapCenter({ lat: firstCity.lat, lng: firstCity.lng });
-                      const results = getEmptyScannerResults(firstCity.name, uf === 'ALL' ? 'SP' : uf, firstCity.lat, firstCity.lng, selectedCategory, radiusKm);
-                      setScannedBusinesses(results);
-                      if (results.length > 0) setActiveBusiness(results[0]);
+                      setScannedBusinesses([]);
+                      setActiveBusiness(null);
+                      setScanFeedback(null);
                     }
                   }}
                   className={`px-2.5 py-1 rounded-lg text-sm  shrink-0 transition-all cursor-pointer ${
@@ -1571,9 +1556,9 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                     if (found) {
                       setSelectedCity(found);
                       setCustomMapCenter({ lat: found.lat, lng: found.lng });
-                      const results = getEmptyScannerResults(found.name, found.name.split(',')[1]?.trim() || selectedStateUf, found.lat, found.lng, selectedCategory, radiusKm);
-                      setScannedBusinesses(results);
-                      if (results.length > 0) setActiveBusiness(results[0]);
+                      setScannedBusinesses([]);
+                      setActiveBusiness(null);
+                      setScanFeedback(null);
                     }
                   }}
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 cursor-pointer"
@@ -1673,9 +1658,9 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                     setSelectedCity(c);
                     setCustomCityInput('');
                     setCustomMapCenter({ lat: c.lat, lng: c.lng });
-                    const results = getEmptyScannerResults(c.name, c.name.split(',')[1]?.trim() || selectedStateUf, c.lat, c.lng, selectedCategory, radiusKm);
-                    setScannedBusinesses(results);
-                    if (results.length > 0) setActiveBusiness(results[0]);
+                    setScannedBusinesses([]);
+                    setActiveBusiness(null);
+                    setScanFeedback(null);
                   }}
                   className={`px-2.5 py-1 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
                     selectedCity.name === c.name && !customCityInput
