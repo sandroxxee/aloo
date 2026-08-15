@@ -62,6 +62,7 @@
 - [ ] Excluir de `SystemSettingsTab.tsx` o tipo, estados, handlers e JSX residuais de proxy/VPN e validar as Configurações sem esse fluxo.
 - [x] Eliminar a infraestrutura residual de proxy e rotação não utilizada em `searchEngines.ts`.
 - [ ] Validar carga inicial, troca de local, busca manual, extração em lote e modo autônomo do Radar sem qualquer fallback sintético.
+- [ ] Revisar cada chamada de `getEmptyScannerResults` para assegurar que apenas resultados reais ou mensagens vazias/erro sejam exibidos.
 - [x] Criar estados explícitos de vazio e erro para o Radar quando a busca real não retornar contatos.
 - [ ] Simplificar os atalhos e localizar a terminologia residual nas áreas de Inteligência e Mensagens.
 - [x] Tornar o painel de Configurações transparente, sem histórico ou alertas aparentando estar ativos antes da configuração real.

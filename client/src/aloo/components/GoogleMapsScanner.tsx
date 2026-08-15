@@ -441,7 +441,7 @@ const CATEGORIES = [
  * O Radar não preenche a interface com empresas, telefones, avaliações ou
  * coordenadas estimadas. Resultados só podem ser exibidos após uma busca real.
  */
-function generateMockScannedBusinesses(..._ignored: unknown[]): ScannedBusiness[] {
+function getEmptyScannerResults(..._ignored: unknown[]): ScannedBusiness[] {
   return [];
 }
 
@@ -921,7 +921,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
       setBatchStepLabel(point.name);
       setScanProgress(Math.round(((stepIdx + 1) / gridPoints.length) * 100));
 
-      const pointResults = generateMockScannedBusinesses(
+      const pointResults = getEmptyScannerResults(
         `${cityToUse} (${point.name})`,
         selectedStateUf === 'ALL' ? 'SP' : selectedStateUf,
         point.lat,
@@ -1496,7 +1496,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                       const firstCity = newCityList[0];
                       setSelectedCity(firstCity);
                       setCustomMapCenter({ lat: firstCity.lat, lng: firstCity.lng });
-                      const results = generateMockScannedBusinesses(firstCity.name, newUf === 'ALL' ? 'SP' : newUf, firstCity.lat, firstCity.lng, selectedCategory, radiusKm);
+                      const results = getEmptyScannerResults(firstCity.name, newUf === 'ALL' ? 'SP' : newUf, firstCity.lat, firstCity.lng, selectedCategory, radiusKm);
                       setScannedBusinesses(results);
                       if (results.length > 0) setActiveBusiness(results[0]);
                     }
@@ -1528,7 +1528,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                       const firstCity = newCityList[0];
                       setSelectedCity(firstCity);
                       setCustomMapCenter({ lat: firstCity.lat, lng: firstCity.lng });
-                      const results = generateMockScannedBusinesses(firstCity.name, uf === 'ALL' ? 'SP' : uf, firstCity.lat, firstCity.lng, selectedCategory, radiusKm);
+                      const results = getEmptyScannerResults(firstCity.name, uf === 'ALL' ? 'SP' : uf, firstCity.lat, firstCity.lng, selectedCategory, radiusKm);
                       setScannedBusinesses(results);
                       if (results.length > 0) setActiveBusiness(results[0]);
                     }
@@ -1571,7 +1571,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                     if (found) {
                       setSelectedCity(found);
                       setCustomMapCenter({ lat: found.lat, lng: found.lng });
-                      const results = generateMockScannedBusinesses(found.name, found.name.split(',')[1]?.trim() || selectedStateUf, found.lat, found.lng, selectedCategory, radiusKm);
+                      const results = getEmptyScannerResults(found.name, found.name.split(',')[1]?.trim() || selectedStateUf, found.lat, found.lng, selectedCategory, radiusKm);
                       setScannedBusinesses(results);
                       if (results.length > 0) setActiveBusiness(results[0]);
                     }
@@ -1673,7 +1673,7 @@ export const GoogleMapsScanner: React.FC<GoogleMapsScannerProps> = ({
                     setSelectedCity(c);
                     setCustomCityInput('');
                     setCustomMapCenter({ lat: c.lat, lng: c.lng });
-                    const results = generateMockScannedBusinesses(c.name, c.name.split(',')[1]?.trim() || selectedStateUf, c.lat, c.lng, selectedCategory, radiusKm);
+                    const results = getEmptyScannerResults(c.name, c.name.split(',')[1]?.trim() || selectedStateUf, c.lat, c.lng, selectedCategory, radiusKm);
                     setScannedBusinesses(results);
                     if (results.length > 0) setActiveBusiness(results[0]);
                   }}
