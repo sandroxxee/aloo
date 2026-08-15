@@ -2994,11 +2994,10 @@ export default function App() {
               {(dashboardSubTab === 'overview' || dashboardSubTab === 'robot') && (
                 <div className="space-y-5">
                   <section className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:px-6">
-                    <div className="absolute -right-10 -top-12 h-40 w-40 rounded-full bg-emerald-400/10 blur-3xl" />
                     <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                       <div className="max-w-2xl">
-                        <div className="mb-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
-                          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                        <div className="mb-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                          <span className="h-2 w-2 rounded-full bg-slate-500" />
                           Centro de operações
                         </div>
                         <h1 className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">Visão geral</h1>
@@ -3014,7 +3013,7 @@ export default function App() {
                           <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Termos</p>
                         </div>
                         <div className="px-3">
-                          <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{loopState.status === 'running' ? 'Ativo' : 'Pausado'}</p>
+                          <p className="text-lg font-bold text-slate-900 dark:text-white">{loopState.status === 'running' ? 'Ativo' : 'Pausado'}</p>
                           <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500">Operação</p>
                         </div>
                       </div>
