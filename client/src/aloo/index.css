@@ -403,6 +403,18 @@ button:active {
   box-shadow: none !important;
 }
 
+.asset-intelligence-shell .animate-in,
+.asset-intelligence-shell [class*="fade-in"],
+.asset-intelligence-shell [class*="slide-in"],
+.asset-intelligence-shell [class*="zoom-in"] {
+  animation: none !important;
+}
+
+.asset-intelligence-shell [class*="hover:scale"],
+.asset-intelligence-shell [class*="group-hover:scale"] {
+  transform: none !important;
+}
+
 .asset-intelligence-shell .glass-panel {
   background: var(--ai-surface) !important;
   border-color: var(--ai-border) !important;
