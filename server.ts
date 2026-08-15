@@ -4970,8 +4970,13 @@ async function setupServer() {
     });
   } else {
     console.log('⚡ Modo Desenvolvimento: Carregando middleware Vite...');
+    const viteHmrPort = Number(process.env.VITE_HMR_PORT || 24700);
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      // Mantém HMR isolado da porta padrão usada por outras prévias.
+      server: {
+        middlewareMode: true,
+        hmr: { host: '0.0.0.0', port: viteHmrPort },
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -4980,11 +4985,11 @@ async function setupServer() {
   let attempts = 0;
   const maxAttempts = 10;
 
-  function tryListen() {
-    const server = app.listen(PORT, '0.0.0.0', () => {
+  function tryListen(port: number = PORT) {
+    const server = app.listen(port, '0.0.0.0', () => {
       console.log(`\n==================================================`);
       console.log(`🚀 Asset Intelligence - Servidor rodando com sucesso!`);
-      console.log(`🌐 Acesse no seu navegador: http://localhost:${PORT}`);
+      console.log(`🌐 Acesse no seu navegador: http://localhost:${port}`);
       console.log(`==================================================\n`);
       const wssInstance = new WebSocketServer({ server, path: '/ws' });
       setWss(wssInstance);
@@ -4993,13 +4998,15 @@ async function setupServer() {
       });
     });
 
-    server.on('error', (err: any) => {
+    server.once('error', (err: any) => {
       if (err.code === 'EADDRINUSE' && attempts < maxAttempts) {
         attempts++;
-        console.warn(`⚠️ Porta ${PORT} em uso. Aguardando liberação (tentativa ${attempts}/${maxAttempts})...`);
-        setTimeout(tryListen, 500);
+        const nextPort = port + 1;
+        console.warn(`⚠️ Porta ${port} em uso. Tentando a porta ${nextPort} (${attempts}/${maxAttempts})...`);
+        try { server.close(); } catch {}
+        setTimeout(() => tryListen(nextPort), 250);
       } else if (err.code === 'EADDRINUSE') {
-        console.error(`\n❌ [ERRO DE PORTA]: A porta ${PORT} permaneceu ocupada.`);
+        console.error(`\n❌ [ERRO DE PORTA]: Nenhuma porta livre foi encontrada a partir de ${port}.`);
       } else {
         console.error('❌ Erro inesperado no servidor:', err);
       }
