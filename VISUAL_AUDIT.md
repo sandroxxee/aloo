@@ -38,6 +38,8 @@ O painel será consolidado como um **centro de inteligência operacional**: supe
 
 > O painel de resultados do Radar agora orienta o usuário a iniciar uma busca real e diferencia visualmente carregamento, ausência de contatos e falha de consulta, sem preencher empresas artificiais.
 
+> Após a remoção do modal de proxy do aplicativo principal, a prévia foi recarregada e o console permaneceu sem erros de execução.
+
 ## Passagem de validação
 
 | Fluxo | Resultado observado | Ação |
