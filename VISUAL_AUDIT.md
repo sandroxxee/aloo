@@ -42,6 +42,8 @@ O painel será consolidado como um **centro de inteligência operacional**: supe
 
 > Após a remoção do modal de proxy do aplicativo principal, a prévia foi recarregada e o console permaneceu sem erros de execução.
 
+> A recarga posterior confirmou a navegação localizada do dashboard e novamente não registrou erros no console da prévia.
+
 ## Passagem de validação
 
 | Fluxo | Resultado observado | Ação |
