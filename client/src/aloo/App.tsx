@@ -146,7 +146,6 @@ const SecurityGuardModal = safeLazy(() => import('./components/SecurityGuardModa
 const DesktopSyncCard = safeLazy(() => import('./components/DesktopSyncCard').then(m => ({ default: m.DesktopSyncCard })), 'DesktopSyncCard');
 const SmsDispatcher = safeLazy(() => import('./components/SmsDispatcher').then(m => ({ default: m.SmsDispatcher })), 'SmsDispatcher');
 const SearchQueuePanel = safeLazy(() => import('./components/keywordIntelligence/SearchQueuePanel').then(m => ({ default: m.SearchQueuePanel })), 'SearchQueuePanel');
-const ProxyConfigModal = safeLazy(() => import('./components/ProxyConfigModal').then(m => ({ default: m.ProxyConfigModal })), 'ProxyConfigModal');
 const DiagnosticSystem = safeLazy(() => import('./components/DiagnosticSystem').then(m => ({ default: m.DiagnosticSystem })), 'DiagnosticSystem');
 import { downloadVcfContacts, downloadGoogleContactsCsv } from './utils/googleContacts';
 import { saveBackup, restoreBackup, safeSaveLeads, safeLoadLeads, checkAndCreateAutoBackup } from './utils/backup';
@@ -609,7 +608,6 @@ export default function App() {
   });
 
   const [isHeaderMoreMenuOpen, setIsHeaderMoreMenuOpen] = useState(false);
-  const [isProxyConfigOpen, setIsProxyConfigOpen] = useState(false);
 
   // Activity Logs Console State
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
@@ -3873,16 +3871,6 @@ export default function App() {
         </Suspense>
       )}
 
-      {/* Proxy Rotation Configuration Modal */}
-      {isProxyConfigOpen && (
-        <Suspense fallback={null}>
-          <ProxyConfigModal
-            isOpen={isProxyConfigOpen}
-            onClose={() => setIsProxyConfigOpen(false)}
-          />
-        </Suspense>
-      )}
-
       {/* Windows EXE Desktop Installer Center Modal */}
       {isWindowsInstallerModalOpen && (
         <Suspense fallback={null}>
@@ -4056,7 +4044,6 @@ export default function App() {
 
               {/* Card 9: Proxies Rotativos */}
               <button
-                onClick={() => { setIsProxyConfigOpen(true); setIsHeaderMoreMenuOpen(false); }}
                 className="flex items-start gap-4 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 hover:border-indigo-200 dark:hover:border-indigo-800/60 shadow-sm hover:shadow-md transition-all text-left group cursor-pointer"
               >
                 <div className="p-3 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-xl group-hover:scale-110 transition-transform shrink-0 ring-1 ring-indigo-500/10">
